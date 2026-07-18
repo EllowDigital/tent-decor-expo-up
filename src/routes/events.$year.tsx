@@ -1,13 +1,16 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowLeft, ArrowRight, Calendar, Check, MapPin, Users, X, Building2, Trophy } from "lucide-react";
-import { EDITIONS, type Edition } from "@/data/constants";
+import { ArrowLeft, ArrowRight, Calendar, Check, MapPin, Users, X, Building2, Trophy, Ticket } from "lucide-react";
+import { EDITIONS, REGISTER_URL, type Edition } from "@/data/constants";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RegisterLink } from "@/components/common/RegisterLink";
+import { EpassDialog } from "@/components/common/EpassDialog";
+import { AddToCalendar } from "@/components/common/AddToCalendar";
+import { CountdownMeta } from "@/components/common/CountdownMeta";
 
 export const Route = createFileRoute("/events/$year")({
   loader: ({ params }) => {
