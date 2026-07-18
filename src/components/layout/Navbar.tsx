@@ -61,12 +61,8 @@ export function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
-            <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10">
-              <Link to="/register">Get E-Pass</Link>
-            </Button>
-            <Button asChild className="bg-gradient-gold text-charcoal hover:opacity-90 shadow-gold">
-              <Link to="/register">Book Stall</Link>
-            </Button>
+            <RegisterLink variant="outline">Get E-Pass</RegisterLink>
+            <RegisterLink variant="gold" showIcon>Book Stall</RegisterLink>
           </div>
 
           <button
