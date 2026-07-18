@@ -1,6 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
-import { Menu, X, Ticket, Store } from "lucide-react";
+import { Menu, X, Ticket } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
@@ -66,14 +66,9 @@ export function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-2">
-            <Button asChild variant="outline" size="sm" className="border-gold text-charcoal hover:bg-gold/10 h-10 px-4">
-              <Link to="/visitors">
-                <Ticket className="mr-1.5 h-4 w-4" /> Visitors
-              </Link>
-            </Button>
-            <Button asChild size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-4">
-              <Link to="/exhibitors">
-                <Store className="mr-1.5 h-4 w-4" /> Exhibitors
+            <Button asChild size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-5">
+              <Link to="/registration">
+                <Ticket className="mr-1.5 h-4 w-4" /> Register
               </Link>
             </Button>
           </div>
@@ -115,15 +110,10 @@ export function Navbar() {
                   </Link>
                 );
               })}
-              <div className="pt-3 grid grid-cols-2 gap-2">
-                <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10 w-full">
-                  <Link to="/visitors">
-                    <Ticket className="mr-1.5 h-4 w-4" /> Visitors
-                  </Link>
-                </Button>
+              <div className="pt-3">
                 <Button asChild className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 w-full">
-                  <Link to="/exhibitors">
-                    <Store className="mr-1.5 h-4 w-4" /> Exhibitors
+                  <Link to="/registration">
+                    <Ticket className="mr-1.5 h-4 w-4" /> Register — Visitor or Exhibitor
                   </Link>
                 </Button>
               </div>

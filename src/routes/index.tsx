@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Calendar, MapPin, Ticket, Store, Users, Sparkles, Trophy, Handshake } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Ticket, Store, Users, Sparkles, Trophy, Handshake, ChevronDown } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, GALLERY, INDUSTRY_CATEGORIES, REGISTER_URL } from "@/data/constants";
@@ -42,110 +42,123 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
   const eventName = `${upcoming.edition} · ${upcoming.city} ${upcoming.year}`;
 
   return (
-    <section className="relative overflow-hidden -mt-16 sm:-mt-20 pt-16 sm:pt-20">
+    <section
+      className="relative overflow-hidden -mt-16 sm:-mt-20 min-h-[100svh] flex flex-col"
+      aria-label="Upcoming edition"
+    >
       <div className="absolute inset-0">
         <img src={heroBg} alt="" className="h-full w-full object-cover" fetchPriority="high" />
         <div className="absolute inset-0 bg-gradient-to-br from-charcoal/95 via-charcoal/85 to-charcoal/70" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-28">
-        <div className="grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7">
-            <Reveal>
-              <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/[0.04] px-3 py-1.5">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-gold opacity-70 animate-ping" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
-                </span>
-                <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-gold font-medium">
-                  Upcoming Edition · {upcoming.year}
-                </span>
-              </div>
+      <div className="relative z-10 flex-1 flex items-center pt-20 sm:pt-24 pb-14 sm:pb-16">
+        <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
+            <div className="lg:col-span-7">
+              <Reveal>
+                <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/[0.04] px-3 py-1.5">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-gold opacity-70 animate-ping" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
+                  </span>
+                  <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-gold font-medium">
+                    Upcoming Edition · {upcoming.year}
+                  </span>
+                </div>
 
-              <h1 className="mt-6 font-display font-bold text-white leading-[1.05] text-[clamp(2rem,5.5vw,4.75rem)]">
-                {upcoming.edition}
-                <span className="block text-gradient-gold mt-1">{upcoming.city} {upcoming.year}</span>
-              </h1>
+                <h1 className="mt-4 sm:mt-5 font-display font-bold text-white leading-[1.05] text-[clamp(1.75rem,5vw,4.25rem)]">
+                  {upcoming.edition}
+                  <span className="block text-gradient-gold mt-1">{upcoming.city} {upcoming.year}</span>
+                </h1>
 
-              <p className="mt-5 max-w-xl text-white/70 text-base sm:text-lg leading-relaxed">
-                {upcoming.summary}
-              </p>
+                <p className="mt-3 sm:mt-4 max-w-xl text-white/70 text-sm sm:text-base leading-relaxed line-clamp-3 sm:line-clamp-none">
+                  {upcoming.summary}
+                </p>
 
-              <dl className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl">
-                <MetaRow icon={Calendar} label="Dates" value={upcoming.dates} />
-                <MetaRow icon={MapPin} label="Venue" value={upcoming.venue} />
-              </dl>
+                <dl className="mt-4 sm:mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-xl">
+                  <MetaRow icon={Calendar} label="Dates" value={upcoming.dates} />
+                  <MetaRow icon={MapPin} label="Venue" value={upcoming.venue} />
+                </dl>
 
-              <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
-                <Button asChild size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-12 sm:h-14 px-6 sm:px-8">
-                  <Link to="/events/$year" params={{ year: upcoming.year }}>
-                    <Ticket className="mr-2 h-4 w-4" /> View Event Details
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent h-12 sm:h-14 px-6 sm:px-8">
-                  <Link to="/events">
-                    All editions <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </Reveal>
-          </div>
-
-          {cd && (
-            <div className="lg:col-span-5">
-              <Reveal delay={0.1}>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-6 sm:p-7">
-                  <div className="flex items-center gap-2 text-gold">
-                    <Calendar className="h-4 w-4" />
-                    <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium">Counting down</span>
-                  </div>
-                  <div className="mt-5 grid grid-cols-4 gap-2 sm:gap-3" role="timer" aria-live="polite">
-                    {[
-                      { v: cd.days, l: "Days" },
-                      { v: cd.hours, l: "Hrs" },
-                      { v: cd.minutes, l: "Min" },
-                      { v: cd.seconds, l: "Sec" },
-                    ].map((u) => (
-                      <div key={u.l} className="rounded-lg border border-white/10 bg-charcoal/40 py-3 sm:py-4 text-center">
-                        <div className="font-display font-bold text-gold tabular-nums text-2xl sm:text-3xl leading-none">
-                          {String(u.v).padStart(2, "0")}
-                        </div>
-                        <div className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50 mt-1.5">{u.l}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {upcoming.startDate && (
-                    <CountdownMeta
-                      startISO={upcoming.startDate}
-                      endISO={upcoming.endDate}
-                      timezone={upcoming.timezone}
-                      className="mt-4"
-                      tone="light"
-                    />
-                  )}
-
-                  {upcoming.startDate && upcoming.endDate && (
-                    <div className="mt-5 pt-5 border-t border-white/10">
-                      <AddToCalendar
-                        variant="ghostLight"
-                        size="sm"
-                        title={eventName}
-                        description={`${upcoming.summary} Register at ${REGISTER_URL}`}
-                        location={upcoming.venue}
-                        timezone={upcoming.timezone}
-                        start={upcoming.startDate}
-                        end={upcoming.endDate}
-                        label="Add to Calendar"
-                      />
-                    </div>
-                  )}
+                <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3">
+                  <Button asChild size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-11 sm:h-13 px-5 sm:px-7">
+                    <Link to="/registration">
+                      <Ticket className="mr-2 h-4 w-4" /> Register Now
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent h-11 sm:h-13 px-5 sm:px-7">
+                    <Link to="/events/$year" params={{ year: upcoming.year }}>
+                      Event details <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
                 </div>
               </Reveal>
             </div>
-          )}
+
+            {cd && (
+              <div className="lg:col-span-5">
+                <Reveal delay={0.1}>
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-4 sm:p-6">
+                    <div className="flex items-center gap-2 text-gold">
+                      <Calendar className="h-4 w-4" />
+                      <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium">Counting down</span>
+                    </div>
+                    <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-3" role="timer" aria-live="polite">
+                      {[
+                        { v: cd.days, l: "Days" },
+                        { v: cd.hours, l: "Hrs" },
+                        { v: cd.minutes, l: "Min" },
+                        { v: cd.seconds, l: "Sec" },
+                      ].map((u) => (
+                        <div key={u.l} className="rounded-lg border border-white/10 bg-charcoal/40 py-2.5 sm:py-3.5 text-center">
+                          <div className="font-display font-bold text-gold tabular-nums text-xl sm:text-3xl leading-none">
+                            {String(u.v).padStart(2, "0")}
+                          </div>
+                          <div className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50 mt-1">{u.l}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {upcoming.startDate && (
+                      <CountdownMeta
+                        startISO={upcoming.startDate}
+                        endISO={upcoming.endDate}
+                        timezone={upcoming.timezone}
+                        className="mt-3 sm:mt-4"
+                        tone="light"
+                      />
+                    )}
+
+                    {upcoming.startDate && upcoming.endDate && (
+                      <div className="mt-4 pt-4 border-t border-white/10">
+                        <AddToCalendar
+                          variant="ghostLight"
+                          size="sm"
+                          title={eventName}
+                          description={`${upcoming.summary} Register at ${REGISTER_URL}`}
+                          location={upcoming.venue}
+                          timezone={upcoming.timezone}
+                          start={upcoming.startDate}
+                          end={upcoming.endDate}
+                          label="Add to Calendar"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </Reveal>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      <a
+        href="#next"
+        aria-label="Scroll to next section"
+        className="hidden sm:flex absolute bottom-4 left-1/2 -translate-x-1/2 z-10 items-center gap-2 text-white/60 hover:text-gold text-[10px] uppercase tracking-[0.3em] transition-colors"
+      >
+        Scroll <ChevronDown className="h-4 w-4 animate-bounce" />
+      </a>
     </section>
   );
 }
@@ -170,7 +183,7 @@ function CategoryMarquee() {
   const items = [...INDUSTRY_CATEGORIES, "Sound", "SFX", "AV & Lighting", "Mandap"];
   const loop = [...items, ...items];
   return (
-    <section aria-label="Industry categories" className="bg-charcoal border-y border-white/10 overflow-hidden">
+    <section id="next" aria-label="Industry categories" className="bg-charcoal border-y border-white/10 overflow-hidden scroll-mt-20">
       <div className="relative flex" role="marquee">
         <div className="flex shrink-0 animate-marquee gap-10 py-4 sm:py-5 pr-10 whitespace-nowrap">
           {loop.map((c, i) => (
@@ -355,10 +368,10 @@ function ClosingCTA({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Button asChild size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-12 sm:h-14 px-6 sm:px-8">
-            <Link to="/events/$year" params={{ year: upcoming.year }}>Event details</Link>
+            <Link to="/registration"><Ticket className="mr-2 h-4 w-4" /> Register Now</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 bg-transparent h-12 sm:h-14 px-6 sm:px-8">
-            <Link to="/visitors">Visitor info</Link>
+            <Link to="/events/$year" params={{ year: upcoming.year }}>Event details</Link>
           </Button>
         </div>
       </div>
