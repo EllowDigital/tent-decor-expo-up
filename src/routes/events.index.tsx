@@ -266,7 +266,13 @@ function EventsIndex() {
             <RegisterLink kind="visitor" size="lg" variant="gold" showIcon>
               Get E-Pass
             </RegisterLink>
-            <RegisterLink kind="exhibitor" size="lg" variant="outline" showIcon>
+            <RegisterLink
+              kind="exhibitor"
+              size="lg"
+              variant="outline"
+              showIcon
+              className="border-gold/70 text-white hover:bg-gold/10"
+            >
               Book a Stall
             </RegisterLink>
             <Button asChild size="lg" variant="ghost" className="text-white hover:text-gold">
