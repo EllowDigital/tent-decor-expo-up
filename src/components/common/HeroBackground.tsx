@@ -3,13 +3,16 @@ import { cn } from "@/lib/utils";
 /**
  * Responsive hero background image (`public/assets/responsive/hero-bg-*`).
  *
- * Emits a <picture> with WebP + JPEG srcsets at 640/1024/1600/1920 widths so
- * mobile fetches ~80 KB instead of the 360 KB source. Variants are generated
- * from `public/assets/hero-bg.jpg` by `scripts/gen-hero-variants.mjs` (runs on
- * every build via the `prebuild` npm script).
+ * Emits a <picture> with AVIF + WebP + JPEG srcsets at 640/1024/1600/1920
+ * widths. AVIF is preferred (smallest), then WebP, with JPEG as the universal
+ * fallback. Variants are generated from `public/assets/hero-bg.jpg` by
+ * `scripts/gen-hero-variants.mjs` (runs on every build via the `prebuild`
+ * npm script). Missing formats degrade gracefully — <source> tags without
+ * matching files are ignored by the browser.
  */
 const WIDTHS = [640, 1024, 1600, 1920] as const;
 const base = "/assets/responsive/hero-bg";
+const srcSetAvif = WIDTHS.map((w) => `${base}-${w}.avif ${w}w`).join(", ");
 const srcSetWebp = WIDTHS.map((w) => `${base}-${w}.webp ${w}w`).join(", ");
 const srcSetJpg = WIDTHS.map((w) => `${base}-${w}.jpg ${w}w`).join(", ");
 
@@ -25,6 +28,7 @@ export function HeroBackground({
   return (
     <>
       <picture>
+        <source type="image/avif" srcSet={srcSetAvif} sizes="100vw" />
         <source type="image/webp" srcSet={srcSetWebp} sizes="100vw" />
         <img
           src={`${base}-1600.jpg`}

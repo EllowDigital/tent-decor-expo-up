@@ -9,6 +9,9 @@ export const getRouter = () => {
     routeTree,
     context: { queryClient },
     scrollRestoration: true,
+    // Prefetch route JS on hover/focus of any <Link>, dramatically reducing
+    // navigation latency for CTAs like /registration, /visitors, /exhibitors.
+    defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
   });
 
