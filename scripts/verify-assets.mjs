@@ -7,16 +7,16 @@
  * one resolves to a real file on disk. Fails the build (exit 1) on any miss.
  *
  * Rationale: we run this offline against the produced bundle so it works
- * identically in local `bun run build`, Cloudflare, and Vercel — no dev server
+ * identically in local `bun run build` and Netlify — no dev server
  * required, no flaky HTTP.
  */
-import { readFile, stat } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { globSync } from "glob";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const SEARCH_ROOTS = ["dist", ".output/public", ".vercel/output/static", "public"].filter((d) =>
+const SEARCH_ROOTS = ["dist/client", "dist", "public"].filter((d) =>
   existsSync(path.join(ROOT, d)),
 );
 

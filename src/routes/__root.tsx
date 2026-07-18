@@ -117,10 +117,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       // og:title / og:description are set per-route via buildHead().
 
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Tent Decor Expo UP" },
+      // og:type, og:site_name, twitter:card are set per-route via buildHead()
+      // to avoid duplication and conflicting values (e.g. article vs website).
       { property: "og:locale", content: "en_IN" },
-      { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@tentdecorexpo" },
       { name: "twitter:creator", content: "@tentdecorexpo" },
     ],
