@@ -1,46 +1,92 @@
-import g1 from "@/assets/g1.jpg";
-import g2 from "@/assets/g2.jpg";
-import g3 from "@/assets/g3.jpg";
-import g4 from "@/assets/g4.jpg";
-import g5 from "@/assets/g5.jpg";
-import g6 from "@/assets/g6.jpg";
-import g7 from "@/assets/g7.jpg";
-import p1 from "@/assets/p1.jpg";
-import p2 from "@/assets/p2.jpg";
-import p3 from "@/assets/p3.jpg";
-import p4 from "@/assets/p4.jpg";
+/**
+ * ⚠️ This file is a backward-compatibility shim.
+ *
+ * All editable content now lives in dedicated data modules:
+ *   • src/data/siteConfig.ts   → contact info, socials, registration URLs, current event
+ *   • src/data/eventsData.ts   → all event editions (upcoming + past)
+ *   • src/data/membersData.ts  → core committee + city chapters
+ *   • src/data/galleryData.ts  → gallery images + auto-derived categories
+ *
+ * Prefer importing from those files. This module simply re-exports them under
+ * the legacy names used across older components.
+ */
 
-// External registration & E-Pass portal. Swap these every year — the whole site picks up the new URLs.
-export const REGISTER_URL = "https://www.tentdecorexpo.com";
-export const VISITOR_REGISTER_URL = "https://www.tentdecorexpo.com/e-pass"; // visitor E-Pass form
-export const EXHIBITOR_REGISTER_URL = "https://www.tentdecorexpo.com/book-stall"; // exhibitor stall booking form
+import { eventsData, type EventItem } from "./eventsData";
+import { coreCommittee, executiveCommittee, cityChapters } from "./membersData";
+import { galleryData } from "./galleryData";
 
-export const INDUSTRY_CATEGORIES = [
-  "Tent Infrastructure",
-  "Decoration",
-  "Catering Services",
-  "Hospitality",
-  "Light Decoration",
-  "Kitchen Equipment",
-  "Beverages",
-  "Food Products",
-  "Wedding Planning",
-  "Furniture",
-  "Fabric",
-  "Stage Design",
-  "Wedding Accessories",
-  "Event Management",
-];
+export {
+  CONTACT,
+  SOCIAL_LINKS,
+  REGISTER_URL,
+  VISITOR_REGISTER_URL,
+  EXHIBITOR_REGISTER_URL,
+  INDUSTRY_CATEGORIES,
+  NAV_LINKS,
+  CURRENT_EVENT_ID,
+  siteConfig,
+} from "./siteConfig";
 
-export const NAV_LINKS = [
-  { label: "Home", to: "/" },
-  { label: "About", to: "/about" },
-  { label: "Events", to: "/events" },
-  { label: "Members", to: "/members" },
-  { label: "Gallery", to: "/gallery" },
-  { label: "Registration", to: "/registration" },
-  { label: "Contact", to: "/contact" },
-] as const;
+// ---------- Legacy: EDITIONS (used by /event/$slug, /events, homepage) ----------
+
+export type Edition = {
+  year: string;
+  slug: string;
+  edition: string;
+  status: "upcoming" | "past";
+  city: string;
+  venue: string;
+  dates: string;
+  startDate?: string;
+  endDate?: string;
+  timezone?: string;
+  host: string;
+  exhibitors: string;
+  visitors: string;
+  summary: string;
+  highlights: string[];
+  chiefGuests?: { name: string; role: string }[];
+  cover: string;
+  photos: string[];
+};
+
+export const EDITIONS: Edition[] = eventsData.map((e: EventItem) => ({
+  year: e.year,
+  slug: e.id,
+  edition: e.edition,
+  status: e.status,
+  city: e.city,
+  venue: e.venue,
+  dates: e.dates,
+  startDate: e.startDate,
+  endDate: e.endDate,
+  timezone: e.timezone,
+  host: e.host,
+  exhibitors: e.exhibitors,
+  visitors: e.visitors,
+  summary: e.description,
+  highlights: e.highlights,
+  chiefGuests: e.chiefGuests,
+  cover: e.featuredImage,
+  photos: e.galleryImages,
+}));
+
+// ---------- Legacy: Members ----------
+
+export const LEADERSHIP = coreCommittee;
+export const COMMITTEE = executiveCommittee;
+export const CITY_CHAPTERS = cityChapters;
+
+// ---------- Legacy: Gallery ----------
+
+export const GALLERY = galleryData.map((g) => ({
+  src: g.src,
+  category: g.category,
+  title: g.alt,
+  year: g.year ?? "",
+}));
+
+// ---------- Static content that isn't tied to a specific data domain ----------
 
 export const STATS = [
   { value: 250, suffix: "+", label: "Exhibitors" },
@@ -50,26 +96,10 @@ export const STATS = [
 ];
 
 export const FEATURES = [
-  {
-    title: "Discover Innovation",
-    desc: "Explore the newest tent, decor, and hospitality technology from India's leading manufacturers.",
-    icon: "Sparkles",
-  },
-  {
-    title: "Business Growth",
-    desc: "Meet decision-makers, close bulk orders, and expand your dealer network across North India.",
-    icon: "TrendingUp",
-  },
-  {
-    title: "Networking",
-    desc: "Connect with 25,000+ event professionals, wedding planners, caterers, and association leaders.",
-    icon: "Users",
-  },
-  {
-    title: "Knowledge",
-    desc: "Attend expert panels, live demonstrations, and workshops led by the industry's most respected voices.",
-    icon: "BookOpen",
-  },
+  { title: "Discover Innovation", desc: "Explore the newest tent, decor, and hospitality technology from India's leading manufacturers.", icon: "Sparkles" },
+  { title: "Business Growth", desc: "Meet decision-makers, close bulk orders, and expand your dealer network across North India.", icon: "TrendingUp" },
+  { title: "Networking", desc: "Connect with 25,000+ event professionals, wedding planners, caterers, and association leaders.", icon: "Users" },
+  { title: "Knowledge", desc: "Attend expert panels, live demonstrations, and workshops led by the industry's most respected voices.", icon: "BookOpen" },
 ];
 
 export const EXHIBITOR_CATEGORIES = [
@@ -103,237 +133,6 @@ export const MILESTONES = [
   { year: "2026", title: "Kanpur 2026", desc: "4th Mahadhiveshan — hosted by Shamiyana Furniture Association, Kanpur." },
 ];
 
-// Office-bearers of the Tent, Caterers & Decorators Welfare Association of UP (parent body).
-export const LEADERSHIP = [
-  { name: "Vijay Kumar", role: "President", img: p1 },
-  { name: "Rajeev Kumar Singh", role: "General Secretary", img: p2 },
-  { name: "Sandeep Tiwari", role: "Treasurer", img: p4 },
-  { name: "Meera Agrawal", role: "Women's Wing Convener", img: p3 },
-];
-
-// Executive committee & district conveners — shown on the Members page.
-export const COMMITTEE = [
-  { name: "Anil Srivastava", role: "Vice President", district: "Lucknow" },
-  { name: "Mohd. Aslam", role: "Joint Secretary", district: "Varanasi" },
-  { name: "Ramesh Chandra Gupta", role: "Executive Member", district: "Agra" },
-  { name: "Deepak Sahu", role: "Executive Member", district: "Prayagraj" },
-  { name: "Suresh Yadav", role: "District Convener", district: "Kanpur" },
-  { name: "Neeraj Pandey", role: "District Convener", district: "Gorakhpur" },
-  { name: "Praveen Chaurasia", role: "District Convener", district: "Meerut" },
-  { name: "Kailash Nath", role: "District Convener", district: "Bareilly" },
-];
-
-// Multi-year editions. Add a new entry each year to publish a fresh event page.
-export type Edition = {
-  year: string;
-  slug: string; // URL slug — e.g. "kanpur-2026"
-  edition: string;
-  status: "upcoming" | "past";
-  city: string;
-  venue: string;
-  dates: string;
-  startDate?: string; // ISO — enables countdown for upcoming editions
-  endDate?: string; // ISO — end of the event (used for calendar exports & labels)
-  timezone?: string; // IANA tz for display (e.g. "Asia/Kolkata")
-  host: string;
-  exhibitors: string;
-  visitors: string;
-  summary: string;
-  highlights: string[];
-  chiefGuests?: { name: string; role: string }[];
-  cover: string;
-  photos: string[];
-};
-
-export const EDITIONS: Edition[] = [
-  {
-    year: "2026",
-    slug: "kanpur-2026",
-    edition: "4th Mahadhiveshan",
-    status: "upcoming",
-    city: "Kanpur",
-    venue: "Sanskar Lawn, Kanpur",
-    dates: "30 August – 1 September 2026",
-    startDate: "2026-08-30T09:00:00+05:30",
-    endDate: "2026-09-01T20:00:00+05:30",
-    timezone: "Asia/Kolkata",
-    host: "Shamiyana Furniture Association",
-    exhibitors: "250+",
-    visitors: "25,000+",
-    summary:
-      "The largest B2B stage the tent, catering and decor industry has ever seen — hosted by Shamiyana Furniture Association, Kanpur.",
-    highlights: [
-      "Grand inauguration with chief guest addresses",
-      "Curated B2B buyer-seller meetings across 14 verticals",
-      "Panel discussions on the future of the wedding economy",
-      "Live central-stage demos and Innovation Awards",
-      "Three days of hospitality lounges and networking galas",
-    ],
-    chiefGuests: [
-      { name: "Shri Yogi Adityanath", role: "Hon'ble Chief Minister of Uttar Pradesh (Invited)" },
-      { name: "Shri Nand Gopal Gupta 'Nandi'", role: "Cabinet Minister, MSME, Govt. of UP (Invited)" },
-      { name: "Vijay Kumar", role: "President, TCDWA UP" },
-      { name: "Prem Chandra Awasthi", role: "President, Shamiyana Furniture Association" },
-    ],
-    cover: g6,
-    photos: [g6, g2, g4, g5, g3, g7],
-  },
-  {
-    year: "2025",
-    slug: "lucknow-2025",
-    edition: "3rd Mahadhiveshan",
-    status: "past",
-    city: "Lucknow",
-    venue: "Awadh Exhibition Grounds, Lucknow",
-    dates: "12 – 14 September 2025",
-    host: "Tent, Caterers & Decorators Welfare Association of UP",
-    exhibitors: "180",
-    visitors: "15,000+",
-    summary:
-      "Three record-breaking days in Lucknow that redefined North India's wedding economy — and set the stage for Kanpur 2026.",
-    highlights: [
-      "180 exhibitors across 12 verticals",
-      "15,000+ trade buyers from UP, Bihar and MP",
-      "First-ever Innovation Awards for regional craftsmen",
-      "Live wedding mandap demonstrations",
-      "Signature Awadhi hospitality dinners",
-    ],
-    chiefGuests: [
-      { name: "Shri Brajesh Pathak", role: "Deputy CM, Uttar Pradesh" },
-      { name: "Vijay Kumar", role: "President, TCDWA UP" },
-    ],
-    cover: g1,
-    photos: [g1, g4, g2, g5, g3, g7],
-  },
-  {
-    year: "2019",
-    slug: "varanasi-2019",
-    edition: "2nd Mahadhiveshan",
-    status: "past",
-    city: "Varanasi",
-    venue: "Diamond Hotel Grounds, Varanasi",
-    dates: "18 – 20 October 2019",
-    host: "Kashi Tent & Decor Association",
-    exhibitors: "120",
-    visitors: "9,000+",
-    summary:
-      "The regional expansion edition — new chapters formed in Kanpur, Varanasi and Agra, uniting the industry under one voice.",
-    highlights: [
-      "Formation of 3 new district chapters",
-      "First Women's Wing convention",
-      "State-level welfare policy roundtable",
-    ],
-    cover: g3,
-    photos: [g3, g7, g5, g2],
-  },
-  {
-    year: "2015",
-    slug: "lucknow-2015",
-    edition: "1st Mahadhiveshan",
-    status: "past",
-    city: "Lucknow",
-    venue: "Sarojini Nagar Grounds, Lucknow",
-    dates: "22 – 23 November 2015",
-    host: "Tent, Caterers & Decorators Welfare Association of UP",
-    exhibitors: "60",
-    visitors: "4,000",
-    summary:
-      "The founding congress — 400 members from across UP districts came together to build a unified industry voice.",
-    highlights: [
-      "400 founding members",
-      "First state-level industry charter signed",
-      "Recognition by UP MSME department",
-    ],
-    cover: g5,
-    photos: [g5, g4, g2],
-  },
-];
-
-// City-wise chapters — hierarchical members structure for the Members page.
-export const CITY_CHAPTERS = [
-  {
-    city: "Lucknow",
-    members: [
-      { name: "Anil Srivastava", role: "City President" },
-      { name: "Rakesh Verma", role: "City Secretary" },
-      { name: "Sunil Kashyap", role: "Treasurer" },
-      { name: "Manoj Rastogi", role: "Executive Member" },
-    ],
-  },
-  {
-    city: "Kanpur",
-    members: [
-      { name: "Suresh Yadav", role: "City President" },
-      { name: "Prem Chandra Awasthi", role: "City Secretary" },
-      { name: "Rajeev Nigam", role: "Treasurer" },
-      { name: "Harish Tandon", role: "Executive Member" },
-    ],
-  },
-  {
-    city: "Varanasi",
-    members: [
-      { name: "Mohd. Aslam", role: "City President" },
-      { name: "Vinod Gupta", role: "City Secretary" },
-      { name: "Ashok Pandey", role: "Treasurer" },
-    ],
-  },
-  {
-    city: "Agra",
-    members: [
-      { name: "Ramesh Chandra Gupta", role: "City President" },
-      { name: "Vikas Sharma", role: "City Secretary" },
-      { name: "Deepak Agarwal", role: "Treasurer" },
-    ],
-  },
-  {
-    city: "Prayagraj",
-    members: [
-      { name: "Deepak Sahu", role: "City President" },
-      { name: "Ajay Mishra", role: "City Secretary" },
-      { name: "Sanjay Tripathi", role: "Executive Member" },
-    ],
-  },
-  {
-    city: "Gorakhpur",
-    members: [
-      { name: "Neeraj Pandey", role: "City President" },
-      { name: "Rakesh Singh", role: "City Secretary" },
-    ],
-  },
-  {
-    city: "Meerut",
-    members: [
-      { name: "Praveen Chaurasia", role: "City President" },
-      { name: "Vipin Jain", role: "City Secretary" },
-    ],
-  },
-  {
-    city: "Bareilly",
-    members: [
-      { name: "Kailash Nath", role: "City President" },
-      { name: "Rajendra Prasad", role: "City Secretary" },
-    ],
-  },
-];
-
-// Gallery — each item is tagged by category AND edition year for dual filtering.
-export const GALLERY = [
-  { src: g1, category: "Decoration", title: "Floral Mandap — Lucknow 2025", year: "2025" },
-  { src: g2, category: "Tent Setup", title: "Grand Shamiyana Interior", year: "2025" },
-  { src: g3, category: "Catering", title: "Silver Chafing Live Counter", year: "2019" },
-  { src: g4, category: "Lighting", title: "Fairy Light Installation", year: "2025" },
-  { src: g5, category: "VIP", title: "VIP Reception Hall", year: "2015" },
-  { src: g6, category: "Decoration", title: "Royal Stage Design — Kanpur 2026 Preview", year: "2026" },
-  { src: g7, category: "Tent Setup", title: "Shamiyana Fabric Detail", year: "2019" },
-  { src: g2, category: "VIP", title: "Chandelier Pavilion", year: "2025" },
-  { src: g4, category: "Lighting", title: "Ambient Bulb Canopy", year: "2025" },
-  { src: g3, category: "Catering", title: "Live Kitchen Showcase", year: "2025" },
-  { src: g5, category: "VIP", title: "Presidential Lounge", year: "2019" },
-  { src: g7, category: "Tent Setup", title: "Modular Pavilion Frame", year: "2015" },
-  { src: g6, category: "Stage", title: "Central Awards Stage", year: "2025" },
-  { src: g1, category: "Decoration", title: "Marigold & Rose Backdrop", year: "2025" },
-];
-
 export const FAQS = [
   { q: "When and where is Kanpur 2026 being held?", a: "The 4th Mahadhiveshan takes place 30 August – 1 September 2026 at Sanskar Lawn, Kanpur." },
   { q: "Is the visitor E-Pass free?", a: "Yes. Trade visitors receive a complimentary E-Pass at tentdecorexpo.com. Walk-in registration is also available at the venue." },
@@ -341,9 +140,3 @@ export const FAQS = [
   { q: "Who organises the expo?", a: "Kanpur 2026 is hosted by the Shamiyana Furniture Association, Kanpur, under the umbrella of the Tent, Caterers & Decorators Welfare Association of UP." },
   { q: "Are meals and refreshments provided?", a: "Yes. All registered visitors and exhibitors receive access to hospitality lounges, tea/coffee and lunch on all three days." },
 ];
-
-export const CONTACT = {
-  phone: "+91 98765 43210",
-  email: "info@tentdecorexpoup.in",
-  venue: "Sanskar Lawn, Kanpur, Uttar Pradesh 208001",
-};
