@@ -13,6 +13,7 @@ import { Route as VisitorsRouteImport } from './routes/visitors'
 import { Route as UpcomingRouteImport } from './routes/upcoming'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ExhibitorsRouteImport } from './routes/exhibitors'
 import { Route as EpassStatusRouteImport } from './routes/epass-status'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -38,6 +39,11 @@ const MembersRoute = MembersRouteImport.update({
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExhibitorsRoute = ExhibitorsRouteImport.update({
+  id: '/exhibitors',
+  path: '/exhibitors',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EpassStatusRoute = EpassStatusRouteImport.update({
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/epass-status': typeof EpassStatusRoute
+  '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/upcoming': typeof UpcomingRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/epass-status': typeof EpassStatusRoute
+  '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/upcoming': typeof UpcomingRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/epass-status': typeof EpassStatusRoute
+  '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/upcoming': typeof UpcomingRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/epass-status'
+    | '/exhibitors'
     | '/gallery'
     | '/members'
     | '/upcoming'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/epass-status'
+    | '/exhibitors'
     | '/gallery'
     | '/members'
     | '/upcoming'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/epass-status'
+    | '/exhibitors'
     | '/gallery'
     | '/members'
     | '/upcoming'
@@ -152,6 +164,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   EpassStatusRoute: typeof EpassStatusRoute
+  ExhibitorsRoute: typeof ExhibitorsRoute
   GalleryRoute: typeof GalleryRoute
   MembersRoute: typeof MembersRoute
   UpcomingRoute: typeof UpcomingRoute
@@ -188,6 +201,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exhibitors': {
+      id: '/exhibitors'
+      path: '/exhibitors'
+      fullPath: '/exhibitors'
+      preLoaderRoute: typeof ExhibitorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/epass-status': {
@@ -240,6 +260,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   EpassStatusRoute: EpassStatusRoute,
+  ExhibitorsRoute: ExhibitorsRoute,
   GalleryRoute: GalleryRoute,
   MembersRoute: MembersRoute,
   UpcomingRoute: UpcomingRoute,

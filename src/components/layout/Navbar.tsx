@@ -3,11 +3,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { Menu, X, Ticket, Store } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
-import { EpassDialog } from "@/components/common/EpassDialog";
-import { StallBookingDialog } from "@/components/common/StallBookingDialog";
 import { Button } from "@/components/ui/button";
-import { EDITIONS, NAV_LINKS } from "@/data/constants";
+import { NAV_LINKS } from "@/data/constants";
 import { cn } from "@/lib/utils";
+
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
