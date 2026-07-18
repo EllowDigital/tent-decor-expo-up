@@ -13,7 +13,9 @@ export const Route = createFileRoute("/members")({
       { name: "description", content: "Office-bearers, executive committee and district conveners of the Tent, Caterers & Decorators Welfare Association of UP." },
       { property: "og:title", content: "Members — Tent Decor Expo UP" },
       { property: "og:description", content: "Meet the President, secretariat and committee leading the association across Uttar Pradesh." },
+      { property: "og:url", content: "/members" },
     ],
+    links: [{ rel: "canonical", href: "/members" }],
   }),
   component: Members,
 });
