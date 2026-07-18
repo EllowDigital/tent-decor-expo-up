@@ -7,6 +7,9 @@ import { STATS, EDITIONS, GALLERY, REGISTER_URL } from "@/data/constants";
 import { Reveal, Counter } from "@/components/common/Reveal";
 import { Card } from "@/components/ui/card";
 import { RegisterLink } from "@/components/common/RegisterLink";
+import { EpassDialog } from "@/components/common/EpassDialog";
+import { AddToCalendar } from "@/components/common/AddToCalendar";
+import { CountdownMeta } from "@/components/common/CountdownMeta";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,7 +30,7 @@ function Home() {
   return (
     <>
       <Hero upcoming={upcoming} />
-      <HowToRegister />
+      <HowToRegister upcoming={upcoming} />
       <Stats />
       <EventsRow upcoming={upcoming} past={past} />
       <GalleryPreview />
@@ -76,31 +79,64 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
 
           {/* Countdown */}
           {cd && (
-            <div className="mt-8 flex flex-wrap gap-2 sm:gap-3">
-              {[
-                { v: cd.days, l: "Days" },
-                { v: cd.hours, l: "Hours" },
-                { v: cd.minutes, l: "Min" },
-                { v: cd.seconds, l: "Sec" },
-              ].map((u) => (
-                <div key={u.l} className="min-w-[68px] rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-center">
-                  <div className="font-display text-2xl sm:text-3xl font-bold text-gold tabular-nums">
-                    {String(u.v).padStart(2, "0")}
+            <div className="mt-8">
+              <div className="flex flex-wrap gap-2 sm:gap-3" role="timer" aria-live="polite" aria-label="Time until event starts">
+                {[
+                  { v: cd.days, l: "Days" },
+                  { v: cd.hours, l: "Hours" },
+                  { v: cd.minutes, l: "Min" },
+                  { v: cd.seconds, l: "Sec" },
+                ].map((u) => (
+                  <div key={u.l} className="min-w-[68px] rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-center">
+                    <div className="font-display text-2xl sm:text-3xl font-bold text-gold tabular-nums">
+                      {String(u.v).padStart(2, "0")}
+                    </div>
+                    <div className="text-[10px] uppercase tracking-widest text-white/60 mt-1">{u.l}</div>
                   </div>
-                  <div className="text-[10px] uppercase tracking-widest text-white/60 mt-1">{u.l}</div>
-                </div>
-              ))}
+                ))}
+              </div>
+              {upcoming.startDate && (
+                <CountdownMeta
+                  startISO={upcoming.startDate}
+                  endISO={upcoming.endDate}
+                  timezone={upcoming.timezone}
+                  className="mt-4"
+                  tone="light"
+                />
+              )}
             </div>
           )}
 
           {/* Primary CTAs */}
           <div className="mt-9 flex flex-col sm:flex-row flex-wrap gap-3">
-            <RegisterLink size="lg" variant="gold" showIcon ariaLabel="Get your free E-Pass at tentdecorexpo.com">
-              Get Free E-Pass
-            </RegisterLink>
+            <EpassDialog
+              eventName={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+              eventDate={upcoming.dates}
+              eventVenue={upcoming.venue}
+              trigger={
+                <Button
+                  size="lg"
+                  className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-14 px-8"
+                  aria-label="Start guided E-Pass registration"
+                >
+                  <Ticket className="mr-2 h-4 w-4" /> Get Free E-Pass
+                </Button>
+              }
+            />
             <RegisterLink size="lg" variant="outline" ariaLabel="Book an exhibitor stall at tentdecorexpo.com" className="border-white/40 text-white hover:bg-white/10">
               Book Exhibitor Stall
             </RegisterLink>
+            {upcoming.startDate && upcoming.endDate && (
+              <AddToCalendar
+                variant="ghostLight"
+                size="lg"
+                title={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+                description={`${upcoming.summary} Register at ${REGISTER_URL}`}
+                location={upcoming.venue}
+                start={upcoming.startDate}
+                end={upcoming.endDate}
+              />
+            )}
             <Button asChild size="lg" variant="ghost" className="text-white hover:bg-white/10 h-14 px-6">
               <Link to="/events/$year" params={{ year: upcoming.year }}>
                 Event details <ArrowRight className="ml-2 h-4 w-4" />
@@ -109,7 +145,7 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
           </div>
 
           <p className="mt-4 text-xs text-white/50">
-            Registration is free and hosted at{" "}
+            Prefer the full portal? Register at{" "}
             <a href={REGISTER_URL} target="_blank" rel="noopener noreferrer" className="text-gold underline underline-offset-4 hover:text-gold-light">
               tentdecorexpo.com
             </a>
@@ -134,24 +170,28 @@ function Fact({ icon, label, value }: { icon: React.ReactNode; label: string; va
 
 /* ---------------- HOW TO REGISTER ---------------- */
 
-function HowToRegister() {
+function HowToRegister({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
+  const eventName = `${upcoming.edition} · ${upcoming.city} ${upcoming.year}`;
   const steps = [
     {
       icon: Ticket,
       title: "Free Visitor E-Pass",
-      desc: "For trade buyers, planners and industry professionals. Instant confirmation to your inbox.",
+      desc: "For trade buyers, planners and industry professionals. Fill a short form and get an instant reference.",
+      action: "epass" as const,
       cta: "Get E-Pass",
     },
     {
       icon: Store,
       title: "Exhibitor Stall Booking",
       desc: "9 sqm to premium custom stalls. Our team responds within one business day.",
+      action: "stall" as const,
       cta: "Book a Stall",
     },
     {
       icon: CheckCircle2,
       title: "Arrive & Attend",
       desc: "Show your E-Pass at the venue. Walk-in registration is also available on all three days.",
+      action: null,
       cta: null,
     },
   ];
@@ -164,7 +204,7 @@ function HowToRegister() {
             Three simple steps.
           </h2>
           <p className="mt-4 text-slate-muted leading-relaxed">
-            Registration for every edition happens at <span className="text-charcoal font-medium">tentdecorexpo.com</span>. It only takes a minute.
+            Get your E-Pass right here in under a minute — or book an exhibitor stall on the official portal.
           </p>
         </div>
 
@@ -173,7 +213,7 @@ function HowToRegister() {
             const Icon = s.icon;
             return (
               <li key={s.title} className="relative">
-                <Card className="h-full p-6 sm:p-7 border-border/60">
+                <Card className="h-full p-6 sm:p-7 border-border/60 flex flex-col">
                   <div className="flex items-start gap-4">
                     <div className="h-10 w-10 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
                       <Icon className="h-5 w-5 text-gold" />
@@ -183,9 +223,25 @@ function HowToRegister() {
                       <h3 className="mt-0.5 font-display text-lg sm:text-xl font-semibold text-charcoal">{s.title}</h3>
                     </div>
                   </div>
-                  <p className="mt-4 text-sm text-slate-muted leading-relaxed">{s.desc}</p>
-                  {s.cta && (
-                    <RegisterLink size="sm" variant="outline" className="mt-5" showIcon>
+                  <p className="mt-4 text-sm text-slate-muted leading-relaxed flex-1">{s.desc}</p>
+                  {s.action === "epass" && (
+                    <EpassDialog
+                      eventName={eventName}
+                      eventDate={upcoming.dates}
+                      eventVenue={upcoming.venue}
+                      trigger={
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="mt-5 border-gold text-charcoal hover:bg-gold/10 w-fit"
+                        >
+                          <Ticket className="mr-1.5 h-4 w-4" /> {s.cta}
+                        </Button>
+                      }
+                    />
+                  )}
+                  {s.action === "stall" && (
+                    <RegisterLink size="sm" variant="outline" className="mt-5 w-fit" showIcon>
                       {s.cta}
                     </RegisterLink>
                   )}
@@ -254,10 +310,31 @@ function EventsRow({
             <p className="text-gold font-medium text-sm mt-1">{upcoming.edition}</p>
             <p className="mt-3 text-sm text-slate-muted leading-relaxed">{upcoming.dates} · {upcoming.venue}.</p>
             <div className="mt-6 flex flex-wrap gap-2">
-              <RegisterLink size="sm" variant="gold" showIcon>Register</RegisterLink>
+              <EpassDialog
+                eventName={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+                eventDate={upcoming.dates}
+                eventVenue={upcoming.venue}
+                trigger={
+                  <Button size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90">
+                    <Ticket className="mr-1.5 h-4 w-4" /> Get E-Pass
+                  </Button>
+                }
+              />
               <Button asChild size="sm" variant="outline" className="border-charcoal/20">
                 <Link to="/events/$year" params={{ year: upcoming.year }}>Details</Link>
               </Button>
+              {upcoming.startDate && upcoming.endDate && (
+                <AddToCalendar
+                  size="sm"
+                  variant="outline"
+                  title={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+                  description={`${upcoming.summary} Register at ${REGISTER_URL}`}
+                  location={upcoming.venue}
+                  start={upcoming.startDate}
+                  end={upcoming.endDate}
+                  label="Add to Calendar"
+                />
+              )}
             </div>
           </Card>
 

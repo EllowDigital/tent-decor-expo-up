@@ -116,6 +116,8 @@ export type Edition = {
   venue: string;
   dates: string;
   startDate?: string; // ISO — enables countdown for upcoming editions
+  endDate?: string; // ISO — end of the event (used for calendar exports & labels)
+  timezone?: string; // IANA tz for display (e.g. "Asia/Kolkata")
   host: string;
   exhibitors: string;
   visitors: string;
@@ -135,6 +137,8 @@ export const EDITIONS: Edition[] = [
     venue: "Sanskar Lawn, Kanpur",
     dates: "30 August – 1 September 2026",
     startDate: "2026-08-30T09:00:00+05:30",
+    endDate: "2026-09-01T20:00:00+05:30",
+    timezone: "Asia/Kolkata",
     host: "Shamiyana Furniture Association",
     exhibitors: "250+",
     visitors: "25,000+",

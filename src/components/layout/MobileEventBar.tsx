@@ -1,17 +1,15 @@
-import { useRouterState, Link } from "@tanstack/react-router";
-import { RegisterLink } from "@/components/common/RegisterLink";
+import { Link } from "@tanstack/react-router";
+import { EpassDialog } from "@/components/common/EpassDialog";
 import { EDITIONS } from "@/data/constants";
-import { Calendar } from "lucide-react";
+import { Calendar, Ticket } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 /**
  * Sticky bottom bar on mobile only. Surfaces the next upcoming edition and
  * a one-tap Register CTA — solves the "how do I sign up?" UX gap.
  */
 export function MobileEventBar() {
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const upcoming = EDITIONS.find((e) => e.status === "upcoming") ?? EDITIONS[0];
-
-  // Hide on the external register flow's own success screens if any; keep everywhere else.
   if (!upcoming) return null;
 
   return (
@@ -38,14 +36,20 @@ export function MobileEventBar() {
             </span>
           </span>
         </Link>
-        <RegisterLink
-          size="sm"
-          variant="gold"
-          className="shrink-0"
-          ariaLabel="Register for the expo"
-        >
-          {pathname.startsWith("/events") ? "Register" : "Get E-Pass"}
-        </RegisterLink>
+        <EpassDialog
+          eventName={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+          eventDate={upcoming.dates}
+          eventVenue={upcoming.venue}
+          trigger={
+            <Button
+              size="sm"
+              className="shrink-0 bg-gradient-gold text-charcoal shadow-gold hover:opacity-90"
+              aria-label="Get your free E-Pass"
+            >
+              <Ticket className="mr-1.5 h-4 w-4" /> Get E-Pass
+            </Button>
+          }
+        />
       </div>
     </div>
   );

@@ -1,13 +1,16 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowLeft, ArrowRight, Calendar, Check, MapPin, Users, X, Building2, Trophy } from "lucide-react";
-import { EDITIONS, type Edition } from "@/data/constants";
+import { ArrowLeft, ArrowRight, Calendar, Check, MapPin, Users, X, Building2, Trophy, Ticket } from "lucide-react";
+import { EDITIONS, REGISTER_URL, type Edition } from "@/data/constants";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RegisterLink } from "@/components/common/RegisterLink";
+import { EpassDialog } from "@/components/common/EpassDialog";
+import { AddToCalendar } from "@/components/common/AddToCalendar";
+import { CountdownMeta } from "@/components/common/CountdownMeta";
 
 export const Route = createFileRoute("/events/$year")({
   loader: ({ params }) => {
@@ -114,10 +117,30 @@ function EditionPage() {
             <div className="mt-8 flex flex-wrap gap-4">
               {isUpcoming ? (
                 <>
-                  <RegisterLink size="lg" variant="gold" showIcon>Get Free E-Pass</RegisterLink>
+                  <EpassDialog
+                    eventName={`${e.edition} · ${e.city} ${e.year}`}
+                    eventDate={e.dates}
+                    eventVenue={e.venue}
+                    trigger={
+                      <Button size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-14 px-8">
+                        <Ticket className="mr-2 h-4 w-4" /> Get Free E-Pass
+                      </Button>
+                    }
+                  />
                   <RegisterLink size="lg" variant="outline" className="!border-white/30 !text-white hover:!bg-white/10">
                     Book a Stall
                   </RegisterLink>
+                  {e.startDate && e.endDate && (
+                    <AddToCalendar
+                      variant="ghostLight"
+                      size="lg"
+                      title={`${e.edition} · ${e.city} ${e.year}`}
+                      description={`${e.summary} Register at ${REGISTER_URL}`}
+                      location={e.venue}
+                      start={e.startDate}
+                      end={e.endDate}
+                    />
+                  )}
                 </>
               ) : (
                 <Button asChild size="lg" className="bg-gradient-gold text-charcoal shadow-gold h-14 px-8">
@@ -157,7 +180,12 @@ function EditionPage() {
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
             <span className="text-xs uppercase tracking-[0.32em] text-gold font-medium">Countdown</span>
             <h2 className="mt-4 font-display text-4xl md:text-5xl font-bold text-charcoal">The clock is running.</h2>
-            <div className="mt-12 grid grid-cols-4 gap-3 md:gap-6">
+            <div
+              className="mt-12 grid grid-cols-4 gap-3 md:gap-6"
+              role="timer"
+              aria-live="polite"
+              aria-label={`Time until ${e.edition} begins`}
+            >
               {[
                 { label: "Days", v: time.d },
                 { label: "Hours", v: time.h },
@@ -172,9 +200,36 @@ function EditionPage() {
                 </Card>
               ))}
             </div>
-            <div className="mt-12 flex flex-wrap justify-center gap-4">
-              <RegisterLink size="lg" variant="gold" showIcon>Book Your Stall</RegisterLink>
-              <RegisterLink size="lg" variant="outline">Get Free E-Pass</RegisterLink>
+            <CountdownMeta
+              startISO={e.startDate}
+              endISO={e.endDate}
+              timezone={e.timezone}
+              tone="dark"
+              className="mt-6 justify-center"
+            />
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <EpassDialog
+                eventName={`${e.edition} · ${e.city} ${e.year}`}
+                eventDate={e.dates}
+                eventVenue={e.venue}
+                trigger={
+                  <Button size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-14 px-8">
+                    <Ticket className="mr-2 h-4 w-4" /> Get Free E-Pass
+                  </Button>
+                }
+              />
+              <RegisterLink size="lg" variant="outline">Book Your Stall</RegisterLink>
+              {e.endDate && (
+                <AddToCalendar
+                  variant="outline"
+                  size="lg"
+                  title={`${e.edition} · ${e.city} ${e.year}`}
+                  description={`${e.summary} Register at ${REGISTER_URL}`}
+                  location={e.venue}
+                  start={e.startDate}
+                  end={e.endDate}
+                />
+              )}
             </div>
           </div>
         </section>
