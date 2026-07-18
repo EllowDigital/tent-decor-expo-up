@@ -33,6 +33,7 @@ export const INDUSTRY_CATEGORIES = [
 export const NAV_LINKS = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
+  { label: "Members", to: "/members" },
   { label: "Editions", to: "/events" },
   { label: "Gallery", to: "/gallery" },
   { label: "Contact", to: "/contact" },
@@ -99,11 +100,24 @@ export const MILESTONES = [
   { year: "2026", title: "Kanpur 2026", desc: "4th Mahadhiveshan — hosted by Shamiyana Furniture Association, Kanpur." },
 ];
 
+// Office-bearers of the Tent, Caterers & Decorators Welfare Association of UP (parent body).
 export const LEADERSHIP = [
-  { name: "Prem Chandra Awasthi", role: "President, Shamiyana Furniture Association", img: p2 },
-  { name: "Rajeev Kumar Singh", role: "General Secretary", img: p1 },
+  { name: "Vijay Kumar", role: "President", img: p1 },
+  { name: "Rajeev Kumar Singh", role: "General Secretary", img: p2 },
+  { name: "Sandeep Tiwari", role: "Treasurer", img: p4 },
   { name: "Meera Agrawal", role: "Women's Wing Convener", img: p3 },
-  { name: "Sandeep Tiwari", role: "Treasurer & Trade Chair", img: p4 },
+];
+
+// Executive committee & district conveners — shown on the Members page.
+export const COMMITTEE = [
+  { name: "Anil Srivastava", role: "Vice President", district: "Lucknow" },
+  { name: "Mohd. Aslam", role: "Joint Secretary", district: "Varanasi" },
+  { name: "Ramesh Chandra Gupta", role: "Executive Member", district: "Agra" },
+  { name: "Deepak Sahu", role: "Executive Member", district: "Prayagraj" },
+  { name: "Suresh Yadav", role: "District Convener", district: "Kanpur" },
+  { name: "Neeraj Pandey", role: "District Convener", district: "Gorakhpur" },
+  { name: "Praveen Chaurasia", role: "District Convener", district: "Meerut" },
+  { name: "Kailash Nath", role: "District Convener", district: "Bareilly" },
 ];
 
 // Multi-year editions. Add a new entry each year to publish a fresh event page.
