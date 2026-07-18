@@ -11,16 +11,19 @@ type Props = {
   title: string;
   description?: string;
   location?: string;
-  start: string; // ISO
-  end: string; // ISO
+  start: string; // ISO with offset, e.g. "2026-08-30T09:00:00+05:30"
+  end: string; // ISO with offset
+  /** IANA timezone label surfaced in .ics (default Asia/Kolkata / IST). */
+  timezone?: string;
   className?: string;
   variant?: "gold" | "outline" | "ghostLight";
   size?: "sm" | "md" | "lg";
   label?: string;
 };
 
+// Basic-format UTC stamp: YYYYMMDDTHHMMSSZ. Deterministic across devices —
+// downstream calendars translate to the viewer's local zone.
 function toBasicUtc(iso: string) {
-  // → YYYYMMDDTHHMMSSZ
   const d = new Date(iso);
   const pad = (n: number) => String(n).padStart(2, "0");
   return (
@@ -39,6 +42,9 @@ function googleUrl(p: Props) {
   const params = new URLSearchParams({
     action: "TEMPLATE",
     text: p.title,
+    // Google honours ctz — pin the intended zone so the imported event
+    // displays in IST regardless of the user's local time.
+    ctz: p.timezone ?? "Asia/Kolkata",
     dates: `${toBasicUtc(p.start)}/${toBasicUtc(p.end)}`,
     details: p.description ?? "",
     location: p.location ?? "",
@@ -59,27 +65,46 @@ function outlookUrl(p: Props) {
   return `https://outlook.live.com/calendar/0/deeplink/compose?${params.toString()}`;
 }
 
+// Static IST VTIMEZONE block (no DST in India).
+const IST_VTIMEZONE = [
+  "BEGIN:VTIMEZONE",
+  "TZID:Asia/Kolkata",
+  "BEGIN:STANDARD",
+  "DTSTART:19700101T000000",
+  "TZOFFSETFROM:+0530",
+  "TZOFFSETTO:+0530",
+  "TZNAME:IST",
+  "END:STANDARD",
+  "END:VTIMEZONE",
+].join("\r\n");
+
 function icsBlobUrl(p: Props) {
-  const uid = `tentdecorexpo-${p.start}-${p.title.replace(/\s+/g, "-")}`;
+  const tz = p.timezone ?? "Asia/Kolkata";
+  const uid = `tentdecorexpo-${p.start}-${p.title.replace(/\s+/g, "-")}@tentdecorexpo.com`;
   const escape = (s: string) => s.replace(/([,;\\])/g, "\\$1").replace(/\n/g, "\\n");
-  const ics = [
+  const parts = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "PRODID:-//Tent Decor Expo UP//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    `X-WR-TIMEZONE:${tz}`,
+    tz === "Asia/Kolkata" ? IST_VTIMEZONE : "",
     "BEGIN:VEVENT",
     `UID:${uid}`,
     `DTSTAMP:${toBasicUtc(new Date().toISOString())}`,
+    // UTC times ensure identical absolute time on every device.
     `DTSTART:${toBasicUtc(p.start)}`,
     `DTEND:${toBasicUtc(p.end)}`,
     `SUMMARY:${escape(p.title)}`,
     p.description ? `DESCRIPTION:${escape(p.description)}` : "",
     p.location ? `LOCATION:${escape(p.location)}` : "",
+    "STATUS:CONFIRMED",
+    "TRANSP:OPAQUE",
     "END:VEVENT",
     "END:VCALENDAR",
-  ]
-    .filter(Boolean)
-    .join("\r\n");
-  return URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+  ].filter(Boolean);
+  return URL.createObjectURL(new Blob([parts.join("\r\n")], { type: "text/calendar;charset=utf-8" }));
 }
 
 export function AddToCalendar(props: Props) {

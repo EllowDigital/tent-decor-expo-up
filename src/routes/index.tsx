@@ -8,6 +8,7 @@ import { Reveal, Counter } from "@/components/common/Reveal";
 import { Card } from "@/components/ui/card";
 import { RegisterLink } from "@/components/common/RegisterLink";
 import { EpassDialog } from "@/components/common/EpassDialog";
+import { StallBookingDialog } from "@/components/common/StallBookingDialog";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
 
@@ -123,9 +124,16 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
                 </Button>
               }
             />
-            <RegisterLink size="lg" variant="outline" ariaLabel="Book an exhibitor stall at tentdecorexpo.com" className="border-white/40 text-white hover:bg-white/10">
-              Book Exhibitor Stall
-            </RegisterLink>
+            <StallBookingDialog
+              eventName={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+              eventDate={upcoming.dates}
+              eventVenue={upcoming.venue}
+              trigger={
+                <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 bg-transparent h-14 px-8">
+                  <Store className="mr-2 h-4 w-4" /> Book Exhibitor Stall
+                </Button>
+              }
+            />
             {upcoming.startDate && upcoming.endDate && (
               <AddToCalendar
                 variant="ghostLight"
@@ -133,6 +141,7 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
                 title={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
                 description={`${upcoming.summary} Register at ${REGISTER_URL}`}
                 location={upcoming.venue}
+                timezone={upcoming.timezone}
                 start={upcoming.startDate}
                 end={upcoming.endDate}
               />
@@ -330,6 +339,7 @@ function EventsRow({
                   title={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
                   description={`${upcoming.summary} Register at ${REGISTER_URL}`}
                   location={upcoming.venue}
+                  timezone={upcoming.timezone}
                   start={upcoming.startDate}
                   end={upcoming.endDate}
                   label="Add to Calendar"

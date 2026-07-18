@@ -1,14 +1,14 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowLeft, ArrowRight, Calendar, Check, MapPin, Users, X, Building2, Trophy, Ticket } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Check, MapPin, Users, X, Building2, Trophy, Ticket, Store } from "lucide-react";
 import { EDITIONS, REGISTER_URL, type Edition } from "@/data/constants";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RegisterLink } from "@/components/common/RegisterLink";
 import { EpassDialog } from "@/components/common/EpassDialog";
+import { StallBookingDialog } from "@/components/common/StallBookingDialog";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
 
@@ -18,18 +18,47 @@ export const Route = createFileRoute("/events/$year")({
     if (!edition) throw notFound();
     return { edition };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const e = loaderData?.edition;
-    const title = e ? `${e.city} ${e.year} · ${e.edition} — Tent Decor Expo UP` : "Edition — Tent Decor Expo UP";
-    const desc = e ? `${e.edition} · ${e.dates} · ${e.venue}. ${e.summary}` : "Mahadhiveshan edition details.";
+    if (!e) {
+      return { meta: [{ title: "Edition not found — Tent Decor Expo UP" }, { name: "robots", content: "noindex" }] };
+    }
+    const title = `${e.city} ${e.year} · ${e.edition} — Tent Decor Expo UP`;
+    const desc = `${e.edition} · ${e.dates} · ${e.venue}. ${e.summary}`;
+    const path = `/events/${params.year}`;
     return {
       meta: [
         { title },
         { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
-        ...(e ? [{ property: "og:image", content: e.cover }] : []),
-        ...(e ? [] : [{ name: "robots", content: "noindex" }]),
+        { property: "og:type", content: e.status === "upcoming" ? "event" : "article" },
+        { property: "og:url", content: path },
+        { property: "og:image", content: e.cover },
+        { property: "og:image:alt", content: `${e.edition} — ${e.city} ${e.year}` },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: desc },
+        { name: "twitter:image", content: e.cover },
+      ],
+      links: [{ rel: "canonical", href: path }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Event",
+            name: `${e.edition} · ${e.city} ${e.year}`,
+            startDate: e.startDate,
+            endDate: e.endDate,
+            eventStatus: "https://schema.org/EventScheduled",
+            eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+            location: { "@type": "Place", name: e.venue, address: { "@type": "PostalAddress", addressLocality: e.city, addressRegion: "Uttar Pradesh", addressCountry: "IN" } },
+            image: [e.cover],
+            description: e.summary,
+            organizer: { "@type": "Organization", name: e.host, url: "https://www.tentdecorexpo.com" },
+          }),
+        },
       ],
     };
   },
@@ -127,9 +156,16 @@ function EditionPage() {
                       </Button>
                     }
                   />
-                  <RegisterLink size="lg" variant="outline" className="!border-white/30 !text-white hover:!bg-white/10">
-                    Book a Stall
-                  </RegisterLink>
+                  <StallBookingDialog
+                    eventName={`${e.edition} · ${e.city} ${e.year}`}
+                    eventDate={e.dates}
+                    eventVenue={e.venue}
+                    trigger={
+                      <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 bg-transparent h-14 px-8">
+                        <Store className="mr-2 h-4 w-4" /> Book a Stall
+                      </Button>
+                    }
+                  />
                   {e.startDate && e.endDate && (
                     <AddToCalendar
                       variant="ghostLight"
@@ -137,6 +173,7 @@ function EditionPage() {
                       title={`${e.edition} · ${e.city} ${e.year}`}
                       description={`${e.summary} Register at ${REGISTER_URL}`}
                       location={e.venue}
+                      timezone={e.timezone}
                       start={e.startDate}
                       end={e.endDate}
                     />
@@ -218,7 +255,16 @@ function EditionPage() {
                   </Button>
                 }
               />
-              <RegisterLink size="lg" variant="outline">Book Your Stall</RegisterLink>
+              <StallBookingDialog
+                eventName={`${e.edition} · ${e.city} ${e.year}`}
+                eventDate={e.dates}
+                eventVenue={e.venue}
+                trigger={
+                  <Button size="lg" variant="outline" className="border-gold text-charcoal hover:bg-gold/10 h-14 px-8">
+                    <Store className="mr-2 h-4 w-4" /> Book Your Stall
+                  </Button>
+                }
+              />
               {e.endDate && (
                 <AddToCalendar
                   variant="outline"
@@ -226,6 +272,7 @@ function EditionPage() {
                   title={`${e.edition} · ${e.city} ${e.year}`}
                   description={`${e.summary} Register at ${REGISTER_URL}`}
                   location={e.venue}
+                  timezone={e.timezone}
                   start={e.startDate}
                   end={e.endDate}
                 />

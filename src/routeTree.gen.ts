@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UpcomingRouteImport } from './routes/upcoming'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as EpassStatusRouteImport } from './routes/epass-status'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -31,6 +32,11 @@ const MembersRoute = MembersRouteImport.update({
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EpassStatusRoute = EpassStatusRouteImport.update({
+  id: '/epass-status',
+  path: '/epass-status',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/epass-status': typeof EpassStatusRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/upcoming': typeof UpcomingRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/epass-status': typeof EpassStatusRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/upcoming': typeof UpcomingRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/epass-status': typeof EpassStatusRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/upcoming': typeof UpcomingRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/epass-status'
     | '/gallery'
     | '/members'
     | '/upcoming'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/epass-status'
     | '/gallery'
     | '/members'
     | '/upcoming'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/epass-status'
     | '/gallery'
     | '/members'
     | '/upcoming'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  EpassStatusRoute: typeof EpassStatusRoute
   GalleryRoute: typeof GalleryRoute
   MembersRoute: typeof MembersRoute
   UpcomingRoute: typeof UpcomingRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/epass-status': {
+      id: '/epass-status'
+      path: '/epass-status'
+      fullPath: '/epass-status'
+      preLoaderRoute: typeof EpassStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  EpassStatusRoute: EpassStatusRoute,
   GalleryRoute: GalleryRoute,
   MembersRoute: MembersRoute,
   UpcomingRoute: UpcomingRoute,
