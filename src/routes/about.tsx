@@ -201,9 +201,9 @@ function About() {
                     <p className="font-display text-2xl sm:text-3xl font-bold text-gradient-gold">
                       {m.year}
                     </p>
-                    <h4 className="mt-1.5 sm:mt-2 font-display text-lg sm:text-xl font-semibold text-white">
-                      {m.title}
-                    </h4>
+                   <h3 className="mt-1.5 sm:mt-2 font-display text-lg sm:text-xl font-semibold text-white">
+                     {m.title}
+                   </h3>
                     <p className="mt-2 text-white/60 text-sm leading-relaxed">{m.desc}</p>
                   </div>
                 </div>
