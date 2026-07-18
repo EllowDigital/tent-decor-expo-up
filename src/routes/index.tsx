@@ -87,7 +87,7 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent h-11 sm:h-13 px-5 sm:px-7">
-                    <Link to="/events/$year" params={{ year: upcoming.year }}>
+                    <Link to="/event/$slug" params={{ slug: upcoming.slug }}>
                       Event details <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -371,7 +371,7 @@ function ClosingCTA({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
             <Link to="/registration"><Ticket className="mr-2 h-4 w-4" /> Register Now</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 bg-transparent h-12 sm:h-14 px-6 sm:px-8">
-            <Link to="/events/$year" params={{ year: upcoming.year }}>Event details</Link>
+            <Link to="/event/$slug" params={{ slug: upcoming.slug }}>Event details</Link>
           </Button>
         </div>
       </div>

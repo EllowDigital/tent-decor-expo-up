@@ -49,8 +49,8 @@ function EventsIndex() {
               {upcoming.map((e, i) => (
                 <Reveal key={e.year} delay={i * 0.05}>
                   <Link
-                    to="/events/$year"
-                    params={{ year: e.slug }}
+                    to="/event/$slug"
+                    params={{ slug: e.slug }}
                     className="block group"
                   >
                     <Card className="overflow-hidden border-2 border-gold shadow-gold grid md:grid-cols-[1.2fr_1fr]">
@@ -96,8 +96,8 @@ function EventsIndex() {
             {past.map((e, i) => (
               <Reveal key={e.year} delay={i * 0.06}>
                 <Link
-                  to="/events/$year"
-                  params={{ year: e.slug }}
+                  to="/event/$slug"
+                  params={{ slug: e.slug }}
                   className="block group"
                 >
                   <Card className="overflow-hidden border-border/60 hover-lift bg-white h-full flex flex-col">

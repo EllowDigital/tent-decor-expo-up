@@ -58,7 +58,7 @@ function VisitorsPage() {
               }
             />
             <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent h-12 sm:h-14 px-6 sm:px-8">
-              <Link to="/events/$year" params={{ year: upcoming.year }}>
+              <Link to="/event/$slug" params={{ slug: upcoming.slug }}>
                 Event details <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
