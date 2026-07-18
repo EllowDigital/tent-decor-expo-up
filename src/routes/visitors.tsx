@@ -20,16 +20,16 @@ import { Button } from "@/components/ui/button";
 import { EDITIONS, REGISTER_URL } from "@/data/constants";
 import { EpassDialog } from "@/components/common/EpassDialog";
 
+import { buildHead, PAGE_SEO, breadcrumbJsonLd } from "@/lib/seo";
+
 export const Route = createFileRoute("/visitors")({
-  head: () => ({
-    meta: [
-      { title: "For Visitors — Tent Decor Expo UP" },
-      { name: "description", content: "Trade visitor profile for Tent Decor Expo UP. Learn what a Visitor E-Pass includes, who should attend, and how to register." },
-      { property: "og:title", content: "Visitor Profile — Tent Decor Expo UP" },
-      { property: "og:description", content: "Free trade E-Pass for planners, buyers and industry professionals attending the Mahadhiveshan." },
-      { property: "og:url", content: "/visitors" },
-    ],
-    links: [{ rel: "canonical", href: "/visitors" }],
+  head: () => buildHead({
+    ...PAGE_SEO.visitors,
+    extraJsonLd: [breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Attend", path: "/registration" },
+      { name: "For Visitors", path: "/visitors" },
+    ])],
   }),
   component: VisitorsPage,
 });
