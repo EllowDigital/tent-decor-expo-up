@@ -29,7 +29,6 @@ function Home() {
       <UpcomingBanner upcoming={upcoming} />
       <AboutSnippet />
       <WhyAttendExhibit />
-      <WhyAttend />
       <TwoPaths />
       <GalleryPreview />
       <Testimonials />
