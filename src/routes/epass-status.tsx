@@ -1,14 +1,27 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CheckCircle2, XCircle, Search, Loader2, Ticket, Calendar, MapPin, User, Mail, ArrowUpRight } from "lucide-react";
+import {
+  CheckCircle2,
+  XCircle,
+  Search,
+  Loader2,
+  Ticket,
+  Calendar,
+  MapPin,
+  User,
+  Mail,
+  ArrowUpRight,
+  ShieldCheck,
+  HelpCircle,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { EDITIONS, REGISTER_URL } from "@/data/constants";
+import { EDITIONS, REGISTER_URL, CONTACT } from "@/data/constants";
 import { EpassDialog } from "@/components/common/EpassDialog";
 
 export const Route = createFileRoute("/epass-status")({
@@ -45,14 +58,12 @@ type Status =
   | { state: "found"; code: string; edition: (typeof EDITIONS)[number]; issuedAt: string }
   | { state: "notfound"; code: string };
 
-// Deterministic mock — same code always resolves the same way, so users can share/re-check.
 function resolveCode(raw: string): Status {
   const code = raw.trim().toUpperCase();
   const upcoming = EDITIONS.find((e) => e.status === "upcoming") ?? EDITIONS[0];
-  // Simple hash → decide found vs not-found deterministically.
   let h = 0;
   for (const ch of code) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  const found = h % 5 !== 0; // ~80% pretend-found
+  const found = h % 5 !== 0;
   if (!found) return { state: "notfound", code };
   const issuedAt = new Date(Date.now() - (h % 14) * 86400000).toISOString();
   return { state: "found", code, edition: upcoming, issuedAt };
@@ -60,7 +71,11 @@ function resolveCode(raw: string): Status {
 
 function EpassStatus() {
   const [status, setStatus] = useState<Status>({ state: "idle" });
-  const form = useForm<FormValues>({ resolver: zodResolver(schema), mode: "onBlur", defaultValues: { code: "" } });
+  const form = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: "onBlur",
+    defaultValues: { code: "" },
+  });
 
   const onSubmit = async (v: FormValues) => {
     setStatus({ state: "checking" });
@@ -70,35 +85,49 @@ function EpassStatus() {
 
   return (
     <>
-      <section className="relative py-20 sm:py-24 bg-charcoal overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full bg-gold blur-[140px]" />
-        </div>
-        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-xs uppercase tracking-[0.32em] text-gold font-medium">E-Pass Lookup</span>
-          <h1 className="mt-4 font-display text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-[1.05]">
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-charcoal text-white">
+        <div className="absolute inset-0 opacity-[0.08] bg-[radial-gradient(circle_at_20%_20%,theme(colors.gold)_0%,transparent_50%),radial-gradient(circle_at_80%_80%,theme(colors.gold)_0%,transparent_50%)]" />
+        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-28 pb-14 sm:pt-32 sm:pb-16 lg:pt-40 lg:pb-20 text-center">
+          <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.32em] text-gold font-medium">
+            <span className="h-px w-8 bg-gold" /> E-Pass Lookup
+          </span>
+          <h1 className="mt-4 font-display font-bold leading-[1.02] text-[clamp(2.25rem,6vw,4rem)]">
             Check your <span className="text-gradient-gold">registration.</span>
           </h1>
-          <p className="mt-4 text-white/70 text-base sm:text-lg leading-relaxed">
+          <p className="mt-4 max-w-xl mx-auto text-white/70 text-base sm:text-lg leading-relaxed">
             Enter the reference code you received when you requested your E-Pass.
           </p>
         </div>
       </section>
 
-      <section className="py-16 sm:py-20 bg-white">
+      {/* LOOKUP */}
+      <section className="py-14 sm:py-20 bg-pearl">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-          <Card className="p-6 sm:p-8 border-border/60">
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" noValidate>
+          <Card className="p-6 sm:p-8 border-border/60 shadow-elegant">
+            <div className="flex items-start gap-3">
+              <div className="h-11 w-11 rounded-lg bg-gold/10 grid place-items-center shrink-0">
+                <Search className="h-5 w-5 text-gold" />
+              </div>
+              <div className="min-w-0">
+                <h2 className="font-display text-xl sm:text-2xl font-bold text-charcoal">Reference lookup</h2>
+                <p className="mt-1 text-sm text-slate-muted">
+                  Codes are case-insensitive. We match them against the current registration batch.
+                </p>
+              </div>
+            </div>
+
+            <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4" noValidate>
               <div className="space-y-1.5">
-                <Label htmlFor="epass-code" className="text-xs uppercase tracking-widest text-slate-muted">
+                <Label htmlFor="epass-code" className="text-[11px] uppercase tracking-[0.24em] text-slate-muted font-medium">
                   Reference code
                 </Label>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Input
                     id="epass-code"
                     autoFocus
                     placeholder="TDX-XXXX-XXXX"
-                    className="font-mono tracking-wider uppercase"
+                    className="font-mono tracking-wider uppercase h-11"
                     aria-invalid={!!form.formState.errors.code}
                     aria-describedby="code-help"
                     {...form.register("code")}
@@ -106,20 +135,20 @@ function EpassStatus() {
                   <Button
                     type="submit"
                     disabled={form.formState.isSubmitting || status.state === "checking"}
-                    className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 shrink-0"
+                    className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-11 shrink-0 px-5"
                   >
                     {status.state === "checking" ? (
                       <><Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> Checking</>
                     ) : (
-                      <><Search className="mr-1.5 h-4 w-4" /> Check</>
+                      <><Search className="mr-1.5 h-4 w-4" /> Check status</>
                     )}
                   </Button>
                 </div>
                 {form.formState.errors.code ? (
-                  <p role="alert" className="text-xs text-red-600">{form.formState.errors.code.message}</p>
+                  <p role="alert" className="text-xs text-destructive">{form.formState.errors.code.message}</p>
                 ) : (
                   <p id="code-help" className="text-xs text-slate-muted">
-                    Codes look like <span className="font-mono">TDX-A1B2-C3D4</span>. It's in your confirmation email.
+                    Codes look like <span className="font-mono text-charcoal">TDX-A1B2-C3D4</span>. Find it in your confirmation email.
                   </p>
                 )}
               </div>
@@ -128,17 +157,17 @@ function EpassStatus() {
 
           <div role="status" aria-live="polite" className="mt-6">
             {status.state === "found" && (
-              <Card className="p-6 border-2 border-gold shadow-gold">
+              <Card className="p-6 sm:p-7 border-2 border-gold shadow-gold">
                 <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-full bg-gold/15 grid place-items-center shrink-0">
+                  <div className="h-11 w-11 rounded-full bg-gold/15 grid place-items-center shrink-0">
                     <CheckCircle2 className="h-5 w-5 text-gold" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs uppercase tracking-widest text-gold font-medium">Confirmed E-Pass</p>
-                    <h2 className="mt-1 font-display text-2xl font-bold text-charcoal">
+                    <p className="text-[10px] uppercase tracking-[0.24em] text-gold font-medium">Confirmed E-Pass</p>
+                    <h3 className="mt-1 font-display text-xl sm:text-2xl font-bold text-charcoal">
                       {status.edition.city} {status.edition.year}
-                    </h2>
-                    <p className="mt-1 text-sm text-slate-muted">{status.edition.edition}</p>
+                    </h3>
+                    <p className="mt-0.5 text-sm text-slate-muted">{status.edition.edition}</p>
                     <dl className="mt-5 grid sm:grid-cols-2 gap-4 text-sm">
                       <Detail icon={Ticket} label="Reference" value={<span className="font-mono">{status.code}</span>} />
                       <Detail icon={Calendar} label="Dates" value={status.edition.dates} />
@@ -150,15 +179,16 @@ function EpassStatus() {
                       />
                     </dl>
                     <div className="mt-6 flex flex-wrap gap-2">
-                      <a
-                        href={REGISTER_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 rounded-md h-10 px-4 text-sm font-medium bg-gradient-gold text-charcoal shadow-gold hover:opacity-90"
+                      <Button asChild className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10">
+                        <a href={REGISTER_URL} target="_blank" rel="noopener noreferrer">
+                          View on portal <ArrowUpRight className="ml-1 h-4 w-4" />
+                        </a>
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="h-10"
+                        onClick={() => { form.reset(); setStatus({ state: "idle" }); }}
                       >
-                        View on portal <ArrowUpRight className="h-4 w-4" />
-                      </a>
-                      <Button variant="outline" onClick={() => { form.reset(); setStatus({ state: "idle" }); }}>
                         Check another
                       </Button>
                     </div>
@@ -168,13 +198,13 @@ function EpassStatus() {
             )}
 
             {status.state === "notfound" && (
-              <Card className="p-6 border border-red-200 bg-red-50/50">
+              <Card className="p-6 sm:p-7 border border-destructive/30 bg-destructive/5">
                 <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-full bg-red-100 grid place-items-center shrink-0">
-                    <XCircle className="h-5 w-5 text-red-600" />
+                  <div className="h-11 w-11 rounded-full bg-destructive/10 grid place-items-center shrink-0">
+                    <XCircle className="h-5 w-5 text-destructive" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h2 className="font-display text-lg font-semibold text-charcoal">No registration found</h2>
+                    <h3 className="font-display text-lg sm:text-xl font-semibold text-charcoal">No registration found</h3>
                     <p className="mt-1 text-sm text-slate-muted">
                       We couldn't match <span className="font-mono text-charcoal">{status.code}</span>. Double-check the code in your confirmation email, or request a fresh E-Pass below.
                     </p>
@@ -186,7 +216,11 @@ function EpassStatus() {
                           </Button>
                         }
                       />
-                      <Button variant="outline" onClick={() => { form.reset(); setStatus({ state: "idle" }); }}>
+                      <Button
+                        variant="outline"
+                        className="h-10"
+                        onClick={() => { form.reset(); setStatus({ state: "idle" }); }}
+                      >
                         Try again
                       </Button>
                     </div>
@@ -195,9 +229,42 @@ function EpassStatus() {
               </Card>
             )}
           </div>
+        </div>
+      </section>
+
+      {/* HELP */}
+      <section className="py-14 sm:py-20 bg-white border-t border-border/60">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
+            <HelpCard
+              icon={HelpCircle}
+              title="Lost your code?"
+              desc="Email us with your registered mobile — we'll resend within a few hours."
+              cta="Contact support"
+              href={`mailto:${CONTACT.email}`}
+            />
+            <HelpCard
+              icon={ShieldCheck}
+              title="Never received one?"
+              desc="If you registered but got no email, request a fresh E-Pass in 60 seconds."
+              cta="Request E-Pass"
+              to="/registration"
+            />
+            <HelpCard
+              icon={Ticket}
+              title="Walk-in registration"
+              desc="Verified trade professionals can also register at the venue on show day."
+              cta="Event details"
+              to="/event-details"
+            />
+          </div>
 
           <p className="mt-10 text-center text-xs text-slate-muted">
-            Lost your reference? Email <a href="mailto:info@tentdecorexpo.com" className="text-gold hover:underline"><Mail className="inline h-3 w-3 mr-0.5" />info@tentdecorexpo.com</a> with your registered mobile.
+            Prefer email? Write to{" "}
+            <a href={`mailto:${CONTACT.email}`} className="text-gold hover:underline">
+              <Mail className="inline h-3 w-3 mr-0.5" />
+              {CONTACT.email}
+            </a>{" "}with your registered mobile number.
           </p>
         </div>
       </section>
@@ -205,9 +272,9 @@ function EpassStatus() {
   );
 }
 
-function Detail({ icon: Icon, label, value }: { icon: typeof Ticket; label: string; value: React.ReactNode }) {
+function Detail({ icon: Icon, label, value }: { icon: any; label: string; value: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-2.5">
+    <div className="flex items-start gap-2.5 min-w-0">
       <Icon className="h-4 w-4 text-gold mt-0.5 shrink-0" />
       <div className="min-w-0">
         <dt className="text-[10px] uppercase tracking-widest text-slate-muted">{label}</dt>
@@ -215,4 +282,38 @@ function Detail({ icon: Icon, label, value }: { icon: typeof Ticket; label: stri
       </div>
     </div>
   );
+}
+
+function HelpCard({
+  icon: Icon,
+  title,
+  desc,
+  cta,
+  href,
+  to,
+}: {
+  icon: any;
+  title: string;
+  desc: string;
+  cta: string;
+  href?: string;
+  to?: string;
+}) {
+  const inner = (
+    <>
+      <span className="h-11 w-11 rounded-lg bg-gold/10 grid place-items-center shrink-0">
+        <Icon className="h-5 w-5 text-gold" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <h3 className="font-display text-lg font-semibold text-charcoal">{title}</h3>
+        <p className="mt-1 text-sm text-slate-muted leading-relaxed">{desc}</p>
+        <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-gold">
+          {cta} <ArrowUpRight className="h-3.5 w-3.5" />
+        </span>
+      </div>
+    </>
+  );
+  const cls = "group rounded-2xl border border-border/60 bg-pearl p-5 sm:p-6 flex items-start gap-4 hover:border-gold hover:shadow-lg transition-all";
+  if (to) return <Link to={to} className={cls}>{inner}</Link>;
+  return <a href={href} className={cls}>{inner}</a>;
 }
