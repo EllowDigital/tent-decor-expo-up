@@ -29,7 +29,11 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li><Link to="/register" className="hover:text-gold transition-colors">Register</Link></li>
+              <li>
+                <a href="https://www.tentdecorexpo.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+                  Register / E-Pass ↗
+                </a>
+              </li>
             </ul>
           </div>
 
