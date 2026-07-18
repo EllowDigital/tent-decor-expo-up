@@ -310,10 +310,31 @@ function EventsRow({
             <p className="text-gold font-medium text-sm mt-1">{upcoming.edition}</p>
             <p className="mt-3 text-sm text-slate-muted leading-relaxed">{upcoming.dates} · {upcoming.venue}.</p>
             <div className="mt-6 flex flex-wrap gap-2">
-              <RegisterLink size="sm" variant="gold" showIcon>Register</RegisterLink>
+              <EpassDialog
+                eventName={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+                eventDate={upcoming.dates}
+                eventVenue={upcoming.venue}
+                trigger={
+                  <Button size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90">
+                    <Ticket className="mr-1.5 h-4 w-4" /> Get E-Pass
+                  </Button>
+                }
+              />
               <Button asChild size="sm" variant="outline" className="border-charcoal/20">
                 <Link to="/events/$year" params={{ year: upcoming.year }}>Details</Link>
               </Button>
+              {upcoming.startDate && upcoming.endDate && (
+                <AddToCalendar
+                  size="sm"
+                  variant="outline"
+                  title={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+                  description={`${upcoming.summary} Register at ${REGISTER_URL}`}
+                  location={upcoming.venue}
+                  start={upcoming.startDate}
+                  end={upcoming.endDate}
+                  label="Add to Calendar"
+                />
+              )}
             </div>
           </Card>
 
