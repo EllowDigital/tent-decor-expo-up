@@ -11,7 +11,7 @@ export default defineConfig({
   // with TanStack Start's SPA mode below, this produces dist/client/ with a
   // static index.html plus per-route prerendered HTML — perfect for Netlify,
   // Vercel static, or Cloudflare Pages with zero server code.
-  nitro: { preset: "static" },
+  nitro: false,
 
   // Pure static SPA build. TanStack Start's SPA mode emits a static shell
   // (dist/client/index.html) plus per-route prerendered HTML, so Netlify
