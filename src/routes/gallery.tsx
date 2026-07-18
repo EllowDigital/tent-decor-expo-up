@@ -10,18 +10,10 @@ import { Input } from "@/components/ui/input";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
+import { buildHead, PAGE_SEO } from "@/lib/seo";
 
 export const Route = createFileRoute("/gallery")({
-  head: () => ({
-    meta: [
-      { title: "Gallery — Tent Decor Expo UP" },
-      { name: "description", content: "Highlights, aftermovies and unforgettable moments from every edition of the Mahadhiveshan." },
-      { property: "og:title", content: "Gallery — Tent Decor Expo UP" },
-      { property: "og:description", content: "Tent, decoration, lighting, catering and VIP moments across every edition." },
-      { property: "og:url", content: "/gallery" },
-    ],
-    links: [{ rel: "canonical", href: "/gallery" }],
-  }),
+  head: () => buildHead(PAGE_SEO.gallery),
   component: Gallery,
 });
 
