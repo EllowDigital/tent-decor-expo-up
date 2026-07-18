@@ -331,6 +331,7 @@ function EventsRow({
                   title={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
                   description={`${upcoming.summary} Register at ${REGISTER_URL}`}
                   location={upcoming.venue}
+                  timezone={upcoming.timezone}
                   start={upcoming.startDate}
                   end={upcoming.endDate}
                   label="Add to Calendar"
