@@ -20,16 +20,16 @@ export const Route = createFileRoute("/sitemap.xml")({
 
         const staticEntries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0", lastmod: today },
-          { path: "/about", changefreq: "monthly", priority: "0.7" },
-          { path: "/events", changefreq: "monthly", priority: "0.8" },
-          { path: "/members", changefreq: "monthly", priority: "0.6" },
-          { path: "/visitors", changefreq: "monthly", priority: "0.7" },
-          { path: "/exhibitors", changefreq: "monthly", priority: "0.7" },
+          { path: "/about", changefreq: "monthly", priority: "0.8" },
+          { path: "/events", changefreq: "monthly", priority: "0.9" },
+          { path: "/event-details", changefreq: "weekly", priority: "0.9" },
+          { path: "/members", changefreq: "monthly", priority: "0.7" },
+          { path: "/visitors", changefreq: "monthly", priority: "0.8" },
+          { path: "/exhibitors", changefreq: "monthly", priority: "0.8" },
           { path: "/registration", changefreq: "weekly", priority: "0.9" },
-          { path: "/gallery", changefreq: "monthly", priority: "0.6" },
-          { path: "/contact", changefreq: "yearly", priority: "0.5" },
+          { path: "/gallery", changefreq: "monthly", priority: "0.7" },
+          { path: "/contact", changefreq: "yearly", priority: "0.6" },
           { path: "/epass-status", changefreq: "monthly", priority: "0.4" },
-          { path: "/upcoming", changefreq: "weekly", priority: "0.9" },
         ];
 
         const eventEntries: SitemapEntry[] = EDITIONS.map((e) => ({
