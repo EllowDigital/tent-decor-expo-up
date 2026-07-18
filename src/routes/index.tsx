@@ -46,10 +46,10 @@ export const Route = createFileRoute("/")({
           as: "image",
           href: "/assets/responsive/hero-bg-1600.webp",
           type: "image/webp",
-          fetchpriority: "high",
-          imagesrcset:
+          fetchPriority: "high",
+          imageSrcSet:
             "/assets/responsive/hero-bg-640.webp 640w, /assets/responsive/hero-bg-1024.webp 1024w, /assets/responsive/hero-bg-1600.webp 1600w, /assets/responsive/hero-bg-1920.webp 1920w",
-          imagesizes: "100vw",
+          imageSizes: "100vw",
         },
       ],
     };
