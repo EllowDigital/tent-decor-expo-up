@@ -12,14 +12,8 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const upcoming = EDITIONS.find((e) => e.status === "upcoming") ?? EDITIONS[0];
-  const eventCtx = upcoming
-    ? {
-        eventName: `${upcoming.edition} · ${upcoming.city} ${upcoming.year}`,
-        eventDate: upcoming.dates,
-        eventVenue: upcoming.venue,
-      }
-    : {};
+
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
