@@ -150,8 +150,8 @@ function Gallery() {
       </section>
 
       {/* FILTER BAR */}
-      <section className="sticky top-16 sm:top-20 z-30 bg-white/90 backdrop-blur-md border-b border-border">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 sm:py-5 space-y-4">
+      <section className="sticky top-16 sm:top-20 z-30 bg-white/95 backdrop-blur-md border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3 sm:py-5 space-y-3 sm:space-y-4">
           {/* Row 1: search + sort */}
           <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 sm:gap-3">
             <div className="relative min-w-0">
@@ -167,9 +167,9 @@ function Gallery() {
             <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
               <SelectTrigger
                 aria-label="Sort photos"
-                className="h-11 w-[110px] sm:w-40 bg-pearl border-border/60 shrink-0"
+                className="h-11 w-[104px] sm:w-40 bg-pearl border-border/60 shrink-0 px-2.5 sm:px-3"
               >
-                <ArrowDownUp className="h-4 w-4 text-slate-muted mr-1" aria-hidden />
+                <ArrowDownUp className="h-4 w-4 text-slate-muted mr-1 shrink-0" aria-hidden />
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -180,47 +180,59 @@ function Gallery() {
             </Select>
           </div>
 
-          {/* Row 2: year chips (scroll on mobile) */}
-          <div className="-mx-4 sm:mx-0 overflow-x-auto scrollbar-none">
-            <div className="flex items-center gap-2 px-4 sm:px-0 whitespace-nowrap">
-              <span className="text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Year</span>
-              {YEARS.map((y) => (
-                <button
-                  key={y}
-                  onClick={() => setYear(y)}
-                  aria-pressed={year === y}
-                  className={cn(
-                    "shrink-0 h-8 px-3.5 rounded-full text-[11px] font-semibold tracking-wider uppercase transition-all border",
-                    year === y
-                      ? "bg-charcoal text-gold border-charcoal"
-                      : "bg-white text-charcoal/70 border-border/60 hover:border-charcoal hover:text-charcoal",
-                  )}
-                >
-                  {y}
-                </button>
-              ))}
+          {/* Row 2: year chips */}
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.24em] text-slate-muted mb-1.5 sm:hidden">Year</div>
+            <div className="relative -mx-4 sm:mx-0">
+              <div className="overflow-x-auto scrollbar-none px-4 sm:px-0">
+                <div className="flex items-center gap-2 whitespace-nowrap pr-2">
+                  <span className="hidden sm:inline text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Year</span>
+                  {YEARS.map((y) => (
+                    <button
+                      key={y}
+                      onClick={() => setYear(y)}
+                      aria-pressed={year === y}
+                      className={cn(
+                        "shrink-0 h-8 px-3.5 rounded-full text-[11px] font-semibold tracking-wider uppercase transition-all border",
+                        year === y
+                          ? "bg-charcoal text-gold border-charcoal"
+                          : "bg-white text-charcoal/70 border-border/60 hover:border-charcoal hover:text-charcoal",
+                      )}
+                    >
+                      {y}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="sm:hidden pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/95 to-transparent" />
             </div>
           </div>
 
-          {/* Row 3: category chips (scroll on mobile) */}
-          <div className="-mx-4 sm:mx-0 overflow-x-auto scrollbar-none">
-            <div className="flex items-center gap-2 px-4 sm:px-0 whitespace-nowrap">
-              <span className="text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Category</span>
-              {CATEGORIES.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setCategory(c)}
-                  aria-pressed={category === c}
-                  className={cn(
-                    "shrink-0 h-9 px-4 rounded-full text-xs sm:text-sm font-medium transition-all border",
-                    category === c
-                      ? "bg-gradient-gold text-charcoal border-transparent shadow-sm"
-                      : "bg-white text-charcoal/70 border-border/60 hover:border-gold hover:text-charcoal",
-                  )}
-                >
-                  {c}
-                </button>
-              ))}
+          {/* Row 3: category chips */}
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.24em] text-slate-muted mb-1.5 sm:hidden">Category</div>
+            <div className="relative -mx-4 sm:mx-0">
+              <div className="overflow-x-auto scrollbar-none px-4 sm:px-0">
+                <div className="flex items-center gap-2 whitespace-nowrap pr-2">
+                  <span className="hidden sm:inline text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Category</span>
+                  {CATEGORIES.map((c) => (
+                    <button
+                      key={c}
+                      onClick={() => setCategory(c)}
+                      aria-pressed={category === c}
+                      className={cn(
+                        "shrink-0 h-9 px-4 rounded-full text-xs sm:text-sm font-medium transition-all border",
+                        category === c
+                          ? "bg-gradient-gold text-charcoal border-transparent shadow-sm"
+                          : "bg-white text-charcoal/70 border-border/60 hover:border-gold hover:text-charcoal",
+                      )}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="sm:hidden pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/95 to-transparent" />
             </div>
           </div>
 
@@ -241,6 +253,7 @@ function Gallery() {
           </div>
         </div>
       </section>
+
 
       {/* MASONRY */}
       <section className="py-10 sm:py-14 lg:py-16 bg-white">
