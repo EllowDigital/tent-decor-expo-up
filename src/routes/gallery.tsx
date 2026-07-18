@@ -184,8 +184,10 @@ function Gallery() {
           <div>
             <div className="text-[10px] uppercase tracking-[0.24em] text-slate-muted mb-1.5 sm:hidden">Year</div>
             <div className="relative -mx-4 sm:mx-0">
-              <div className="overflow-x-auto scrollbar-none px-4 sm:px-0">
-                <div className="flex items-center gap-2 whitespace-nowrap pr-2">
+              <div
+                className="overflow-x-auto scrollbar-none px-4 sm:px-0 [scroll-padding-inline:1rem] [-webkit-overflow-scrolling:touch] [overscroll-behavior-x:contain] touch-pan-x snap-x snap-mandatory"
+              >
+                <div className="flex items-center gap-2 whitespace-nowrap pr-4">
                   <span className="hidden sm:inline text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Year</span>
                   {YEARS.map((y) => (
                     <button
@@ -193,7 +195,7 @@ function Gallery() {
                       onClick={() => setYear(y)}
                       aria-pressed={year === y}
                       className={cn(
-                        "shrink-0 h-8 px-3.5 rounded-full text-[11px] font-semibold tracking-wider uppercase transition-all border",
+                        "snap-start shrink-0 min-h-11 sm:min-h-0 sm:h-8 px-4 sm:px-3.5 inline-flex items-center rounded-full text-[12px] sm:text-[11px] font-semibold tracking-wider uppercase transition-all border active:scale-[0.97] touch-manipulation",
                         year === y
                           ? "bg-charcoal text-gold border-charcoal"
                           : "bg-white text-charcoal/70 border-border/60 hover:border-charcoal hover:text-charcoal",
@@ -204,7 +206,8 @@ function Gallery() {
                   ))}
                 </div>
               </div>
-              <div className="sm:hidden pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/95 to-transparent" />
+              <div className="sm:hidden pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white via-white/80 to-transparent" />
+              <div className="sm:hidden pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white via-white/80 to-transparent" />
             </div>
           </div>
 
@@ -212,8 +215,10 @@ function Gallery() {
           <div>
             <div className="text-[10px] uppercase tracking-[0.24em] text-slate-muted mb-1.5 sm:hidden">Category</div>
             <div className="relative -mx-4 sm:mx-0">
-              <div className="overflow-x-auto scrollbar-none px-4 sm:px-0">
-                <div className="flex items-center gap-2 whitespace-nowrap pr-2">
+              <div
+                className="overflow-x-auto scrollbar-none px-4 sm:px-0 [scroll-padding-inline:1rem] [-webkit-overflow-scrolling:touch] [overscroll-behavior-x:contain] touch-pan-x snap-x snap-mandatory"
+              >
+                <div className="flex items-center gap-2 whitespace-nowrap pr-4">
                   <span className="hidden sm:inline text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Category</span>
                   {CATEGORIES.map((c) => (
                     <button
@@ -221,7 +226,7 @@ function Gallery() {
                       onClick={() => setCategory(c)}
                       aria-pressed={category === c}
                       className={cn(
-                        "shrink-0 h-9 px-4 rounded-full text-xs sm:text-sm font-medium transition-all border",
+                        "snap-start shrink-0 min-h-11 sm:min-h-0 sm:h-9 px-4 inline-flex items-center rounded-full text-[13px] sm:text-sm font-medium transition-all border active:scale-[0.97] touch-manipulation",
                         category === c
                           ? "bg-gradient-gold text-charcoal border-transparent shadow-sm"
                           : "bg-white text-charcoal/70 border-border/60 hover:border-gold hover:text-charcoal",
@@ -232,9 +237,11 @@ function Gallery() {
                   ))}
                 </div>
               </div>
-              <div className="sm:hidden pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/95 to-transparent" />
+              <div className="sm:hidden pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white via-white/80 to-transparent" />
+              <div className="sm:hidden pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white via-white/80 to-transparent" />
             </div>
           </div>
+
 
           {/* Row 4: meta */}
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-muted">
