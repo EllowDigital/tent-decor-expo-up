@@ -130,20 +130,22 @@ function TicketCard({
   return (
     <div className="relative rounded-2xl bg-white text-charcoal shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] overflow-hidden">
       {/* Top stub */}
-      <div className="flex items-center justify-between px-5 sm:px-6 py-3 bg-charcoal text-white">
-        <div className="flex items-center gap-2 min-w-0">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-6 py-3 bg-charcoal text-white">
+        <div className="flex min-w-0 items-center gap-2">
           <Plane className="h-3.5 w-3.5 text-gold shrink-0" />
-          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-white/80 truncate">
-            Mahadhiveshan Boarding Pass
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-white/80 truncate">
+            <span className="sm:hidden">Boarding Pass</span>
+            <span className="hidden sm:inline">Mahadhiveshan Boarding Pass</span>
           </span>
         </div>
-        <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-gold font-medium shrink-0">
+        <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-gold font-medium shrink-0">
           {upcoming.edition}
         </span>
       </div>
 
+
       {/* Main body */}
-      <div className="px-5 sm:px-6 py-5 sm:py-6">
+      <div className="px-4 sm:px-6 py-5 sm:py-6">
         {/* Route: FROM → TO */}
         <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
           <div className="min-w-0">
@@ -212,10 +214,10 @@ function TicketCard({
       </div>
 
       {/* Countdown stub */}
-      <div className="px-5 sm:px-6 py-4 sm:py-5 bg-pearl">
+      <div className="px-4 sm:px-6 py-4 sm:py-5 bg-pearl">
         {cd ? (
           <>
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <span className="text-[10px] uppercase tracking-[0.28em] text-slate-muted font-medium">Boarding in</span>
               {upcoming.startDate && upcoming.endDate && (
                 <AddToCalendar
@@ -228,9 +230,11 @@ function TicketCard({
                   start={upcoming.startDate}
                   end={upcoming.endDate}
                   label="Add to Calendar"
+                  className="w-full sm:w-auto"
                 />
               )}
             </div>
+
             <div className="mt-3 grid grid-cols-4 gap-2" role="timer" aria-live="polite">
               {[
                 { v: cd.days, l: "Days" },
