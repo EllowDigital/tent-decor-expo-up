@@ -8,6 +8,7 @@ type ServerEntry = {
 };
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
+let hasLoggedNetlifySsr = false;
 
 async function getServerEntry(): Promise<ServerEntry> {
   if (!serverEntryPromise) {
@@ -44,9 +45,18 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+function logNetlifySsrOnce(request: Request) {
+  if (hasLoggedNetlifySsr) return;
+  if (typeof process === "undefined" || process.env?.NETLIFY !== "true") return;
+  hasLoggedNetlifySsr = true;
+  const path = new URL(request.url).pathname;
+  console.info(`[ssr] Netlify function executing for ${path}`);
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      logNetlifySsrOnce(request);
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
