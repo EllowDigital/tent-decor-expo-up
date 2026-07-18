@@ -92,8 +92,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@type": "Organization",
           name: "Tent, Caterers & Decorators Welfare Association of UP",
           alternateName: "Tent Decor Expo UP",
+          url: SITE_URL,
           description: "Uttar Pradesh's apex tent, catering and decor industry body, organiser of the annual Mahadhiveshan expo.",
         }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(websiteJsonLd()),
       },
     ],
   }),
