@@ -18,18 +18,47 @@ export const Route = createFileRoute("/events/$year")({
     if (!edition) throw notFound();
     return { edition };
   },
-  head: ({ loaderData }) => {
+  head: ({ loaderData, params }) => {
     const e = loaderData?.edition;
-    const title = e ? `${e.city} ${e.year} · ${e.edition} — Tent Decor Expo UP` : "Edition — Tent Decor Expo UP";
-    const desc = e ? `${e.edition} · ${e.dates} · ${e.venue}. ${e.summary}` : "Mahadhiveshan edition details.";
+    if (!e) {
+      return { meta: [{ title: "Edition not found — Tent Decor Expo UP" }, { name: "robots", content: "noindex" }] };
+    }
+    const title = `${e.city} ${e.year} · ${e.edition} — Tent Decor Expo UP`;
+    const desc = `${e.edition} · ${e.dates} · ${e.venue}. ${e.summary}`;
+    const path = `/events/${params.year}`;
     return {
       meta: [
         { title },
         { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
-        ...(e ? [{ property: "og:image", content: e.cover }] : []),
-        ...(e ? [] : [{ name: "robots", content: "noindex" }]),
+        { property: "og:type", content: e.status === "upcoming" ? "event" : "article" },
+        { property: "og:url", content: path },
+        { property: "og:image", content: e.cover },
+        { property: "og:image:alt", content: `${e.edition} — ${e.city} ${e.year}` },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: desc },
+        { name: "twitter:image", content: e.cover },
+      ],
+      links: [{ rel: "canonical", href: path }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Event",
+            name: `${e.edition} · ${e.city} ${e.year}`,
+            startDate: e.startDate,
+            endDate: e.endDate,
+            eventStatus: "https://schema.org/EventScheduled",
+            eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+            location: { "@type": "Place", name: e.venue, address: { "@type": "PostalAddress", addressLocality: e.city, addressRegion: "Uttar Pradesh", addressCountry: "IN" } },
+            image: [e.cover],
+            description: e.summary,
+            organizer: { "@type": "Organization", name: e.host, url: "https://www.tentdecorexpo.com" },
+          }),
+        },
       ],
     };
   },
