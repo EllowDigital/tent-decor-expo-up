@@ -295,15 +295,11 @@ function Gallery() {
                         className="block w-full overflow-hidden rounded-xl sm:rounded-2xl group relative bg-pearl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
                         aria-label={`Open ${g.title}`}
                       >
-                        <img
+                        <GalleryImage
                           src={g.src}
                           alt={g.title}
-                          width={640}
-                          height={640}
-                          sizes="(min-width: 1280px) 22vw, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
-                          loading="lazy"
-                          decoding="async"
-                          className="block w-full h-auto max-w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+                          idx={g._idx}
+                          priority={i < 4}
                         />
                         <span className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 rounded-full bg-charcoal/75 backdrop-blur-md text-gold text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold">
                           {g.year || "Archive"}
