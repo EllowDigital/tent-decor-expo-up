@@ -6,18 +6,10 @@ import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
 import { RegisterLink } from "@/components/common/RegisterLink";
+import { buildHead, PAGE_SEO } from "@/lib/seo";
 
 export const Route = createFileRoute("/events/")({
-  head: () => ({
-    meta: [
-      { title: "Editions — Tent Decor Expo UP" },
-      { name: "description", content: "Every edition of the Mahadhiveshan — from the 2015 founding congress to Kanpur 2026 and beyond." },
-      { property: "og:title", content: "Editions — Tent Decor Expo UP" },
-      { property: "og:description", content: "Browse every year of India's largest tent, decor and catering B2B expo." },
-      { property: "og:url", content: "/events" },
-    ],
-    links: [{ rel: "canonical", href: "/events" }],
-  }),
+  head: () => buildHead(PAGE_SEO.events),
   component: EventsIndex,
 });
 
