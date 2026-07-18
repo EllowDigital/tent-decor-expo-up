@@ -86,8 +86,13 @@
   * {
     border-color: var(--color-border);
   }
+  html, body {
+    overflow-x: clip;
+    max-width: 100vw;
+  }
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
   body {
     background: var(--color-background);
@@ -99,12 +104,20 @@
   h1, h2, h3, h4, .font-display {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+    text-wrap: balance;
   }
+  p { text-wrap: pretty; }
+  img, svg, video { max-width: 100%; height: auto; }
   ::selection {
     background: color-mix(in oklab, var(--gold) 40%, transparent);
     color: var(--charcoal);
   }
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
 }
+
 
 @utility text-gradient-gold {
   background: var(--gradient-gold);
