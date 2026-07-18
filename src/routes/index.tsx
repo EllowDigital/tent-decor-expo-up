@@ -16,7 +16,7 @@ import {
   Award,
   Plane,
 } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+
 import { Button } from "@/components/ui/button";
 import {
   EDITIONS,
