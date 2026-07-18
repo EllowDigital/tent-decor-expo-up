@@ -15,7 +15,9 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "UP's premier B2B tent, decor and event expo. 30 Aug – 1 Sep 2026 at Sanskar Lawn, Kanpur." },
       { property: "og:title", content: "Tent Decor Expo UP — Kanpur 2026" },
       { property: "og:description", content: "India's largest B2B expo for tent, decor and catering — organised by the Tent, Caterers & Decorators Welfare Association of UP." },
+      { property: "og:url", content: "/" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Home,
 });
