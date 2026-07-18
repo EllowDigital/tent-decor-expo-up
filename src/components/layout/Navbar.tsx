@@ -66,23 +66,18 @@ export function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-2">
-            <EpassDialog
-              {...eventCtx}
-              trigger={
-                <Button variant="outline" size="sm" className="border-gold text-charcoal hover:bg-gold/10 h-10 px-4">
-                  <Ticket className="mr-1.5 h-4 w-4" /> Get E-Pass
-                </Button>
-              }
-            />
-            <StallBookingDialog
-              {...eventCtx}
-              trigger={
-                <Button size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-4">
-                  <Store className="mr-1.5 h-4 w-4" /> Book Stall
-                </Button>
-              }
-            />
+            <Button asChild variant="outline" size="sm" className="border-gold text-charcoal hover:bg-gold/10 h-10 px-4">
+              <Link to="/visitors">
+                <Ticket className="mr-1.5 h-4 w-4" /> Visitors
+              </Link>
+            </Button>
+            <Button asChild size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-4">
+              <Link to="/exhibitors">
+                <Store className="mr-1.5 h-4 w-4" /> Exhibitors
+              </Link>
+            </Button>
           </div>
+
 
           <button
             className="lg:hidden p-2 rounded-md text-charcoal hover:bg-pearl"
