@@ -43,7 +43,7 @@ function Home() {
   );
 }
 
-/* ---------------- HERO ---------------- */
+/* ---------------- HERO (boarding-pass ticket) ---------------- */
 
 function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
   const cd = useCountdown(upcoming.startDate);
@@ -61,8 +61,9 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
 
       <div className="relative z-10 flex-1 flex items-center pt-20 sm:pt-24 pb-14 sm:pb-16">
         <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 items-center">
-            <div className="lg:col-span-7">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left: headline + intro */}
+            <div className="lg:col-span-6">
               <Reveal>
                 <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/[0.04] px-3 py-1.5">
                   <span className="relative flex h-1.5 w-1.5">
@@ -70,31 +71,26 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
                   </span>
                   <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-gold font-medium">
-                    Upcoming Edition · {upcoming.year}
+                    Next edition · {upcoming.year}
                   </span>
                 </div>
 
-                <h1 className="mt-4 sm:mt-5 font-display font-bold text-white leading-[1.05] text-[clamp(1.75rem,5vw,4.25rem)]">
+                <h1 className="mt-5 font-display font-bold text-white leading-[1.02] text-[clamp(2rem,5.5vw,4.5rem)]">
                   {upcoming.edition}
                   <span className="block text-gradient-gold mt-1">{upcoming.city} {upcoming.year}</span>
                 </h1>
 
-                <p className="mt-3 sm:mt-4 max-w-xl text-white/70 text-sm sm:text-base leading-relaxed line-clamp-3 sm:line-clamp-none">
+                <p className="mt-4 sm:mt-5 max-w-xl text-white/70 text-sm sm:text-base leading-relaxed">
                   {upcoming.summary}
                 </p>
 
-                <dl className="mt-4 sm:mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-xl">
-                  <MetaRow icon={Calendar} label="Dates" value={upcoming.dates} />
-                  <MetaRow icon={MapPin} label="Venue" value={upcoming.venue} />
-                </dl>
-
-                <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3">
-                  <Button asChild size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-11 sm:h-13 px-5 sm:px-7">
+                <div className="mt-6 sm:mt-7 flex flex-col sm:flex-row flex-wrap gap-3">
+                  <Button asChild size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-12 sm:h-13 px-6 sm:px-7">
                     <Link to="/registration">
-                      <Ticket className="mr-2 h-4 w-4" /> Register Now
+                      <Ticket className="mr-2 h-4 w-4" /> Get your E-Pass
                     </Link>
                   </Button>
-                  <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent h-11 sm:h-13 px-5 sm:px-7">
+                  <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent h-12 sm:h-13 px-6 sm:px-7">
                     <Link to="/event/$slug" params={{ slug: upcoming.slug }}>
                       Event details <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
@@ -103,59 +99,12 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
               </Reveal>
             </div>
 
-            {cd && (
-              <div className="lg:col-span-5">
-                <Reveal delay={0.1}>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-4 sm:p-6">
-                    <div className="flex items-center gap-2 text-gold">
-                      <Calendar className="h-4 w-4" />
-                      <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium">Counting down</span>
-                    </div>
-                    <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-3" role="timer" aria-live="polite">
-                      {[
-                        { v: cd.days, l: "Days" },
-                        { v: cd.hours, l: "Hrs" },
-                        { v: cd.minutes, l: "Min" },
-                        { v: cd.seconds, l: "Sec" },
-                      ].map((u) => (
-                        <div key={u.l} className="rounded-lg border border-white/10 bg-charcoal/40 py-2.5 sm:py-3.5 text-center">
-                          <div className="font-display font-bold text-gold tabular-nums text-xl sm:text-3xl leading-none">
-                            {String(u.v).padStart(2, "0")}
-                          </div>
-                          <div className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50 mt-1">{u.l}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {upcoming.startDate && (
-                      <CountdownMeta
-                        startISO={upcoming.startDate}
-                        endISO={upcoming.endDate}
-                        timezone={upcoming.timezone}
-                        className="mt-3 sm:mt-4"
-                        tone="light"
-                      />
-                    )}
-
-                    {upcoming.startDate && upcoming.endDate && (
-                      <div className="mt-4 pt-4 border-t border-white/10">
-                        <AddToCalendar
-                          variant="ghostLight"
-                          size="sm"
-                          title={eventName}
-                          description={`${upcoming.summary} Register at ${REGISTER_URL}`}
-                          location={upcoming.venue}
-                          timezone={upcoming.timezone}
-                          start={upcoming.startDate}
-                          end={upcoming.endDate}
-                          label="Add to Calendar"
-                        />
-                      </div>
-                    )}
-                  </div>
-                </Reveal>
-              </div>
-            )}
+            {/* Right: boarding-pass ticket */}
+            <div className="lg:col-span-6">
+              <Reveal delay={0.1}>
+                <TicketCard upcoming={upcoming} cd={cd} eventName={eventName} />
+              </Reveal>
+            </div>
           </div>
         </div>
       </div>
@@ -171,83 +120,154 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
   );
 }
 
-function MetaRow({ icon: Icon, label, value }: { icon: any; label: string; value: string }) {
-  return (
-    <div className="flex items-start gap-3">
-      <span className="h-8 w-8 shrink-0 rounded-md bg-gold/15 grid place-items-center">
-        <Icon className="h-4 w-4 text-gold" />
-      </span>
-      <div className="min-w-0">
-        <dt className="text-[10px] uppercase tracking-widest text-white/50">{label}</dt>
-        <dd className="mt-0.5 text-sm sm:text-base text-white font-medium leading-snug">{value}</dd>
-      </div>
-    </div>
-  );
-}
+function TicketCard({
+  upcoming,
+  cd,
+  eventName,
+}: {
+  upcoming: (typeof EDITIONS)[number];
+  cd: ReturnType<typeof useCountdown>;
+  eventName: string;
+}) {
+  const start = upcoming.startDate ? new Date(upcoming.startDate) : null;
+  const end = upcoming.endDate ? new Date(upcoming.endDate) : null;
+  const fmtDay = (d: Date) => d.toLocaleDateString("en-IN", { day: "2-digit", timeZone: upcoming.timezone ?? "Asia/Kolkata" });
+  const fmtMon = (d: Date) => d.toLocaleDateString("en-IN", { month: "short", timeZone: upcoming.timezone ?? "Asia/Kolkata" }).toUpperCase();
 
-/* ---------------- CATEGORY MARQUEE ---------------- */
-
-function CategoryMarquee() {
-  const items = [...INDUSTRY_CATEGORIES, "Sound", "SFX", "AV & Lighting", "Mandap"];
-  const loop = [...items, ...items];
   return (
-    <section id="next" aria-label="Industry categories" className="bg-charcoal border-y border-white/10 overflow-hidden scroll-mt-20">
-      <div className="relative flex" role="marquee">
-        <div className="flex shrink-0 animate-marquee gap-10 py-4 sm:py-5 pr-10 whitespace-nowrap">
-          {loop.map((c, i) => (
-            <span key={i} className="inline-flex items-center gap-3 text-white/75 text-sm sm:text-base font-medium tracking-wide">
-              <span className="h-1 w-1 rounded-full bg-gold" aria-hidden />
-              {c}
-            </span>
-          ))}
+    <div className="relative rounded-2xl bg-white text-charcoal shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] overflow-hidden">
+      {/* Top stub */}
+      <div className="flex items-center justify-between px-5 sm:px-6 py-3 bg-charcoal text-white">
+        <div className="flex items-center gap-2 min-w-0">
+          <Plane className="h-3.5 w-3.5 text-gold shrink-0" />
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-white/80 truncate">
+            Mahadhiveshan Boarding Pass
+          </span>
         </div>
+        <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-gold font-medium shrink-0">
+          {upcoming.edition}
+        </span>
       </div>
-    </section>
-  );
-}
 
-/* ---------------- UPCOMING BANNER (highlight next event) ---------------- */
-
-function UpcomingBanner({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
-  return (
-    <section className="bg-white border-b border-border">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+      {/* Main body */}
+      <div className="px-5 sm:px-6 py-5 sm:py-6">
+        {/* Route: FROM → TO */}
+        <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
           <div className="min-w-0">
-            <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium inline-flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Upcoming Event
-            </span>
-            <h2 className="mt-3 font-display font-bold text-charcoal leading-tight text-[clamp(1.5rem,4vw,2.5rem)]">
-              {upcoming.edition} · <span className="text-gradient-gold">{upcoming.city} {upcoming.year}</span>
-            </h2>
-            <dl className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            <p className="text-[10px] uppercase tracking-widest text-slate-muted">From</p>
+            <p className="mt-1 font-display text-lg sm:text-xl font-bold text-charcoal leading-tight truncate">
+              You
+            </p>
+          </div>
+          <div className="flex items-center gap-1 text-gold" aria-hidden>
+            <span className="h-px w-4 sm:w-8 bg-gold/40" />
+            <ArrowRight className="h-4 w-4" />
+            <span className="h-px w-4 sm:w-8 bg-gold/40" />
+          </div>
+          <div className="min-w-0 text-right">
+            <p className="text-[10px] uppercase tracking-widest text-slate-muted">To</p>
+            <p className="mt-1 font-display text-lg sm:text-xl font-bold text-charcoal leading-tight truncate">
+              {upcoming.city}
+            </p>
+          </div>
+        </div>
+
+        {/* Date block */}
+        {start && end && (
+          <div className="mt-5 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+            <div className="text-center">
+              <div className="font-display text-3xl sm:text-4xl font-bold text-charcoal leading-none tabular-nums">{fmtDay(start)}</div>
+              <div className="mt-1 text-[10px] uppercase tracking-widest text-gold font-medium">{fmtMon(start)}</div>
+            </div>
+            <div className="relative">
+              <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="bg-white px-2 text-[10px] uppercase tracking-[0.28em] text-slate-muted">
+                  3 Days
+                </span>
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="font-display text-3xl sm:text-4xl font-bold text-charcoal leading-none tabular-nums">{fmtDay(end)}</div>
+              <div className="mt-1 text-[10px] uppercase tracking-widest text-gold font-medium">{fmtMon(end)}</div>
+            </div>
+          </div>
+        )}
+
+        {/* Meta grid */}
+        <dl className="mt-5 grid grid-cols-2 gap-4 pt-5 border-t border-dashed border-border">
+          <div className="min-w-0">
+            <dt className="text-[10px] uppercase tracking-widest text-slate-muted flex items-center gap-1.5">
+              <MapPin className="h-3 w-3 text-gold" /> Venue
+            </dt>
+            <dd className="mt-1 text-sm font-medium text-charcoal leading-snug line-clamp-2">{upcoming.venue}</dd>
+          </div>
+          <div className="min-w-0">
+            <dt className="text-[10px] uppercase tracking-widest text-slate-muted flex items-center gap-1.5">
+              <Users className="h-3 w-3 text-gold" /> Host
+            </dt>
+            <dd className="mt-1 text-sm font-medium text-charcoal leading-snug line-clamp-2">{upcoming.host}</dd>
+          </div>
+        </dl>
+      </div>
+
+      {/* Perforated separator */}
+      <div className="relative">
+        <div className="absolute -left-2 top-1/2 -translate-y-1/2 h-4 w-4 rounded-full bg-charcoal" aria-hidden />
+        <div className="absolute -right-2 top-1/2 -translate-y-1/2 h-4 w-4 rounded-full bg-charcoal" aria-hidden />
+        <div className="mx-6 border-t border-dashed border-border" />
+      </div>
+
+      {/* Countdown stub */}
+      <div className="px-5 sm:px-6 py-4 sm:py-5 bg-pearl">
+        {cd ? (
+          <>
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-[10px] uppercase tracking-[0.28em] text-slate-muted font-medium">Boarding in</span>
+              {upcoming.startDate && upcoming.endDate && (
+                <AddToCalendar
+                  variant="ghost"
+                  size="sm"
+                  title={eventName}
+                  description={`${upcoming.summary} Register at ${REGISTER_URL}`}
+                  location={upcoming.venue}
+                  timezone={upcoming.timezone}
+                  start={upcoming.startDate}
+                  end={upcoming.endDate}
+                  label="Add to Calendar"
+                />
+              )}
+            </div>
+            <div className="mt-3 grid grid-cols-4 gap-2" role="timer" aria-live="polite">
               {[
-                { icon: Calendar, label: "Dates", value: upcoming.dates },
-                { icon: MapPin, label: "Venue", value: upcoming.venue },
-                { icon: Users, label: "Host", value: upcoming.host },
-              ].map((f) => (
-                <div key={f.label} className="flex items-start gap-3">
-                  <div className="h-9 w-9 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
-                    <f.icon className="h-4 w-4 text-gold" />
+                { v: cd.days, l: "Days" },
+                { v: cd.hours, l: "Hrs" },
+                { v: cd.minutes, l: "Min" },
+                { v: cd.seconds, l: "Sec" },
+              ].map((u) => (
+                <div key={u.l} className="rounded-md bg-white border border-border py-2 text-center">
+                  <div className="font-display font-bold text-charcoal tabular-nums text-lg sm:text-2xl leading-none">
+                    {String(u.v).padStart(2, "0")}
                   </div>
-                  <div className="min-w-0">
-                    <dt className="text-[10px] uppercase tracking-widest text-slate-muted">{f.label}</dt>
-                    <dd className="mt-0.5 text-sm sm:text-base text-charcoal font-medium leading-snug">{f.value}</dd>
-                  </div>
+                  <div className="text-[9px] uppercase tracking-widest text-slate-muted mt-1">{u.l}</div>
                 </div>
               ))}
-            </dl>
-          </div>
-          <div className="shrink-0">
-            <Button asChild size="lg" className="bg-charcoal text-white hover:bg-charcoal/90 h-12 px-6">
-              <Link to="/event/$slug" params={{ slug: upcoming.slug }}>
-                Event details <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
+            </div>
+            {upcoming.startDate && (
+              <CountdownMeta
+                startISO={upcoming.startDate}
+                endISO={upcoming.endDate}
+                timezone={upcoming.timezone}
+                className="mt-3"
+                tone="dark"
+              />
+            )}
+          </>
+        ) : (
+          <p className="text-sm text-slate-muted">Dates coming soon.</p>
+        )}
       </div>
-    </section>
+    </div>
   );
 }
 
