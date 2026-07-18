@@ -110,15 +110,10 @@ export function Navbar() {
                   </Link>
                 );
               })}
-              <div className="pt-3 grid grid-cols-2 gap-2">
-                <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10 w-full">
-                  <Link to="/visitors">
-                    <Ticket className="mr-1.5 h-4 w-4" /> Visitors
-                  </Link>
-                </Button>
+              <div className="pt-3">
                 <Button asChild className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 w-full">
-                  <Link to="/exhibitors">
-                    <Store className="mr-1.5 h-4 w-4" /> Exhibitors
+                  <Link to="/registration">
+                    <Ticket className="mr-1.5 h-4 w-4" /> Register — Visitor or Exhibitor
                   </Link>
                 </Button>
               </div>
