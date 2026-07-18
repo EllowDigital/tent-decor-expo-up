@@ -38,16 +38,17 @@ import { CONTACT, FAQS, SOCIAL_LINKS } from "@/data/constants";
 import { buildHead, PAGE_SEO, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  head: () => buildHead({
-    ...PAGE_SEO.contact,
-    extraJsonLd: [
-      breadcrumbJsonLd([
-        { name: "Home", path: "/" },
-        { name: "Contact", path: "/contact" },
-      ]),
-      faqJsonLd(FAQS.map((f) => ({ question: f.q, answer: f.a }))),
-    ],
-  }),
+  head: () =>
+    buildHead({
+      ...PAGE_SEO.contact,
+      extraJsonLd: [
+        breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ]),
+        faqJsonLd(FAQS.map((f) => ({ question: f.q, answer: f.a }))),
+      ],
+    }),
   component: Contact,
 });
 
@@ -93,14 +94,11 @@ function Contact() {
                 Let's <span className="text-gradient-gold">talk business.</span>
               </h1>
               <p className="mt-5 max-w-2xl text-white/70 text-base sm:text-lg leading-relaxed">
-                Stall enquiries, press access, sponsorship — the Tent Decor
-                Expo UP secretariat responds within 24 business hours.
+                Stall enquiries, press access, sponsorship — the Tent Decor Expo UP secretariat
+                responds within 24 business hours.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button
-                  asChild
-                  className="h-11 px-5 bg-gradient-gold text-charcoal shadow-gold"
-                >
+                <Button asChild className="h-11 px-5 bg-gradient-gold text-charcoal shadow-gold">
                   <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}>
                     <Phone className="mr-2 h-4 w-4" /> Call now
                   </a>
@@ -126,12 +124,8 @@ function Contact() {
           <div className="mt-12 sm:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10">
             {STATS.map((s) => (
               <div key={s.v} className="bg-charcoal p-5 sm:p-6">
-                <p className="font-display text-2xl sm:text-3xl font-bold text-gold">
-                  {s.k}
-                </p>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.24em] text-white/60">
-                  {s.v}
-                </p>
+                <p className="font-display text-2xl sm:text-3xl font-bold text-gold">{s.k}</p>
+                <p className="mt-1 text-[11px] uppercase tracking-[0.24em] text-white/60">{s.v}</p>
               </div>
             ))}
           </div>
@@ -161,7 +155,7 @@ function Contact() {
               label="Visit the venue"
               value={CONTACT.venue}
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                CONTACT.venue
+                CONTACT.venue,
               )}`}
               cta="Directions"
               external
@@ -197,12 +191,10 @@ function Contact() {
                     <div className="p-5 border-t border-border/60 flex items-start gap-3">
                       <MapPin className="h-5 w-5 text-gold shrink-0 mt-0.5" />
                       <div className="min-w-0">
-                        <p className="font-display text-base text-charcoal">
-                          {CONTACT.venue}
-                        </p>
+                        <p className="font-display text-base text-charcoal">{CONTACT.venue}</p>
                         <a
                           href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                            CONTACT.venue
+                            CONTACT.venue,
                           )}`}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -288,8 +280,7 @@ function Contact() {
             Stay close to every edition.
           </h2>
           <p className="mt-3 text-white/70 max-w-xl mx-auto">
-            Behind-the-scenes, launch dates and exhibitor spotlights — first on
-            our social channels.
+            Behind-the-scenes, launch dates and exhibitor spotlights — first on our social channels.
           </p>
           <div className="mt-8 flex justify-center gap-3">
             {[
@@ -359,17 +350,8 @@ function CopyCard({
         </div>
       </div>
       <div className="mt-5 flex items-center gap-2">
-        <Button
-          asChild
-          size="sm"
-          className="h-9 px-4 bg-charcoal text-white hover:bg-charcoal/90"
-        >
-          <a
-            href={href}
-            {...(external
-              ? { target: "_blank", rel: "noopener noreferrer" }
-              : {})}
-          >
+        <Button asChild size="sm" className="h-9 px-4 bg-charcoal text-white hover:bg-charcoal/90">
+          <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
             {cta}
             <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
           </a>
@@ -381,11 +363,7 @@ function CopyCard({
           className="h-9 px-3 border-border"
           aria-label={`Copy ${label}`}
         >
-          {copied ? (
-            <Check className="h-4 w-4 text-gold" />
-          ) : (
-            <Copy className="h-4 w-4" />
-          )}
+          {copied ? <Check className="h-4 w-4 text-gold" /> : <Copy className="h-4 w-4" />}
         </Button>
       </div>
     </Card>
@@ -431,41 +409,21 @@ function ContactForm() {
         </div>
       </div>
 
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-6 sm:mt-8 space-y-5"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 sm:mt-8 space-y-5">
         <div className="grid sm:grid-cols-2 gap-4">
-          <Field
-            label="Full name"
-            error={form.formState.errors.name?.message}
-          >
+          <Field label="Full name" error={form.formState.errors.name?.message}>
             <Input {...form.register("name")} placeholder="Your name" />
           </Field>
-          <Field
-            label="Email"
-            error={form.formState.errors.email?.message}
-          >
-            <Input
-              type="email"
-              {...form.register("email")}
-              placeholder="you@company.in"
-            />
+          <Field label="Email" error={form.formState.errors.email?.message}>
+            <Input type="email" {...form.register("email")} placeholder="you@company.in" />
           </Field>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-4">
           <Field label="Phone (optional)">
-            <Input
-              type="tel"
-              {...form.register("phone")}
-              placeholder="+91 …"
-            />
+            <Input type="tel" {...form.register("phone")} placeholder="+91 …" />
           </Field>
-          <Field
-            label="Topic"
-            error={form.formState.errors.topic?.message}
-          >
+          <Field label="Topic" error={form.formState.errors.topic?.message}>
             <select
               {...form.register("topic")}
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-gold/40"
@@ -483,22 +441,12 @@ function ContactForm() {
           </Field>
         </div>
 
-        <Field
-          label="Subject"
-          error={form.formState.errors.subject?.message}
-        >
+        <Field label="Subject" error={form.formState.errors.subject?.message}>
           <Input {...form.register("subject")} placeholder="How can we help?" />
         </Field>
 
-        <Field
-          label="Message"
-          error={form.formState.errors.message?.message}
-        >
-          <Textarea
-            rows={6}
-            {...form.register("message")}
-            placeholder="Tell us more…"
-          />
+        <Field label="Message" error={form.formState.errors.message?.message}>
+          <Textarea rows={6} {...form.register("message")} placeholder="Tell us more…" />
         </Field>
 
         <Button
@@ -522,8 +470,8 @@ function ContactForm() {
         </Button>
 
         <p className="text-xs text-slate-muted">
-          By sending this message you agree to be contacted by the Tent Decor
-          Expo UP team regarding your enquiry.
+          By sending this message you agree to be contacted by the Tent Decor Expo UP team regarding
+          your enquiry.
         </p>
       </form>
     </Card>

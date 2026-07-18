@@ -104,7 +104,9 @@ function icsBlobUrl(p: Props) {
     "END:VEVENT",
     "END:VCALENDAR",
   ].filter(Boolean);
-  return URL.createObjectURL(new Blob([parts.join("\r\n")], { type: "text/calendar;charset=utf-8" }));
+  return URL.createObjectURL(
+    new Blob([parts.join("\r\n")], { type: "text/calendar;charset=utf-8" }),
+  );
 }
 
 export function AddToCalendar(props: Props) {
@@ -157,7 +159,12 @@ export function AddToCalendar(props: Props) {
             Outlook / Office 365
           </a>
         </DropdownMenuItem>
-        <DropdownMenuItem onSelect={(e) => { e.preventDefault(); downloadIcs(); }}>
+        <DropdownMenuItem
+          onSelect={(e) => {
+            e.preventDefault();
+            downloadIcs();
+          }}
+        >
           <Download className="mr-2 h-4 w-4" />
           Apple / Download .ics
         </DropdownMenuItem>

@@ -23,7 +23,10 @@ const schema = z.object({
   company: z.string().trim().min(2, "Enter your company or brand").max(120, "Too long"),
   contact: z.string().trim().min(2, "Enter the contact person's name").max(80, "Too long"),
   email: z.string().trim().email("Enter a valid email").max(120, "Too long"),
-  phone: z.string().trim().regex(/^[6-9]\d{9}$/, "Enter a 10-digit Indian mobile number"),
+  phone: z
+    .string()
+    .trim()
+    .regex(/^[6-9]\d{9}$/, "Enter a 10-digit Indian mobile number"),
   city: z.string().trim().min(2, "Enter your city").max(60, "Too long"),
   category: z.string().min(1, "Select a category"),
   stallSize: z.string().min(1, "Select a stall size"),
@@ -32,7 +35,13 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-const STALL_SIZES = ["3x3 m — Standard", "3x6 m — Premium", "6x6 m — Corner", "9x9 m — Pavilion", "Custom (contact us)"];
+const STALL_SIZES = [
+  "3x3 m — Standard",
+  "3x6 m — Premium",
+  "6x6 m — Corner",
+  "9x9 m — Pavilion",
+  "Custom (contact us)",
+];
 
 type Props = {
   trigger: React.ReactElement;
@@ -49,8 +58,14 @@ export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }
     resolver: zodResolver(schema),
     mode: "onBlur",
     defaultValues: {
-      company: "", contact: "", email: "", phone: "", city: "",
-      category: "", stallSize: "", notes: "",
+      company: "",
+      contact: "",
+      email: "",
+      phone: "",
+      city: "",
+      category: "",
+      stallSize: "",
+      notes: "",
     },
   });
 
@@ -67,7 +82,10 @@ export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }
     });
   };
 
-  const reset = () => { setDone(null); form.reset(); };
+  const reset = () => {
+    setDone(null);
+    form.reset();
+  };
 
   const copyCode = async () => {
     if (!done) return;
@@ -80,7 +98,13 @@ export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }
   };
 
   return (
-    <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) setTimeout(reset, 300); }}>
+    <Dialog
+      open={open}
+      onOpenChange={(v) => {
+        setOpen(v);
+        if (!v) setTimeout(reset, 300);
+      }}
+    >
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-xl p-0 overflow-hidden max-h-[90dvh] overflow-y-auto">
         {!done ? (
@@ -91,39 +115,90 @@ export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }
                   <Store className="h-5 w-5 text-gold" />
                 </div>
                 <div>
-                  <DialogTitle className="font-display text-xl text-charcoal">Book Your Stall</DialogTitle>
+                  <DialogTitle className="font-display text-xl text-charcoal">
+                    Book Your Stall
+                  </DialogTitle>
                   <DialogDescription className="text-xs mt-0.5">
-                    {eventName ? `${eventName} · ` : ""}{eventDate ?? ""}{eventVenue ? ` · ${eventVenue}` : ""}
+                    {eventName ? `${eventName} · ` : ""}
+                    {eventDate ?? ""}
+                    {eventVenue ? ` · ${eventVenue}` : ""}
                   </DialogDescription>
                 </div>
               </div>
             </DialogHeader>
 
             <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4" noValidate>
-              <Field label="Company / Brand" id="stall-company" error={form.formState.errors.company?.message}>
-                <Input id="stall-company" autoComplete="organization" placeholder="e.g. Verma Tent House" aria-invalid={!!form.formState.errors.company} {...form.register("company")} />
+              <Field
+                label="Company / Brand"
+                id="stall-company"
+                error={form.formState.errors.company?.message}
+              >
+                <Input
+                  id="stall-company"
+                  autoComplete="organization"
+                  placeholder="e.g. Verma Tent House"
+                  aria-invalid={!!form.formState.errors.company}
+                  {...form.register("company")}
+                />
               </Field>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <Field label="Contact person" id="stall-contact" error={form.formState.errors.contact?.message}>
-                  <Input id="stall-contact" autoComplete="name" placeholder="Full name" aria-invalid={!!form.formState.errors.contact} {...form.register("contact")} />
+                <Field
+                  label="Contact person"
+                  id="stall-contact"
+                  error={form.formState.errors.contact?.message}
+                >
+                  <Input
+                    id="stall-contact"
+                    autoComplete="name"
+                    placeholder="Full name"
+                    aria-invalid={!!form.formState.errors.contact}
+                    {...form.register("contact")}
+                  />
                 </Field>
                 <Field label="City" id="stall-city" error={form.formState.errors.city?.message}>
-                  <Input id="stall-city" autoComplete="address-level2" placeholder="e.g. Kanpur" aria-invalid={!!form.formState.errors.city} {...form.register("city")} />
+                  <Input
+                    id="stall-city"
+                    autoComplete="address-level2"
+                    placeholder="e.g. Kanpur"
+                    aria-invalid={!!form.formState.errors.city}
+                    {...form.register("city")}
+                  />
                 </Field>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <Field label="Email" id="stall-email" error={form.formState.errors.email?.message}>
-                  <Input id="stall-email" type="email" autoComplete="email" inputMode="email" placeholder="you@company.com" aria-invalid={!!form.formState.errors.email} {...form.register("email")} />
+                  <Input
+                    id="stall-email"
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    placeholder="you@company.com"
+                    aria-invalid={!!form.formState.errors.email}
+                    {...form.register("email")}
+                  />
                 </Field>
                 <Field label="Mobile" id="stall-phone" error={form.formState.errors.phone?.message}>
-                  <Input id="stall-phone" type="tel" autoComplete="tel" inputMode="numeric" maxLength={10} placeholder="10-digit number" aria-invalid={!!form.formState.errors.phone} {...form.register("phone")} />
+                  <Input
+                    id="stall-phone"
+                    type="tel"
+                    autoComplete="tel"
+                    inputMode="numeric"
+                    maxLength={10}
+                    placeholder="10-digit number"
+                    aria-invalid={!!form.formState.errors.phone}
+                    {...form.register("phone")}
+                  />
                 </Field>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <Field label="Category" id="stall-category" error={form.formState.errors.category?.message}>
+                <Field
+                  label="Category"
+                  id="stall-category"
+                  error={form.formState.errors.category?.message}
+                >
                   <select
                     id="stall-category"
                     aria-invalid={!!form.formState.errors.category}
@@ -131,10 +206,18 @@ export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }
                     {...form.register("category")}
                   >
                     <option value="">Select category…</option>
-                    {INDUSTRY_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                    {INDUSTRY_CATEGORIES.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
                   </select>
                 </Field>
-                <Field label="Stall size" id="stall-size" error={form.formState.errors.stallSize?.message}>
+                <Field
+                  label="Stall size"
+                  id="stall-size"
+                  error={form.formState.errors.stallSize?.message}
+                >
                   <select
                     id="stall-size"
                     aria-invalid={!!form.formState.errors.stallSize}
@@ -142,24 +225,56 @@ export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }
                     {...form.register("stallSize")}
                   >
                     <option value="">Select size…</option>
-                    {STALL_SIZES.map((s) => <option key={s} value={s}>{s}</option>)}
+                    {STALL_SIZES.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
+                    ))}
                   </select>
                 </Field>
               </div>
 
-              <Field label="Notes (optional)" id="stall-notes" error={form.formState.errors.notes?.message}>
-                <Textarea id="stall-notes" rows={3} placeholder="Preferred hall, power requirements, corner preference, etc." aria-invalid={!!form.formState.errors.notes} {...form.register("notes")} />
+              <Field
+                label="Notes (optional)"
+                id="stall-notes"
+                error={form.formState.errors.notes?.message}
+              >
+                <Textarea
+                  id="stall-notes"
+                  rows={3}
+                  placeholder="Preferred hall, power requirements, corner preference, etc."
+                  aria-invalid={!!form.formState.errors.notes}
+                  {...form.register("notes")}
+                />
               </Field>
 
               <p className="text-[11px] text-slate-muted leading-relaxed pt-1">
-                Submitting reserves your interest. Final allotment and payment are confirmed via the official portal.
+                Submitting reserves your interest. Final allotment and payment are confirmed via the
+                official portal.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                <Button type="submit" disabled={form.formState.isSubmitting} className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-11 flex-1">
-                  {form.formState.isSubmitting ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending…</>) : "Request Stall"}
+                <Button
+                  type="submit"
+                  disabled={form.formState.isSubmitting}
+                  className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-11 flex-1"
+                >
+                  {form.formState.isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending…
+                    </>
+                  ) : (
+                    "Request Stall"
+                  )}
                 </Button>
-                <Button type="button" variant="outline" onClick={() => setOpen(false)} className="h-11">Cancel</Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setOpen(false)}
+                  className="h-11"
+                >
+                  Cancel
+                </Button>
               </div>
             </form>
           </>
@@ -172,13 +287,19 @@ export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }
               Request received, {done.company}.
             </h3>
             <p className="mt-2 text-sm text-slate-muted">
-              Our exhibitor team will email <span className="text-charcoal font-medium">{done.email}</span> within 48 hours to confirm availability and next steps.
+              Our exhibitor team will email{" "}
+              <span className="text-charcoal font-medium">{done.email}</span> within 48 hours to
+              confirm availability and next steps.
             </p>
 
             <div className="mt-6 rounded-lg border border-border bg-pearl p-4 flex items-center justify-between gap-3">
               <div className="text-left">
-                <p className="text-[10px] uppercase tracking-widest text-slate-muted">Booking reference</p>
-                <p className="font-mono text-lg font-semibold text-charcoal tracking-wider">{done.code}</p>
+                <p className="text-[10px] uppercase tracking-widest text-slate-muted">
+                  Booking reference
+                </p>
+                <p className="font-mono text-lg font-semibold text-charcoal tracking-wider">
+                  {done.code}
+                </p>
               </div>
               <Button size="sm" variant="outline" onClick={copyCode} className="shrink-0">
                 <Copy className="h-3.5 w-3.5 mr-1.5" /> Copy
@@ -197,7 +318,9 @@ export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }
               >
                 Complete on portal <ArrowUpRight className="h-4 w-4" />
               </a>
-              <Button variant="outline" onClick={() => setOpen(false)} className="h-11">Done</Button>
+              <Button variant="outline" onClick={() => setOpen(false)} className="h-11">
+                Done
+              </Button>
             </div>
           </div>
         )}
@@ -206,12 +329,28 @@ export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }
   );
 }
 
-function Field({ label, id, error, children }: { label: string; id: string; error?: string; children: React.ReactNode }) {
+function Field({
+  label,
+  id,
+  error,
+  children,
+}: {
+  label: string;
+  id: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="space-y-1.5">
-      <Label htmlFor={id} className="text-xs uppercase tracking-widest text-slate-muted">{label}</Label>
+      <Label htmlFor={id} className="text-xs uppercase tracking-widest text-slate-muted">
+        {label}
+      </Label>
       {children}
-      {error && <p role="alert" className="text-xs text-red-600">{error}</p>}
+      {error && (
+        <p role="alert" className="text-xs text-red-600">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

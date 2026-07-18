@@ -19,30 +19,14 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 const schema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, "Please enter your full name")
-    .max(80, "Name is too long"),
-  email: z
-    .string()
-    .trim()
-    .email("Please enter a valid email")
-    .max(120, "Email is too long"),
+  name: z.string().trim().min(2, "Please enter your full name").max(80, "Name is too long"),
+  email: z.string().trim().email("Please enter a valid email").max(120, "Email is too long"),
   phone: z
     .string()
     .trim()
     .regex(/^[6-9]\d{9}$/, "Enter a 10-digit Indian mobile number"),
-  city: z
-    .string()
-    .trim()
-    .min(2, "Please enter your city")
-    .max(60, "City is too long"),
-  role: z
-    .string()
-    .trim()
-    .min(2, "Please describe your role or business")
-    .max(80, "Too long"),
+  city: z.string().trim().min(2, "Please enter your city").max(60, "City is too long"),
+  role: z.string().trim().min(2, "Please describe your role or business").max(80, "Too long"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -126,11 +110,7 @@ export function EpassDialog({ trigger, eventName, eventDate, eventVenue }: Props
             </DialogHeader>
 
             <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4" noValidate>
-              <Field
-                label="Full name"
-                id="epass-name"
-                error={form.formState.errors.name?.message}
-              >
+              <Field label="Full name" id="epass-name" error={form.formState.errors.name?.message}>
                 <Input
                   id="epass-name"
                   autoComplete="name"
@@ -141,11 +121,7 @@ export function EpassDialog({ trigger, eventName, eventDate, eventVenue }: Props
               </Field>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <Field
-                  label="Email"
-                  id="epass-email"
-                  error={form.formState.errors.email?.message}
-                >
+                <Field label="Email" id="epass-email" error={form.formState.errors.email?.message}>
                   <Input
                     id="epass-email"
                     type="email"
@@ -156,11 +132,7 @@ export function EpassDialog({ trigger, eventName, eventDate, eventVenue }: Props
                     {...form.register("email")}
                   />
                 </Field>
-                <Field
-                  label="Mobile"
-                  id="epass-phone"
-                  error={form.formState.errors.phone?.message}
-                >
+                <Field label="Mobile" id="epass-phone" error={form.formState.errors.phone?.message}>
                   <Input
                     id="epass-phone"
                     type="tel"
@@ -175,11 +147,7 @@ export function EpassDialog({ trigger, eventName, eventDate, eventVenue }: Props
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <Field
-                  label="City"
-                  id="epass-city"
-                  error={form.formState.errors.city?.message}
-                >
+                <Field label="City" id="epass-city" error={form.formState.errors.city?.message}>
                   <Input
                     id="epass-city"
                     autoComplete="address-level2"
@@ -203,8 +171,8 @@ export function EpassDialog({ trigger, eventName, eventDate, eventVenue }: Props
               </div>
 
               <p className="text-[11px] text-slate-muted leading-relaxed pt-1">
-                By submitting you agree to receive event updates. Your details are only
-                used to issue this E-Pass.
+                By submitting you agree to receive event updates. Your details are only used to
+                issue this E-Pass.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-2 pt-2">
@@ -242,15 +210,13 @@ export function EpassDialog({ trigger, eventName, eventDate, eventVenue }: Props
             </h3>
             <p className="mt-2 text-sm text-slate-muted">
               A confirmation is on the way to{" "}
-              <span className="text-charcoal font-medium">{done.email}</span>. Save
-              your reference code for the venue.
+              <span className="text-charcoal font-medium">{done.email}</span>. Save your reference
+              code for the venue.
             </p>
 
             <div className="mt-6 rounded-lg border border-border bg-pearl p-4 flex items-center justify-between gap-3">
               <div className="text-left">
-                <p className="text-[10px] uppercase tracking-widest text-slate-muted">
-                  Reference
-                </p>
+                <p className="text-[10px] uppercase tracking-widest text-slate-muted">Reference</p>
                 <p className="font-mono text-lg font-semibold text-charcoal tracking-wider">
                   {done.code}
                 </p>

@@ -9,14 +9,17 @@ import { Crown, Users, MapPin, Search, Sparkles } from "lucide-react";
 import { buildHead, PAGE_SEO, breadcrumbJsonLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/members")({
-  head: () => buildHead({
-    ...PAGE_SEO.members,
-    extraJsonLd: [breadcrumbJsonLd([
-      { name: "Home", path: "/" },
-      { name: "About", path: "/about" },
-      { name: "Members", path: "/members" },
-    ])],
-  }),
+  head: () =>
+    buildHead({
+      ...PAGE_SEO.members,
+      extraJsonLd: [
+        breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+          { name: "Members", path: "/members" },
+        ]),
+      ],
+    }),
   component: Members,
 });
 
@@ -30,7 +33,15 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-function Avatar({ name, img, size = "md" }: { name: string; img?: string; size?: "sm" | "md" | "lg" }) {
+function Avatar({
+  name,
+  img,
+  size = "md",
+}: {
+  name: string;
+  img?: string;
+  size?: "sm" | "md" | "lg";
+}) {
   const sizes = {
     sm: "h-11 w-11 text-xs",
     md: "h-14 w-14 text-sm",
@@ -83,7 +94,11 @@ function Members() {
     });
   }, [q, district]);
 
-  const totalPeople = 1 + officers.length + COMMITTEE.length + CITY_CHAPTERS.reduce((s, c) => s + c.members.length, 0);
+  const totalPeople =
+    1 +
+    officers.length +
+    COMMITTEE.length +
+    CITY_CHAPTERS.reduce((s, c) => s + c.members.length, 0);
 
   return (
     <>
@@ -102,7 +117,8 @@ function Members() {
               The people <span className="text-gradient-gold">leading the association.</span>
             </h1>
             <p className="mt-5 text-white/70 text-base sm:text-lg max-w-2xl leading-relaxed">
-              Office-bearers, executive committee and city chapters of the Tent, Caterers &amp; Decorators Welfare Association of Uttar Pradesh.
+              Office-bearers, executive committee and city chapters of the Tent, Caterers &amp;
+              Decorators Welfare Association of Uttar Pradesh.
             </p>
           </div>
 
@@ -166,7 +182,9 @@ function Members() {
                   President, Tent, Caterers &amp; Decorators Welfare Association of Uttar Pradesh.
                 </p>
                 <p className="mt-5 text-sm sm:text-base text-slate-muted leading-relaxed border-l-2 border-gold/60 pl-4">
-                  Guiding the association's state-wide agenda — welfare of member businesses, policy advocacy, and the Mahadhiveshan expo series that brings the entire industry under one roof.
+                  Guiding the association's state-wide agenda — welfare of member businesses, policy
+                  advocacy, and the Mahadhiveshan expo series that brings the entire industry under
+                  one roof.
                 </p>
               </div>
             </Card>
@@ -338,7 +356,11 @@ function Members() {
               </div>
 
               {CITY_CHAPTERS.map((c) => (
-                <TabsContent key={c.city} value={c.city} className="mt-8 focus-visible:outline-none">
+                <TabsContent
+                  key={c.city}
+                  value={c.city}
+                  className="mt-8 focus-visible:outline-none"
+                >
                   <div className="flex items-center gap-2 text-slate-muted text-xs sm:text-sm">
                     <MapPin className="h-4 w-4 text-gold" />
                     <span className="uppercase tracking-widest text-[10px] sm:text-[11px] font-medium">
@@ -358,7 +380,9 @@ function Members() {
                               <h3 className="font-display text-base sm:text-lg font-semibold text-charcoal truncate">
                                 {m.name}
                               </h3>
-                              <p className="mt-0.5 text-xs sm:text-sm text-gold truncate">{m.role}</p>
+                              <p className="mt-0.5 text-xs sm:text-sm text-gold truncate">
+                                {m.role}
+                              </p>
                               <p className="mt-2 inline-flex items-center gap-1 text-xs text-charcoal/70">
                                 <MapPin className="h-3 w-3 text-gold shrink-0" />
                                 <span className="truncate">{c.city}</span>
@@ -386,7 +410,8 @@ function Members() {
             Become part of the <span className="text-gradient-gold">TCDWA UP</span> family.
           </h2>
           <p className="mt-4 text-white/70 text-base sm:text-lg">
-            If you run a tent, catering, decor or hospitality business in Uttar Pradesh — get in touch with your nearest city chapter.
+            If you run a tent, catering, decor or hospitality business in Uttar Pradesh — get in
+            touch with your nearest city chapter.
           </p>
           <a
             href="/contact"

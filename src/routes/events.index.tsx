@@ -41,7 +41,8 @@ function EventsIndex() {
               A decade of <span className="text-gradient-gold">Mahadhiveshan.</span>
             </h1>
             <p className="mt-5 text-white/70 text-base sm:text-lg max-w-2xl leading-relaxed">
-              Every year we bring India's tent, catering and decor industry under one roof. Explore what's next — and revisit every edition that shaped us.
+              Every year we bring India's tent, catering and decor industry under one roof. Explore
+              what's next — and revisit every edition that shaped us.
             </p>
           </div>
 
@@ -196,11 +197,7 @@ function EventsIndex() {
             <div className="mt-10 sm:mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
               {filteredPast.map((e, i) => (
                 <Reveal key={e.year} delay={i * 0.05}>
-                  <Link
-                    to="/event/$slug"
-                    params={{ slug: e.slug }}
-                    className="block group h-full"
-                  >
+                  <Link to="/event/$slug" params={{ slug: e.slug }} className="block group h-full">
                     <Card className="overflow-hidden border-border/60 hover-lift bg-white h-full flex flex-col">
                       <div className="relative aspect-[4/3] overflow-hidden">
                         <img
@@ -236,9 +233,7 @@ function EventsIndex() {
                           {e.summary}
                         </p>
                         <div className="mt-4 pt-4 border-t border-border/60 flex items-center justify-between text-xs">
-                          <span className="text-slate-muted">
-                            {e.exhibitors} exhibitors
-                          </span>
+                          <span className="text-slate-muted">{e.exhibitors} exhibitors</span>
                           <span className="text-gold font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                             View <ArrowRight className="h-3 w-3" />
                           </span>

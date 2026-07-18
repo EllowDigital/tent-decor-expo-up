@@ -71,16 +71,41 @@ export const eventsData: EventItem[] = [
     ],
     chiefGuests: [
       { name: "Shri Yogi Adityanath", role: "Hon'ble Chief Minister of Uttar Pradesh (Invited)" },
-      { name: "Shri Nand Gopal Gupta 'Nandi'", role: "Cabinet Minister, MSME, Govt. of UP (Invited)" },
+      {
+        name: "Shri Nand Gopal Gupta 'Nandi'",
+        role: "Cabinet Minister, MSME, Govt. of UP (Invited)",
+      },
       { name: "Vijay Kumar", role: "President, TCDWA UP" },
       { name: "Prem Chandra Awasthi", role: "President, Shamiyana Furniture Association" },
     ],
     featuredImage: "/assets/g6.jpg",
-    galleryImages: ["/assets/g6.jpg", "/assets/g2.jpg", "/assets/g4.jpg", "/assets/g5.jpg", "/assets/g3.jpg", "/assets/g7.jpg"],
+    galleryImages: [
+      "/assets/g6.jpg",
+      "/assets/g2.jpg",
+      "/assets/g4.jpg",
+      "/assets/g5.jpg",
+      "/assets/g3.jpg",
+      "/assets/g7.jpg",
+    ],
     schedule: [
-      { day: "Day 01", date: "30 August 2026", title: "Grand Inauguration", desc: "Ribbon cutting, chief guest addresses, exhibitor hall opens, evening networking gala." },
-      { day: "Day 02", date: "31 August 2026", title: "B2B Meetings & Panels", desc: "Curated buyer-seller meetings, panel discussions on the future of the wedding economy, live stage demos." },
-      { day: "Day 03", date: "01 September 2026", title: "Awards & Closing", desc: "Innovation Awards ceremony, Mahadhiveshan closing session, association handover." },
+      {
+        day: "Day 01",
+        date: "30 August 2026",
+        title: "Grand Inauguration",
+        desc: "Ribbon cutting, chief guest addresses, exhibitor hall opens, evening networking gala.",
+      },
+      {
+        day: "Day 02",
+        date: "31 August 2026",
+        title: "B2B Meetings & Panels",
+        desc: "Curated buyer-seller meetings, panel discussions on the future of the wedding economy, live stage demos.",
+      },
+      {
+        day: "Day 03",
+        date: "01 September 2026",
+        title: "Awards & Closing",
+        desc: "Innovation Awards ceremony, Mahadhiveshan closing session, association handover.",
+      },
     ],
   },
   {
@@ -109,7 +134,14 @@ export const eventsData: EventItem[] = [
       { name: "Vijay Kumar", role: "President, TCDWA UP" },
     ],
     featuredImage: "/assets/g1.jpg",
-    galleryImages: ["/assets/g1.jpg", "/assets/g4.jpg", "/assets/g2.jpg", "/assets/g5.jpg", "/assets/g3.jpg", "/assets/g7.jpg"],
+    galleryImages: [
+      "/assets/g1.jpg",
+      "/assets/g4.jpg",
+      "/assets/g2.jpg",
+      "/assets/g5.jpg",
+      "/assets/g3.jpg",
+      "/assets/g7.jpg",
+    ],
   },
   {
     id: "varanasi-2019",
@@ -166,5 +198,4 @@ export const getUpcomingEvents = (): EventItem[] =>
   eventsData.filter((e) => e.status === "upcoming");
 
 /** Helper: past events archive (used on /events) */
-export const getPastEvents = (): EventItem[] =>
-  eventsData.filter((e) => e.status === "past");
+export const getPastEvents = (): EventItem[] => eventsData.filter((e) => e.status === "past");

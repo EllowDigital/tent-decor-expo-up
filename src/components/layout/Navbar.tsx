@@ -33,8 +33,7 @@ export function Navbar() {
 
   const items = NAV_LINKS as readonly NavItem[];
 
-  const isActive = (to: string) =>
-    pathname === to || (to !== "/" && pathname.startsWith(to + "/"));
+  const isActive = (to: string) => pathname === to || (to !== "/" && pathname.startsWith(to + "/"));
 
   const scheduleClose = () => {
     if (closeTimer.current) window.clearTimeout(closeTimer.current);
@@ -54,8 +53,14 @@ export function Navbar() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 sm:h-20 items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="Tent Decor Expo UP — Home">
-            <Logo className={cn("w-auto transition-all", scrolled ? "h-9 sm:h-11" : "h-10 sm:h-14")} />
+          <Link
+            to="/"
+            className="flex items-center gap-2 shrink-0"
+            aria-label="Tent Decor Expo UP — Home"
+          >
+            <Logo
+              className={cn("w-auto transition-all", scrolled ? "h-9 sm:h-11" : "h-10 sm:h-14")}
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Primary">
@@ -67,7 +72,10 @@ export function Navbar() {
                   <div
                     key={l.to}
                     className="relative"
-                    onMouseEnter={() => { cancelClose(); setOpenMenu(l.label); }}
+                    onMouseEnter={() => {
+                      cancelClose();
+                      setOpenMenu(l.label);
+                    }}
                     onMouseLeave={scheduleClose}
                   >
                     <button
@@ -77,11 +85,15 @@ export function Navbar() {
                       onClick={() => setOpenMenu(menuOpen ? null : l.label)}
                       className={cn(
                         "relative inline-flex items-center gap-1 px-3.5 py-2 text-sm font-medium rounded-md transition-colors",
-                        active ? "text-charcoal" : "text-charcoal/70 hover:text-charcoal hover:bg-pearl",
+                        active
+                          ? "text-charcoal"
+                          : "text-charcoal/70 hover:text-charcoal hover:bg-pearl",
                       )}
                     >
                       {l.label}
-                      <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", menuOpen && "rotate-180")} />
+                      <ChevronDown
+                        className={cn("h-3.5 w-3.5 transition-transform", menuOpen && "rotate-180")}
+                      />
                       {active && (
                         <motion.span
                           layoutId="nav-underline"
@@ -110,9 +122,13 @@ export function Navbar() {
                                 isActive(c.to) ? "bg-gold/10" : "hover:bg-pearl",
                               )}
                             >
-                              <span className="block text-sm font-medium text-charcoal">{c.label}</span>
+                              <span className="block text-sm font-medium text-charcoal">
+                                {c.label}
+                              </span>
                               {c.description && (
-                                <span className="mt-0.5 block text-xs text-charcoal/60 leading-snug">{c.description}</span>
+                                <span className="mt-0.5 block text-xs text-charcoal/60 leading-snug">
+                                  {c.description}
+                                </span>
                               )}
                             </Link>
                           ))}
@@ -128,7 +144,9 @@ export function Navbar() {
                   to={l.to}
                   className={cn(
                     "relative px-3.5 py-2 text-sm font-medium rounded-md transition-colors",
-                    active ? "text-charcoal" : "text-charcoal/70 hover:text-charcoal hover:bg-pearl",
+                    active
+                      ? "text-charcoal"
+                      : "text-charcoal/70 hover:text-charcoal hover:bg-pearl",
                   )}
                 >
                   {l.label}
@@ -145,7 +163,11 @@ export function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-2">
-            <Button asChild size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-5">
+            <Button
+              asChild
+              size="sm"
+              className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-5"
+            >
               <Link to="/registration">
                 <Ticket className="mr-1.5 h-4 w-4" /> Register
               </Link>
@@ -189,7 +211,9 @@ export function Navbar() {
                         )}
                       >
                         {l.label}
-                        <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} />
+                        <ChevronDown
+                          className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")}
+                        />
                       </button>
                       {isOpen && (
                         <div className="pb-2 pl-2">
@@ -199,7 +223,9 @@ export function Navbar() {
                               to={c.to}
                               className={cn(
                                 "block px-4 py-2.5 rounded-md text-sm transition-colors",
-                                isActive(c.to) ? "bg-gold/10 text-charcoal" : "text-charcoal/70 hover:bg-pearl",
+                                isActive(c.to)
+                                  ? "bg-gold/10 text-charcoal"
+                                  : "text-charcoal/70 hover:bg-pearl",
                               )}
                             >
                               {c.label}
@@ -224,7 +250,10 @@ export function Navbar() {
                 );
               })}
               <div className="pt-3">
-                <Button asChild className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 w-full">
+                <Button
+                  asChild
+                  className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 w-full"
+                >
                   <Link to="/registration">
                     <Ticket className="mr-1.5 h-4 w-4" /> Register — Visitor or Exhibitor
                   </Link>

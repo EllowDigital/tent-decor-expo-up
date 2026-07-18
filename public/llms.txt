@@ -1,0 +1,23 @@
+# Tent Decor Expo UP
+
+> Official site of the Tent, Caterers & Decorators Welfare Association of Uttar Pradesh (TCDWA UP) and its flagship annual B2B trade show — the Mahadhiveshan (Tent Decor Expo UP). The 4th edition is Kanpur 2026 (30 August – 1 September 2026, Sanskar Lawn, Kanpur).
+
+The site covers the association's mission, leadership, past editions, exhibitor and visitor information, and registration for the upcoming edition. Registration for the Visitor E-Pass and Exhibitor Stall Booking is handled on the external portal at https://www.tentdecorexpo.com.
+
+## Pages
+
+- [Home](/): Overview of Tent Decor Expo UP and the upcoming Kanpur 2026 edition.
+- [About TCDWA UP](/about): Association history, mission, vision and the story behind the Mahadhiveshan.
+- [Kanpur 2026 Event Details](/event-details): Dates, venue, host partners and highlights of the 4th Mahadhiveshan.
+- [Editions & Past Events](/events): Archive of every past edition with photos and highlights.
+- [For Visitors](/visitors): Who should attend, what the free trade E-Pass includes, and how to register.
+- [For Exhibitors](/exhibitors): Stall types, inclusions, categories and booking process.
+- [Registration](/registration): Central hub linking to the Visitor E-Pass and Exhibitor Stall Booking portals.
+- [E-Pass Status](/epass-status): Look up an existing E-Pass registration by reference code.
+- [Members & Leadership](/members): President, office-bearers, executive committee and city chapters of TCDWA UP.
+- [Gallery](/gallery): Photos and highlights from every edition of the Mahadhiveshan.
+- [Contact](/contact): Phone, email, venue map and social links for the Kanpur 2026 team.
+
+## Optional
+
+- [Sitemap](/sitemap.xml): Machine-readable list of all indexable URLs.
