@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowLeft, ArrowRight, Calendar, Check, MapPin, Users, X, Building2, Trophy } from "lucide-react";
-import { EDITIONS } from "@/data/constants";
+import { EDITIONS, type Edition } from "@/data/constants";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
