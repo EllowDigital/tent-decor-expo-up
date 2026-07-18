@@ -52,8 +52,7 @@ function About() {
             height={1080}
             sizes="100vw"
             decoding="async"
-            // @ts-expect-error fetchpriority
-            fetchpriority="high"
+            fetchPriority="high"
             className="h-full w-full object-cover opacity-25"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/90 to-charcoal" />
