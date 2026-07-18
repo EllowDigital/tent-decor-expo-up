@@ -190,61 +190,72 @@ export const PAGE_SEO = {
     title: "About TCDWA UP — Tent Decor Expo UP",
     description:
       "The Tent, Caterers & Decorators Welfare Association of UP — 6,000+ members, mission, vision and the story behind the Mahadhiveshan.",
+    image: "/assets/og-about.jpg",
   },
   events: {
     path: "/events",
     title: "Editions & Past Events — Tent Decor Expo UP",
     description:
       "Every edition of the Mahadhiveshan — from the 2015 founding congress to Kanpur 2026. Photos, highlights and archives.",
+    image: "/assets/og-events.jpg",
   },
   gallery: {
     path: "/gallery",
     title: "Gallery — Tent Decor Expo UP Photos & Videos",
     description:
       "Highlights, aftermovies and unforgettable moments from every edition of the Tent Decor Expo UP Mahadhiveshan.",
+    image: "/assets/og-gallery.jpg",
   },
   contact: {
     path: "/contact",
     title: "Contact Us — Tent Decor Expo UP Kanpur 2026",
     description:
       "Reach the Kanpur 2026 team — phone, email, venue map and social links. Visitor, exhibitor and sponsorship queries.",
+    image: "/assets/og-contact.jpg",
   },
   registration: {
     path: "/registration",
     title: "Register — Visitor E-Pass & Exhibitor Booking",
     description:
       "Join Tent Decor Expo UP 2026 — free Visitor E-Pass and Exhibitor Stall Booking via the official portal.",
+    image: "/assets/og-registration.jpg",
   },
   visitors: {
     path: "/visitors",
     title: "For Visitors — Free Trade E-Pass | TDX UP 2026",
     description:
       "Trade visitor profile for Tent Decor Expo UP. What a free E-Pass includes, who should attend and how to register.",
+    image: "/assets/og-visitors.jpg",
   },
   exhibitors: {
     path: "/exhibitors",
     title: "For Exhibitors — Stall Booking | TDX UP 2026",
     description:
       "Exhibit at Tent Decor Expo UP Kanpur 2026. Stall types, inclusions, categories and step-by-step booking process.",
+    image: "/assets/og-exhibitors.jpg",
   },
   members: {
     path: "/members",
     title: "Members & Leadership — TCDWA UP Association",
     description:
       "President, office-bearers, executive committee and 6,000+ members of the Tent, Caterers & Decorators Welfare Association of UP.",
+    image: "/assets/og-members.jpg",
   },
   epassStatus: {
     path: "/epass-status",
     title: "E-Pass Status — Tent Decor Expo UP",
     description:
       "Check your Tent Decor Expo UP E-Pass registration status with your reference code. Fast, secure lookup.",
+    image: "/assets/og-registration.jpg",
   },
   eventDetails: {
     path: "/event-details",
     title: "Kanpur 2026 Event Details — Tent Decor Expo UP",
     description:
       "Venue, dates, host partners and registration for the 4th Mahadhiveshan at Sanskar Lawn, Kanpur — 30 Aug to 1 Sep 2026.",
+    image: "/assets/og-events.jpg",
   },
+
 } as const satisfies Record<string, PageSeoInput>;
 
 export type PageKey = keyof typeof PAGE_SEO;
