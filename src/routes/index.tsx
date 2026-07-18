@@ -1,37 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import {
   ArrowRight,
-  Calendar,
   MapPin,
   Ticket,
-  Store,
   Users,
-  Sparkles,
   ChevronDown,
-  Quote,
-  TrendingUp,
-  Building2,
-  Rocket,
-  Award,
   Plane,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  EDITIONS,
-  GALLERY,
-  INDUSTRY_CATEGORIES,
-  REGISTER_URL,
-  TESTIMONIALS,
-  CURRENT_EVENT_ID,
-} from "@/data/constants";
+import { EDITIONS, REGISTER_URL, CURRENT_EVENT_ID } from "@/data/constants";
 import { Reveal } from "@/components/common/Reveal";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
 import { HeroBackground } from "@/components/common/HeroBackground";
+import { BelowFoldSkeleton } from "@/components/home/BelowFoldSkeleton";
 
 import { buildHead, PAGE_SEO } from "@/lib/seo";
+
+// Below-fold sections load in their own chunk so the hero paints first.
+const BelowFold = lazy(() => import("@/components/home/BelowFold"));
 
 export const Route = createFileRoute("/")({
   head: () => {
@@ -40,13 +29,25 @@ export const Route = createFileRoute("/")({
       ...base,
       links: [
         ...base.links,
-        // Preload the LCP hero variant most likely to be picked on desktop.
+        // Preload the AVIF LCP variant — the <picture> in <HeroBackground />
+        // picks AVIF first on supporting browsers. The srcset lets the browser
+        // pick the right width; sizes="100vw" matches the hero layout.
+        {
+          rel: "preload",
+          as: "image",
+          href: "/assets/responsive/hero-bg-1600.avif",
+          type: "image/avif",
+          fetchPriority: "high",
+          imageSrcSet:
+            "/assets/responsive/hero-bg-640.avif 640w, /assets/responsive/hero-bg-1024.avif 1024w, /assets/responsive/hero-bg-1600.avif 1600w, /assets/responsive/hero-bg-1920.avif 1920w",
+          imageSizes: "100vw",
+        },
+        // WebP preload as a secondary hint for browsers that skip AVIF.
         {
           rel: "preload",
           as: "image",
           href: "/assets/responsive/hero-bg-1600.webp",
           type: "image/webp",
-          fetchPriority: "high",
           imageSrcSet:
             "/assets/responsive/hero-bg-640.webp 640w, /assets/responsive/hero-bg-1024.webp 1024w, /assets/responsive/hero-bg-1600.webp 1600w, /assets/responsive/hero-bg-1920.webp 1920w",
           imageSizes: "100vw",
@@ -58,8 +59,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  // Single source of truth: siteConfig.currentEventId. Change that one value
-  // each year and the entire homepage (hero, banner, closing CTA) follows.
   const upcoming =
     EDITIONS.find((e) => e.slug === CURRENT_EVENT_ID) ??
     EDITIONS.find((e) => e.status === "upcoming") ??
@@ -67,16 +66,13 @@ function Home() {
   return (
     <>
       <Hero upcoming={upcoming} />
-      <CategoryMarquee />
-      <AboutSnippet />
-      <WhyAttendExhibit />
-      <TwoPaths />
-      <GalleryPreview />
-      <Testimonials />
-      <ClosingCTA upcoming={upcoming} />
+      <Suspense fallback={<BelowFoldSkeleton />}>
+        <BelowFold upcoming={upcoming} />
+      </Suspense>
     </>
   );
 }
+
 
 /* ---------------- HERO (boarding-pass ticket) ---------------- */
 
