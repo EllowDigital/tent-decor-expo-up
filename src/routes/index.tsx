@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Calendar, MapPin, Ticket, Store, Users, Sparkles, Trophy, Handshake, ChevronDown } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Ticket, Store, Users, Sparkles, Trophy, Handshake, ChevronDown, Quote, Target, TrendingUp, Building2, Rocket, Award } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { Button } from "@/components/ui/button";
-import { EDITIONS, GALLERY, INDUSTRY_CATEGORIES, REGISTER_URL } from "@/data/constants";
+import { EDITIONS, GALLERY, INDUSTRY_CATEGORIES, REGISTER_URL, TESTIMONIALS } from "@/data/constants";
 import { Reveal } from "@/components/common/Reveal";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
