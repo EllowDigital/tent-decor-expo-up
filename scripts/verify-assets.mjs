@@ -20,8 +20,6 @@ const SEARCH_ROOTS = ["dist/client", "dist", "public"].filter((d) =>
   existsSync(path.join(ROOT, d)),
 );
 
-
-
 if (SEARCH_ROOTS.length === 0) {
   console.error("[verify-assets] No build output found. Run `bun run build` first.");
   process.exit(1);

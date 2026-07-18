@@ -45,4 +45,6 @@ ${urls}
 `;
 
 writeFileSync(path.join(ROOT, "public/sitemap.xml"), xml);
-console.log(`[gen-sitemap] wrote public/sitemap.xml (${staticRoutes.length + eventRoutes.length} URLs)`);
+console.log(
+  `[gen-sitemap] wrote public/sitemap.xml (${staticRoutes.length + eventRoutes.length} URLs)`,
+);
