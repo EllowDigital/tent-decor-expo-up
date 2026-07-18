@@ -16,6 +16,7 @@ import { Route as RegistrationRouteImport } from './routes/registration'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ExhibitorsRouteImport } from './routes/exhibitors'
+import { Route as EventDetailsRouteImport } from './routes/event-details'
 import { Route as EpassStatusRouteImport } from './routes/epass-status'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -59,6 +60,11 @@ const ExhibitorsRoute = ExhibitorsRouteImport.update({
   path: '/exhibitors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventDetailsRoute = EventDetailsRouteImport.update({
+  id: '/event-details',
+  path: '/event-details',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EpassStatusRoute = EpassStatusRouteImport.update({
   id: '/epass-status',
   path: '/epass-status',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/epass-status': typeof EpassStatusRoute
+  '/event-details': typeof EventDetailsRoute
   '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/epass-status': typeof EpassStatusRoute
+  '/event-details': typeof EventDetailsRoute
   '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/epass-status': typeof EpassStatusRoute
+  '/event-details': typeof EventDetailsRoute
   '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/epass-status'
+    | '/event-details'
     | '/exhibitors'
     | '/gallery'
     | '/members'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/epass-status'
+    | '/event-details'
     | '/exhibitors'
     | '/gallery'
     | '/members'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/epass-status'
+    | '/event-details'
     | '/exhibitors'
     | '/gallery'
     | '/members'
@@ -200,6 +212,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   EpassStatusRoute: typeof EpassStatusRoute
+  EventDetailsRoute: typeof EventDetailsRoute
   ExhibitorsRoute: typeof ExhibitorsRoute
   GalleryRoute: typeof GalleryRoute
   MembersRoute: typeof MembersRoute
@@ -263,6 +276,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExhibitorsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/event-details': {
+      id: '/event-details'
+      path: '/event-details'
+      fullPath: '/event-details'
+      preLoaderRoute: typeof EventDetailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/epass-status': {
       id: '/epass-status'
       path: '/epass-status'
@@ -320,6 +340,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   EpassStatusRoute: EpassStatusRoute,
+  EventDetailsRoute: EventDetailsRoute,
   ExhibitorsRoute: ExhibitorsRoute,
   GalleryRoute: GalleryRoute,
   MembersRoute: MembersRoute,

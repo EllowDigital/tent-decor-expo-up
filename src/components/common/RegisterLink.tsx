@@ -1,10 +1,23 @@
-import { REGISTER_URL } from "@/data/constants";
+import {
+  REGISTER_URL,
+  VISITOR_REGISTER_URL,
+  EXHIBITOR_REGISTER_URL,
+} from "@/data/constants";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
 
+/** Central mapping — swap URLs in siteConfig.ts once a year and every CTA follows. */
+const HREF_BY_KIND = {
+  portal: REGISTER_URL,
+  visitor: VISITOR_REGISTER_URL,
+  exhibitor: EXHIBITOR_REGISTER_URL,
+} as const;
+
 type Props = {
   children: ReactNode;
+  /** Which central registration URL to use. Defaults to the portal. */
+  kind?: keyof typeof HREF_BY_KIND;
   variant?: "gold" | "dark" | "outline" | "ghost";
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -13,11 +26,13 @@ type Props = {
 };
 
 /**
- * External CTA that links to the registration/E-Pass portal.
- * Opens in a new tab. Use for every "Register", "Get E-Pass", "Book Stall" button.
+ * External CTA that links to a registration portal defined in siteConfig.
+ * Use kind="visitor" for E-Pass, kind="exhibitor" for stall booking,
+ * default (portal) for the generic Register button.
  */
 export function RegisterLink({
   children,
+  kind = "portal",
   variant = "gold",
   size = "md",
   className,
@@ -40,7 +55,7 @@ export function RegisterLink({
 
   return (
     <a
-      href={REGISTER_URL}
+      href={HREF_BY_KIND[kind]}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}
@@ -51,3 +66,4 @@ export function RegisterLink({
     </a>
   );
 }
+
