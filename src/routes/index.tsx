@@ -4,7 +4,7 @@ import { ArrowRight, MapPin, Ticket, Users, ChevronDown, Plane } from "lucide-re
 
 import { Button } from "@/components/ui/button";
 import { EDITIONS, REGISTER_URL, CURRENT_EVENT_ID } from "@/data/constants";
-import { Reveal } from "@/components/common/Reveal";
+
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
 import { HeroBackground } from "@/components/common/HeroBackground";
