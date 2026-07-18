@@ -50,7 +50,11 @@ for (const f of files) {
     if (u.startsWith("/api/") || u.startsWith("/_")) continue;
     // strip query/hash
     const clean = u.split(/[?#]/)[0];
-    if (!/\.(png|jpe?g|webp|avif|gif|svg|ico|woff2?|ttf|otf|mp4|webm|pdf|json|xml|txt|webmanifest)$/i.test(clean))
+    if (
+      !/\.(png|jpe?g|webp|avif|gif|svg|ico|woff2?|ttf|otf|mp4|webm|pdf|json|xml|txt|webmanifest)$/i.test(
+        clean,
+      )
+    )
       continue;
     found.add(clean);
   }
@@ -59,10 +63,7 @@ for (const f of files) {
 const roots = SEARCH_ROOTS.filter((r) => r !== "public");
 const missing = [];
 for (const url of found) {
-  const candidates = [
-    ...roots.map((r) => path.join(ROOT, r, url)),
-    path.join(ROOT, "public", url),
-  ];
+  const candidates = [...roots.map((r) => path.join(ROOT, r, url)), path.join(ROOT, "public", url)];
   const ok = candidates.some((p) => existsSync(p));
   if (!ok) missing.push(url);
 }
