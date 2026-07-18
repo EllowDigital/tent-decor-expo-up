@@ -278,14 +278,14 @@ function Gallery() {
             <>
               <ul
                 role="list"
-                className="columns-2 md:columns-3 xl:columns-4 gap-3 sm:gap-4 [column-fill:_balance]"
+                className="columns-2 md:columns-3 xl:columns-4 gap-3 sm:gap-4 lg:gap-5 [column-fill:_balance]"
               >
                 {shown.map((g, i) => (
-                  <li key={`${g.src}-${g._idx}-${i}`} className="break-inside-avoid mb-3 sm:mb-4 inline-block w-full">
+                  <li key={`${g.src}-${g._idx}-${i}`} className="break-inside-avoid mb-3 sm:mb-4 lg:mb-5 inline-block w-full">
                     <Reveal delay={Math.min((i % PAGE) * 0.02, 0.2)}>
                       <button
                         onClick={() => setLightbox(i)}
-                        className="block w-full overflow-hidden rounded-2xl group relative bg-pearl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+                        className="block w-full overflow-hidden rounded-xl sm:rounded-2xl group relative bg-pearl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
                         aria-label={`Open ${g.title}`}
                       >
                         <img
@@ -293,10 +293,10 @@ function Gallery() {
                           alt={g.title}
                           width={640}
                           height={640}
-                          sizes="(min-width: 1280px) 22vw, (min-width: 768px) 30vw, 48vw"
+                          sizes="(min-width: 1280px) 22vw, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
                           loading="lazy"
                           decoding="async"
-                          className="w-full h-auto transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+                          className="block w-full h-auto max-w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
                         />
                         <span className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 rounded-full bg-charcoal/75 backdrop-blur-md text-gold text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold">
                           {g.year || "Archive"}
