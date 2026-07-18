@@ -66,14 +66,9 @@ export function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-2">
-            <Button asChild variant="outline" size="sm" className="border-gold text-charcoal hover:bg-gold/10 h-10 px-4">
-              <Link to="/visitors">
-                <Ticket className="mr-1.5 h-4 w-4" /> Visitors
-              </Link>
-            </Button>
-            <Button asChild size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-4">
-              <Link to="/exhibitors">
-                <Store className="mr-1.5 h-4 w-4" /> Exhibitors
+            <Button asChild size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-5">
+              <Link to="/registration">
+                <Ticket className="mr-1.5 h-4 w-4" /> Register
               </Link>
             </Button>
           </div>
