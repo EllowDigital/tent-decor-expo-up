@@ -48,7 +48,17 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
       aria-label="Upcoming edition"
     >
       <div className="absolute inset-0">
-        <img src={heroBg} alt="" className="h-full w-full object-cover" fetchPriority="high" />
+        <img
+          src={heroBg}
+          alt=""
+          width={1920}
+          height={1080}
+          sizes="100vw"
+          decoding="async"
+          // @ts-expect-error fetchpriority is valid HTML
+          fetchpriority="high"
+          className="h-full w-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-br from-charcoal/95 via-charcoal/85 to-charcoal/70" />
       </div>
 
@@ -507,7 +517,16 @@ function GalleryPreview() {
               }
               aria-label={g.title}
             >
-              <img src={g.src} alt={g.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <img
+                src={g.src}
+                alt={g.title}
+                width={480}
+                height={480}
+                sizes="(min-width: 1024px) 15vw, (min-width: 768px) 22vw, 30vw"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
             </Link>
           ))}
         </div>

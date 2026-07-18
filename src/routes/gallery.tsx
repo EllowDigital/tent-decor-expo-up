@@ -221,6 +221,9 @@ function Gallery() {
                         <img
                           src={g.src}
                           alt={g.title}
+                          width={640}
+                          height={640}
+                          sizes="(min-width: 1280px) 22vw, (min-width: 768px) 30vw, 48vw"
                           loading="lazy"
                           decoding="async"
                           className="w-full h-auto transition-transform duration-700 group-hover:scale-110"

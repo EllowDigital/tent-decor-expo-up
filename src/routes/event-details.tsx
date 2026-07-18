@@ -53,7 +53,7 @@ function EventDetailsPage() {
       {/* HEADER */}
       <section className="relative overflow-hidden bg-charcoal text-white -mt-16 sm:-mt-20 pt-24 sm:pt-32 pb-14 sm:pb-20">
         <div className="absolute inset-0">
-          <img src={e.cover} alt="" className="h-full w-full object-cover opacity-40" />
+          <img src={e.cover} alt="" width={1920} height={1080} sizes="100vw" decoding="async" className="h-full w-full object-cover opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/70 to-charcoal" />
         </div>
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
