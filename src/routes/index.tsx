@@ -183,7 +183,7 @@ function CategoryMarquee() {
   const items = [...INDUSTRY_CATEGORIES, "Sound", "SFX", "AV & Lighting", "Mandap"];
   const loop = [...items, ...items];
   return (
-    <section aria-label="Industry categories" className="bg-charcoal border-y border-white/10 overflow-hidden">
+    <section id="next" aria-label="Industry categories" className="bg-charcoal border-y border-white/10 overflow-hidden scroll-mt-20">
       <div className="relative flex" role="marquee">
         <div className="flex shrink-0 animate-marquee gap-10 py-4 sm:py-5 pr-10 whitespace-nowrap">
           {loop.map((c, i) => (
