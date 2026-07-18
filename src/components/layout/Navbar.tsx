@@ -116,23 +116,18 @@ export function Navbar() {
                 );
               })}
               <div className="pt-3 grid grid-cols-2 gap-2">
-                <EpassDialog
-                  {...eventCtx}
-                  trigger={
-                    <Button variant="outline" className="border-gold text-charcoal hover:bg-gold/10 w-full">
-                      <Ticket className="mr-1.5 h-4 w-4" /> E-Pass
-                    </Button>
-                  }
-                />
-                <StallBookingDialog
-                  {...eventCtx}
-                  trigger={
-                    <Button className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 w-full">
-                      <Store className="mr-1.5 h-4 w-4" /> Book Stall
-                    </Button>
-                  }
-                />
+                <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10 w-full">
+                  <Link to="/visitors">
+                    <Ticket className="mr-1.5 h-4 w-4" /> Visitors
+                  </Link>
+                </Button>
+                <Button asChild className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 w-full">
+                  <Link to="/exhibitors">
+                    <Store className="mr-1.5 h-4 w-4" /> Exhibitors
+                  </Link>
+                </Button>
               </div>
+
             </div>
           </motion.div>
         )}
