@@ -13,7 +13,8 @@ import {
   Handshake,
   Trophy,
 } from "lucide-react";
-import exhibitorImg from "@/assets/g6.jpg";
+import { assets } from "@/lib/assets";
+const exhibitorImg = assets.gallery.g6;
 import { Button } from "@/components/ui/button";
 import { EDITIONS, EXHIBITOR_CATEGORIES, REGISTER_URL } from "@/data/constants";
 import { StallBookingDialog } from "@/components/common/StallBookingDialog";
