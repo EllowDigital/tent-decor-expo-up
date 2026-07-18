@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Calendar, MapPin, Ticket, Store, Users, Sparkles, Trophy, Handshake, ChevronDown, Quote, TrendingUp, Building2, Rocket, Award } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Ticket, Store, Users, Sparkles, ChevronDown, Quote, TrendingUp, Building2, Rocket, Award } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, GALLERY, INDUSTRY_CATEGORIES, REGISTER_URL, TESTIMONIALS } from "@/data/constants";
@@ -29,7 +29,6 @@ function Home() {
       <UpcomingBanner upcoming={upcoming} />
       <AboutSnippet />
       <WhyAttendExhibit />
-      <WhyAttend />
       <TwoPaths />
       <GalleryPreview />
       <Testimonials />
@@ -379,41 +378,8 @@ function Testimonials() {
 }
 
 
-/* ---------------- WHY / WHAT WE DO ---------------- */
+/* WhyAttend removed — replaced by WhyAttendExhibit dual-audience grid above. */
 
-function WhyAttend() {
-  const items = [
-    { icon: Sparkles, title: "One state, one stage", desc: "The only expo that brings every tent, catering and decor vertical of UP under a single roof." },
-    { icon: Handshake, title: "Real B2B business", desc: "Curated buyer-seller meetings and district conveners ensure every visitor is a decision maker." },
-    { icon: Trophy, title: "Recognition & policy", desc: "Innovation awards, association-led policy sessions, and skill programs that lift the whole industry." },
-  ];
-  return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-pearl">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">Why & what</span>
-          <h2 className="mt-3 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,3rem)] leading-tight">
-            What Tent Decor Expo UP does.
-          </h2>
-          <p className="mt-4 text-slate-muted leading-relaxed">
-            Organised by the Tent, Caterers & Decorators Welfare Association of UP — a Mahadhiveshan hosted in a different city every year to grow the wedding and event economy of Uttar Pradesh.
-          </p>
-        </div>
-        <div className="mt-10 grid gap-4 sm:gap-6 md:grid-cols-3">
-          {items.map((i) => (
-            <div key={i.title} className="rounded-2xl border border-border/60 bg-white p-6 sm:p-7">
-              <span className="h-10 w-10 rounded-lg bg-gold/10 grid place-items-center">
-                <i.icon className="h-5 w-5 text-gold" />
-              </span>
-              <h3 className="mt-5 font-display text-lg sm:text-xl font-semibold text-charcoal">{i.title}</h3>
-              <p className="mt-2 text-sm text-slate-muted leading-relaxed">{i.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ---------------- TWO PATHS ---------------- */
 

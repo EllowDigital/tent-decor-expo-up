@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Store, CheckCircle2, Calendar, MapPin, Users, Target, Megaphone, Sparkles } from "lucide-react";
+import exhibitorImg from "@/assets/g6.jpg";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, EXHIBITOR_CATEGORIES, REGISTER_URL } from "@/data/constants";
 import { StallBookingDialog } from "@/components/common/StallBookingDialog";
@@ -73,32 +74,40 @@ function ExhibitorsPage() {
         </div>
       </section>
 
-      {/* Benefits */}
+      {/* Z-pattern: image left, text right */}
       <section className="py-16 sm:py-20 bg-pearl">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16">
-          <div>
-            <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">What you get</span>
-            <h2 className="mt-3 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,2.5rem)] leading-tight">
-              Everything a serious exhibitor needs.
-            </h2>
-            <p className="mt-4 text-slate-muted leading-relaxed">
-              We handle logistics — from shell fabrication and utility connections to hospitality. You focus on selling.
-            </p>
-            <p className="mt-4 text-sm">
-              Prefer to fill the full portal form?{" "}
-              <a href={REGISTER_URL} target="_blank" rel="noopener noreferrer" className="text-charcoal font-medium underline underline-offset-4 decoration-gold hover:text-gold">
-                tentdecorexpo.com
-              </a>
-            </p>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row-reverse gap-10 lg:gap-16 items-center">
+            <div className="w-full lg:w-1/2 min-w-0">
+              <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">What you get</span>
+              <h2 className="mt-3 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,2.5rem)] leading-tight">
+                Everything a serious exhibitor needs.
+              </h2>
+              <p className="mt-4 text-slate-muted leading-relaxed">
+                We handle logistics — shell fabrication, utility connections, hospitality. You focus on selling.
+              </p>
+              <ul className="mt-6 space-y-3">
+                {benefits.map((b) => (
+                  <li key={b} className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 shrink-0 text-gold mt-0.5" />
+                    <span className="text-sm sm:text-base text-charcoal">{b}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-sm">
+                Prefer to fill the full portal form?{" "}
+                <a href={REGISTER_URL} target="_blank" rel="noopener noreferrer" className="text-charcoal font-medium underline underline-offset-4 decoration-gold hover:text-gold">
+                  tentdecorexpo.com
+                </a>
+              </p>
+            </div>
+            <div className="w-full lg:w-1/2">
+              <div className="relative aspect-[4/5] sm:aspect-[4/3] lg:aspect-[4/5] rounded-2xl overflow-hidden shadow-elegant">
+                <img src={exhibitorImg} alt="Exhibitors at Tent Decor Expo" className="h-full w-full object-cover" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/40 to-transparent" />
+              </div>
+            </div>
           </div>
-          <ul className="space-y-3">
-            {benefits.map((b) => (
-              <li key={b} className="flex items-start gap-3 rounded-xl border border-border/60 bg-white p-4">
-                <CheckCircle2 className="h-5 w-5 shrink-0 text-gold mt-0.5" />
-                <span className="text-sm sm:text-base text-charcoal">{b}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
