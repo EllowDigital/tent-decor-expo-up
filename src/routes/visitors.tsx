@@ -15,7 +15,8 @@ import {
   QrCode,
   DoorOpen,
 } from "lucide-react";
-import visitorImg from "@/assets/g1.jpg";
+import { assets } from "@/lib/assets";
+const visitorImg = assets.gallery.g1;
 import { Button } from "@/components/ui/button";
 import { EDITIONS, REGISTER_URL } from "@/data/constants";
 import { EpassDialog } from "@/components/common/EpassDialog";

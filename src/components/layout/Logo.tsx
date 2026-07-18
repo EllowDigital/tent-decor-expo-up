@@ -1,4 +1,6 @@
-import logoUrl from "@/assets/tent-decor-expo-logo.png";
+import { assets } from "@/lib/assets";
+
+const logoUrl = assets.logo;
 
 export function Logo({ className = "h-12 w-auto" }: { className?: string }) {
   return (

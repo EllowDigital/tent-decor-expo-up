@@ -18,7 +18,7 @@ export default defineConfig({
         Expires: "0",
       },
       watch: {
-        // Ensure edits to files under public/ and src/assets/ trigger reloads
+        // Ensure edits to files under public/ and public/assets/ trigger reloads
         // on all platforms (Cloudflare Tunnel + Docker fs can miss inotify).
         ignored: ["**/node_modules/**", "**/dist/**", "**/.output/**"],
       },

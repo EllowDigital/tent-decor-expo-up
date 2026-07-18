@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
  *
  * Emits a <picture> with WebP + JPEG srcsets at 640/1024/1600/1920 widths so
  * mobile fetches ~80 KB instead of the 360 KB source. Variants are generated
- * from `src/assets/hero-bg.jpg` by `scripts/gen-hero-variants.mjs` (runs on
+ * from `public/assets/hero-bg.jpg` by `scripts/gen-hero-variants.mjs` (runs on
  * every build via the `prebuild` npm script).
  */
 const WIDTHS = [640, 1024, 1600, 1920] as const;
