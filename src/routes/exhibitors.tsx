@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Store, CheckCircle2, Calendar, MapPin, Users, Target, Megaphone, Sparkles } from "lucide-react";
+import exhibitorImg from "@/assets/g6.jpg";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, EXHIBITOR_CATEGORIES, REGISTER_URL } from "@/data/constants";
 import { StallBookingDialog } from "@/components/common/StallBookingDialog";
