@@ -14,13 +14,9 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import {
-  CursorGlow,
-  LoadingScreen,
-  PageTransition,
-  ScrollProgress,
-  ScrollToTop,
-} from "@/components/layout/PageChrome";
+import { ScrollToTop } from "@/components/layout/PageChrome";
+import { MobileEventBar } from "@/components/layout/MobileEventBar";
+
 
 function NotFoundComponent() {
   return (
