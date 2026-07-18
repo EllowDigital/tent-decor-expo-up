@@ -7,7 +7,8 @@ export const siteConfig = {
   name: "Tent Decor Expo UP",
   shortName: "TDX UP",
   organisation: "Tent, Caterers & Decorators Welfare Association of UP",
-  tagline: "Uttar Pradesh's premier B2B trade show for the tent, decor, catering & hospitality industry.",
+  tagline:
+    "Uttar Pradesh's premier B2B trade show for the tent, decor, catering & hospitality industry.",
 
   /** ID of the event to highlight on the homepage hero & sticky mobile bar. */
   currentEventId: "kanpur-2026",
@@ -19,10 +20,10 @@ export const siteConfig = {
   },
 
   socialLinks: {
-    facebook: "https://www.facebook.com/tentdecorexpo",
-    instagram: "https://www.instagram.com/tentdecorexpo",
-    youtube: "https://www.youtube.com/@tentdecorexpo",
-    twitter: "https://twitter.com/tentdecorexpo",
+    facebook: "https://www.facebook.com/tentdecorexpoup",
+    instagram: "https://www.instagram.com/tentdecorexpoup",
+    youtube: "https://www.youtube.com/@tentdecorexpoup",
+    twitter: "https://twitter.com/tentdecorexpoup",
   },
 
   /** External portal URLs — swap once each year, whole site picks them up. */
@@ -59,11 +60,27 @@ export const siteConfig = {
       label: "Attend",
       to: "/registration",
       children: [
-        { label: "For Visitors", to: "/visitors", description: "Who should attend & what to expect" },
-        { label: "For Exhibitors", to: "/exhibitors", description: "Book a stall, sponsorships & pricing" },
-        { label: "Registration", to: "/registration", description: "Central portal for all passes" },
+        {
+          label: "For Visitors",
+          to: "/visitors",
+          description: "Who should attend & what to expect",
+        },
+        {
+          label: "For Exhibitors",
+          to: "/exhibitors",
+          description: "Book a stall, sponsorships & pricing",
+        },
+        {
+          label: "Registration",
+          to: "/registration",
+          description: "Central portal for all passes",
+        },
         { label: "E-Pass Status", to: "/epass-status", description: "Check your registration" },
-        { label: "Event Details", to: "/event-details", description: "Upcoming edition full details" },
+        {
+          label: "Event Details",
+          to: "/event-details",
+          description: "Upcoming edition full details",
+        },
       ],
     },
     { label: "Contact", to: "/contact" },

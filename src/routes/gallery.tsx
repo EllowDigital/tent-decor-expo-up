@@ -2,8 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
-  X, Play, ChevronLeft, ChevronRight, Search, ArrowDownUp,
-  Images, Sparkles, LayoutGrid, Camera,
+  X,
+  Play,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  ArrowDownUp,
+  Images,
+  Sparkles,
+  LayoutGrid,
+  Camera,
 } from "lucide-react";
 import { Reveal } from "@/components/common/Reveal";
 import { GalleryImage } from "@/components/gallery/GalleryImage";
@@ -12,7 +20,11 @@ import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { buildHead, PAGE_SEO } from "@/lib/seo";
 
@@ -58,17 +70,25 @@ function Gallery() {
     const filtered = ALL.filter((g) => {
       if (category !== "All" && g.category !== category) return false;
       if (year !== "All" && g.year !== year) return false;
-      if (query && !g.title.toLowerCase().includes(query) && !g.category.toLowerCase().includes(query)) return false;
+      if (
+        query &&
+        !g.title.toLowerCase().includes(query) &&
+        !g.category.toLowerCase().includes(query)
+      )
+        return false;
       return true;
     });
     const sorted = [...filtered];
-    if (sort === "newest") sorted.sort((a, b) => Number(b.year) - Number(a.year) || a._idx - b._idx);
+    if (sort === "newest")
+      sorted.sort((a, b) => Number(b.year) - Number(a.year) || a._idx - b._idx);
     else if (sort === "popular") sorted.sort((a, b) => b._pop - a._pop);
     else sorted.sort((a, b) => a.title.localeCompare(b.title));
     return sorted;
   }, [ALL, category, year, q, sort]);
 
-  useEffect(() => { setVisible(PAGE); }, [category, year, q, sort]);
+  useEffect(() => {
+    setVisible(PAGE);
+  }, [category, year, q, sort]);
 
   const shown = items.slice(0, visible);
   const hasMore = visible < items.length;
@@ -100,11 +120,14 @@ function Gallery() {
   const activeFilterCount =
     (category !== "All" ? 1 : 0) + (year !== "All" ? 1 : 0) + (q.trim() ? 1 : 0);
 
-  const stats = useMemo(() => ({
-    photos: ALL.length,
-    editions: EDITIONS.length,
-    categories: CATEGORIES.length - 1,
-  }), [ALL.length]);
+  const stats = useMemo(
+    () => ({
+      photos: ALL.length,
+      editions: EDITIONS.length,
+      categories: CATEGORIES.length - 1,
+    }),
+    [ALL.length],
+  );
 
   return (
     <>
@@ -123,7 +146,8 @@ function Gallery() {
               Moments that <span className="text-gradient-gold">defined</span> the industry.
             </h1>
             <p className="mt-5 text-white/70 text-base sm:text-lg max-w-2xl leading-relaxed">
-              A visual journey across every Mahadhiveshan — the stages, the craft, the crowds, the culture.
+              A visual journey across every Mahadhiveshan — the stages, the craft, the crowds, the
+              culture.
             </p>
           </div>
 
@@ -175,7 +199,9 @@ function Gallery() {
               </SelectTrigger>
               <SelectContent>
                 {(Object.keys(SORT_LABEL) as SortKey[]).map((k) => (
-                  <SelectItem key={k} value={k}>{SORT_LABEL[k]}</SelectItem>
+                  <SelectItem key={k} value={k}>
+                    {SORT_LABEL[k]}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -183,13 +209,15 @@ function Gallery() {
 
           {/* Row 2: year chips */}
           <div>
-            <div className="text-[10px] uppercase tracking-[0.24em] text-slate-muted mb-1.5 sm:hidden">Year</div>
+            <div className="text-[10px] uppercase tracking-[0.24em] text-slate-muted mb-1.5 sm:hidden">
+              Year
+            </div>
             <div className="relative -mx-4 sm:mx-0">
-              <div
-                className="overflow-x-auto scrollbar-none px-4 sm:px-0 [scroll-padding-inline:1rem] [-webkit-overflow-scrolling:touch] [overscroll-behavior-x:contain] touch-pan-x snap-x snap-mandatory"
-              >
+              <div className="overflow-x-auto scrollbar-none px-4 sm:px-0 [scroll-padding-inline:1rem] [-webkit-overflow-scrolling:touch] [overscroll-behavior-x:contain] touch-pan-x snap-x snap-mandatory">
                 <div className="flex items-center gap-2 whitespace-nowrap pr-4">
-                  <span className="hidden sm:inline text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Year</span>
+                  <span className="hidden sm:inline text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">
+                    Year
+                  </span>
                   {YEARS.map((y) => (
                     <button
                       key={y}
@@ -214,13 +242,15 @@ function Gallery() {
 
           {/* Row 3: category chips */}
           <div>
-            <div className="text-[10px] uppercase tracking-[0.24em] text-slate-muted mb-1.5 sm:hidden">Category</div>
+            <div className="text-[10px] uppercase tracking-[0.24em] text-slate-muted mb-1.5 sm:hidden">
+              Category
+            </div>
             <div className="relative -mx-4 sm:mx-0">
-              <div
-                className="overflow-x-auto scrollbar-none px-4 sm:px-0 [scroll-padding-inline:1rem] [-webkit-overflow-scrolling:touch] [overscroll-behavior-x:contain] touch-pan-x snap-x snap-mandatory"
-              >
+              <div className="overflow-x-auto scrollbar-none px-4 sm:px-0 [scroll-padding-inline:1rem] [-webkit-overflow-scrolling:touch] [overscroll-behavior-x:contain] touch-pan-x snap-x snap-mandatory">
                 <div className="flex items-center gap-2 whitespace-nowrap pr-4">
-                  <span className="hidden sm:inline text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Category</span>
+                  <span className="hidden sm:inline text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">
+                    Category
+                  </span>
                   {CATEGORIES.map((c) => (
                     <button
                       key={c}
@@ -243,25 +273,29 @@ function Gallery() {
             </div>
           </div>
 
-
           {/* Row 4: meta */}
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-muted">
             <p role="status" aria-live="polite">
-              Showing <span className="text-charcoal font-semibold">{Math.min(visible, items.length)}</span>
-              {" "}of <span className="text-charcoal font-semibold">{items.length}</span> moments
+              Showing{" "}
+              <span className="text-charcoal font-semibold">{Math.min(visible, items.length)}</span>{" "}
+              of <span className="text-charcoal font-semibold">{items.length}</span> moments
             </p>
             {activeFilterCount > 0 && (
               <button
-                onClick={() => { setCategory("All"); setYear("All"); setQ(""); }}
+                onClick={() => {
+                  setCategory("All");
+                  setYear("All");
+                  setQ("");
+                }}
                 className="inline-flex items-center gap-1.5 text-charcoal font-medium hover:text-gold"
               >
-                <X className="h-3.5 w-3.5" /> Clear {activeFilterCount} filter{activeFilterCount > 1 ? "s" : ""}
+                <X className="h-3.5 w-3.5" /> Clear {activeFilterCount} filter
+                {activeFilterCount > 1 ? "s" : ""}
               </button>
             )}
           </div>
         </div>
       </section>
-
 
       {/* MASONRY */}
       <section className="py-10 sm:py-14 lg:py-16 bg-white">
@@ -274,9 +308,15 @@ function Gallery() {
               <p className="mt-5 font-display text-xl sm:text-2xl text-charcoal">
                 No moments match those filters.
               </p>
-              <p className="mt-2 text-sm text-slate-muted">Try clearing a filter or the search box.</p>
+              <p className="mt-2 text-sm text-slate-muted">
+                Try clearing a filter or the search box.
+              </p>
               <button
-                onClick={() => { setCategory("All"); setYear("All"); setQ(""); }}
+                onClick={() => {
+                  setCategory("All");
+                  setYear("All");
+                  setQ("");
+                }}
                 className="mt-6 inline-flex items-center min-h-11 px-5 py-2 rounded-full bg-gradient-gold text-charcoal text-sm font-medium shadow-gold"
               >
                 Reset filters
@@ -296,25 +336,23 @@ function Gallery() {
                         className="block w-full overflow-hidden rounded-xl sm:rounded-2xl group relative bg-pearl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
                         aria-label={`Open ${g.title}`}
                       >
-                        <GalleryImage
-                          src={g.src}
-                          alt={g.title}
-                          idx={g._idx}
-                          priority={i < 4}
-                        />
+                        <GalleryImage src={g.src} alt={g.title} idx={g._idx} priority={i < 4} />
                         <span className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 rounded-full bg-charcoal/75 backdrop-blur-md text-gold text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold z-10">
                           {g.year || "Archive"}
                         </span>
                         <span className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/30 to-transparent opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 sm:p-5 text-left z-10">
-                          <span className="text-[10px] uppercase tracking-[0.24em] text-gold font-semibold">{g.category}</span>
-                          <span className="mt-1 text-white font-medium text-sm sm:text-base leading-snug line-clamp-2">{g.title}</span>
+                          <span className="text-[10px] uppercase tracking-[0.24em] text-gold font-semibold">
+                            {g.category}
+                          </span>
+                          <span className="mt-1 text-white font-medium text-sm sm:text-base leading-snug line-clamp-2">
+                            {g.title}
+                          </span>
                         </span>
                       </button>
                     </Reveal>
                   </li>
                 ))}
               </ul>
-
 
               <div ref={sentinelRef} aria-hidden className="h-1" />
               {hasMore && (
@@ -337,7 +375,9 @@ function Gallery() {
       <section className="py-16 sm:py-20 lg:py-24 bg-pearl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <span className="text-[11px] sm:text-xs uppercase tracking-[0.28em] text-gold font-medium">Aftermovies</span>
+            <span className="text-[11px] sm:text-xs uppercase tracking-[0.28em] text-gold font-medium">
+              Aftermovies
+            </span>
             <h2 className="mt-2 font-display font-bold text-charcoal text-3xl sm:text-4xl lg:text-5xl">
               Watch the story unfold.
             </h2>
@@ -347,8 +387,14 @@ function Gallery() {
           </div>
           <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[
-              { title: "Lucknow 2025 — Official Aftermovie", desc: "The 3rd Mahadhiveshan in 3 minutes." },
-              { title: "Behind the Mandap", desc: "Craftsmen who build India's grandest weddings." },
+              {
+                title: "Lucknow 2025 — Official Aftermovie",
+                desc: "The 3rd Mahadhiveshan in 3 minutes.",
+              },
+              {
+                title: "Behind the Mandap",
+                desc: "Craftsmen who build India's grandest weddings.",
+              },
               { title: "Voices of the Association", desc: "Members share what the expo means." },
             ].map((v, i) => (
               <Reveal key={v.title} delay={i * 0.06}>
@@ -364,7 +410,9 @@ function Gallery() {
                     </div>
                   </button>
                   <div className="p-5">
-                    <h3 className="font-display text-base sm:text-lg font-semibold text-charcoal">{v.title}</h3>
+                    <h3 className="font-display text-base sm:text-lg font-semibold text-charcoal">
+                      {v.title}
+                    </h3>
                     <p className="mt-1 text-sm text-slate-muted">{v.desc}</p>
                   </div>
                 </Card>
@@ -409,7 +457,9 @@ function Lightbox({
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
+    return () => {
+      document.body.style.overflow = prev;
+    };
   }, [open]);
 
   useEffect(() => {
@@ -418,9 +468,21 @@ function Lightbox({
     const t = setTimeout(() => closeBtnRef.current?.focus(), 0);
 
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") { e.preventDefault(); onClose(); return; }
-      if (e.key === "ArrowRight") { e.preventDefault(); onNext(); return; }
-      if (e.key === "ArrowLeft") { e.preventDefault(); onPrev(); return; }
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        onNext();
+        return;
+      }
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        onPrev();
+        return;
+      }
       if (e.key === "Tab") {
         const root = dialogRef.current;
         if (!root) return;
@@ -431,9 +493,11 @@ function Lightbox({
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
         if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault(); last.focus();
+          e.preventDefault();
+          last.focus();
         } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault(); first.focus();
+          e.preventDefault();
+          first.focus();
         }
       }
     }
@@ -506,10 +570,15 @@ function Lightbox({
                 className="max-h-[70vh] sm:max-h-[80dvh] max-w-full w-auto h-auto rounded-lg shadow-elegant object-contain"
               />
               <figcaption className="text-center text-white/90 px-4">
-                <p id={descId} className="text-[11px] sm:text-xs uppercase tracking-[0.24em] text-gold font-semibold">
+                <p
+                  id={descId}
+                  className="text-[11px] sm:text-xs uppercase tracking-[0.24em] text-gold font-semibold"
+                >
                   {current.category} · {current.year}
                 </p>
-                <p id={titleId} className="mt-1 font-display text-base sm:text-lg">{current.title}</p>
+                <p id={titleId} className="mt-1 font-display text-base sm:text-lg">
+                  {current.title}
+                </p>
                 <p className="mt-2 text-[11px] text-white/50">
                   {(index ?? 0) + 1} / {items.length} · Use ← → to navigate, Esc to close
                 </p>

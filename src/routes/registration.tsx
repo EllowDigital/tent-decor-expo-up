@@ -15,12 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/common/Reveal";
-import {
-  EDITIONS,
-  VISITOR_REGISTER_URL,
-  EXHIBITOR_REGISTER_URL,
-  CONTACT,
-} from "@/data/constants";
+import { EDITIONS, VISITOR_REGISTER_URL, EXHIBITOR_REGISTER_URL, CONTACT } from "@/data/constants";
 import { buildHead, PAGE_SEO } from "@/lib/seo";
 
 export const Route = createFileRoute("/registration")({
@@ -52,14 +47,18 @@ function RegistrationPage() {
               Join the next <span className="text-gradient-gold">Expo.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-white/70 text-base sm:text-lg leading-relaxed">
-              Two clear paths — visitors get a free E-Pass, exhibitors book
-              stall space. Both open in our official registration portal.
+              Two clear paths — visitors get a free E-Pass, exhibitors book stall space. Both open
+              in our official registration portal.
             </p>
           </Reveal>
 
           {/* Event facts row */}
           <div className="mt-8 sm:mt-10 grid gap-3 sm:grid-cols-3 max-w-4xl">
-            <FactRow icon={Calendar} label="Edition" value={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`} />
+            <FactRow
+              icon={Calendar}
+              label="Edition"
+              value={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+            />
             <FactRow icon={MapPin} label="Venue" value={upcoming.venue} />
             <FactRow icon={Users} label="Audience" value={upcoming.visitors + " visitors"} />
           </div>
@@ -80,7 +79,9 @@ function RegistrationPage() {
       <section className="py-14 sm:py-20 lg:py-24 bg-pearl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">Pick your path</span>
+            <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">
+              Pick your path
+            </span>
             <h2 className="mt-3 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,2.75rem)] leading-tight">
               Visitor or exhibitor — start here.
             </h2>
@@ -94,13 +95,17 @@ function RegistrationPage() {
                   <Ticket className="h-5 w-5 text-gold" />
                 </span>
                 <div className="min-w-0">
-                  <div className="text-[10px] uppercase tracking-widest text-slate-muted">Path 1 · For Visitors</div>
-                  <h3 className="font-display text-xl sm:text-2xl font-semibold text-charcoal">Visitor E-Pass</h3>
+                  <div className="text-[10px] uppercase tracking-widest text-slate-muted">
+                    Path 1 · For Visitors
+                  </div>
+                  <h3 className="font-display text-xl sm:text-2xl font-semibold text-charcoal">
+                    Visitor E-Pass
+                  </h3>
                 </div>
               </div>
               <p className="mt-4 text-sm text-slate-muted leading-relaxed">
-                Trade buyers, planners, hoteliers and industry professionals —
-                get a complimentary entry pass valid across all three show days.
+                Trade buyers, planners, hoteliers and industry professionals — get a complimentary
+                entry pass valid across all three show days.
               </p>
               <ul className="mt-5 space-y-2 text-sm text-charcoal/80">
                 {[
@@ -116,15 +121,29 @@ function RegistrationPage() {
                 ))}
               </ul>
               <div className="mt-auto pt-6 space-y-2">
-                <Button asChild size="lg" className="w-full bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-12">
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-12"
+                >
                   <a href={VISITOR_REGISTER_URL} target="_blank" rel="noopener noreferrer">
                     Generate E-Pass <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
                 <div className="flex flex-wrap gap-3 text-xs text-slate-muted justify-center">
-                  <Link to="/visitors" className="hover:text-gold underline-offset-4 hover:underline">Visitor profile</Link>
+                  <Link
+                    to="/visitors"
+                    className="hover:text-gold underline-offset-4 hover:underline"
+                  >
+                    Visitor profile
+                  </Link>
                   <span aria-hidden>·</span>
-                  <Link to="/epass-status" className="hover:text-gold underline-offset-4 hover:underline">Check status</Link>
+                  <Link
+                    to="/epass-status"
+                    className="hover:text-gold underline-offset-4 hover:underline"
+                  >
+                    Check status
+                  </Link>
                 </div>
               </div>
             </div>
@@ -139,13 +158,15 @@ function RegistrationPage() {
                   <Store className="h-5 w-5 text-gold" />
                 </span>
                 <div className="min-w-0">
-                  <div className="text-[10px] uppercase tracking-widest text-gold/80">Path 2 · For Exhibitors</div>
+                  <div className="text-[10px] uppercase tracking-widest text-gold/80">
+                    Path 2 · For Exhibitors
+                  </div>
                   <h3 className="font-display text-xl sm:text-2xl font-semibold">Stall Booking</h3>
                 </div>
               </div>
               <p className="relative mt-4 text-sm text-white/70 leading-relaxed">
-                Manufacturers, lighting providers, catering suppliers, decor
-                houses — reserve stall space across 14 industry verticals.
+                Manufacturers, lighting providers, catering suppliers, decor houses — reserve stall
+                space across 14 industry verticals.
               </p>
               <ul className="relative mt-5 space-y-2 text-sm text-white/85">
                 {[
@@ -161,15 +182,29 @@ function RegistrationPage() {
                 ))}
               </ul>
               <div className="relative mt-auto pt-6 space-y-2">
-                <Button asChild size="lg" className="w-full bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-12">
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-12"
+                >
                   <a href={EXHIBITOR_REGISTER_URL} target="_blank" rel="noopener noreferrer">
                     Book Stall Space <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
                 <div className="flex flex-wrap gap-3 text-xs text-white/50 justify-center">
-                  <Link to="/exhibitors" className="hover:text-gold underline-offset-4 hover:underline">Exhibitor profile</Link>
+                  <Link
+                    to="/exhibitors"
+                    className="hover:text-gold underline-offset-4 hover:underline"
+                  >
+                    Exhibitor profile
+                  </Link>
                   <span aria-hidden>·</span>
-                  <Link to="/event-details" className="hover:text-gold underline-offset-4 hover:underline">Event details</Link>
+                  <Link
+                    to="/event-details"
+                    className="hover:text-gold underline-offset-4 hover:underline"
+                  >
+                    Event details
+                  </Link>
                 </div>
               </div>
             </div>
@@ -177,8 +212,8 @@ function RegistrationPage() {
 
           {/* Explanatory note */}
           <p className="mt-8 text-center text-xs sm:text-sm text-slate-muted max-w-2xl mx-auto">
-            Registration links are updated for each new edition. If a link
-            doesn't work, contact us — we'll share the latest form directly.
+            Registration links are updated for each new edition. If a link doesn't work, contact us
+            — we'll share the latest form directly.
           </p>
         </div>
       </section>
@@ -216,33 +251,54 @@ function RegistrationPage() {
       <section className="py-14 sm:py-20 lg:py-24 bg-pearl border-t border-border/60">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">Registration support</span>
+            <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">
+              Registration support
+            </span>
             <h2 className="mt-3 font-display font-bold text-charcoal text-[clamp(1.5rem,3.5vw,2.25rem)] leading-tight">
               Need help with registration or booking?
             </h2>
             <p className="mt-3 text-slate-muted">
-              Our registration desk can help with group visitor E-Passes, stall
-              availability, floor-plan queries and sponsorship options.
+              Our registration desk can help with group visitor E-Passes, stall availability,
+              floor-plan queries and sponsorship options.
             </p>
           </div>
           <div className="mt-8 sm:mt-10 grid gap-4 sm:gap-5 sm:grid-cols-3">
-            <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`} className="rounded-2xl border border-border/60 bg-white p-5 sm:p-6 hover:border-gold hover:shadow-lg transition-all block">
+            <a
+              href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}
+              className="rounded-2xl border border-border/60 bg-white p-5 sm:p-6 hover:border-gold hover:shadow-lg transition-all block"
+            >
               <Phone className="h-5 w-5 text-gold" />
-              <p className="mt-3 text-[10px] uppercase tracking-widest text-slate-muted">Registration desk</p>
-              <p className="mt-1 font-display text-lg font-semibold text-charcoal">{CONTACT.phone}</p>
+              <p className="mt-3 text-[10px] uppercase tracking-widest text-slate-muted">
+                Registration desk
+              </p>
+              <p className="mt-1 font-display text-lg font-semibold text-charcoal">
+                {CONTACT.phone}
+              </p>
               <p className="mt-1 text-xs text-slate-muted">Mon–Sat, 10am–7pm IST</p>
             </a>
-            <a href={`mailto:${CONTACT.email}`} className="rounded-2xl border border-border/60 bg-white p-5 sm:p-6 hover:border-gold hover:shadow-lg transition-all block">
+            <a
+              href={`mailto:${CONTACT.email}`}
+              className="rounded-2xl border border-border/60 bg-white p-5 sm:p-6 hover:border-gold hover:shadow-lg transition-all block"
+            >
               <Mail className="h-5 w-5 text-gold" />
               <p className="mt-3 text-[10px] uppercase tracking-widest text-slate-muted">Email</p>
-              <p className="mt-1 font-display text-lg font-semibold text-charcoal break-all">{CONTACT.email}</p>
+              <p className="mt-1 font-display text-lg font-semibold text-charcoal break-all">
+                {CONTACT.email}
+              </p>
               <p className="mt-1 text-xs text-slate-muted">Reply within 24 business hours</p>
             </a>
-            <Link to="/contact" className="rounded-2xl border border-border/60 bg-white p-5 sm:p-6 hover:border-gold hover:shadow-lg transition-all block">
+            <Link
+              to="/contact"
+              className="rounded-2xl border border-border/60 bg-white p-5 sm:p-6 hover:border-gold hover:shadow-lg transition-all block"
+            >
               <MapPin className="h-5 w-5 text-gold" />
-              <p className="mt-3 text-[10px] uppercase tracking-widest text-slate-muted">Full contact</p>
+              <p className="mt-3 text-[10px] uppercase tracking-widest text-slate-muted">
+                Full contact
+              </p>
               <p className="mt-1 font-display text-lg font-semibold text-charcoal">Message us</p>
-              <p className="mt-1 text-xs text-slate-muted inline-flex items-center gap-1">Open <ArrowRight className="h-3 w-3" /></p>
+              <p className="mt-1 text-xs text-slate-muted inline-flex items-center gap-1">
+                Open <ArrowRight className="h-3 w-3" />
+              </p>
             </Link>
           </div>
         </div>
@@ -291,7 +347,8 @@ function QuickLink({
         <p className="mt-1 font-display text-lg font-semibold text-charcoal">{title}</p>
         <p className="mt-1 text-sm text-slate-muted leading-relaxed">{desc}</p>
         <span className="mt-3 inline-flex items-center gap-1 text-sm text-gold font-medium">
-          Open <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          Open{" "}
+          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
         </span>
       </div>
     </Link>

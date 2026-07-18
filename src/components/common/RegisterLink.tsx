@@ -1,8 +1,4 @@
-import {
-  REGISTER_URL,
-  VISITOR_REGISTER_URL,
-  EXHIBITOR_REGISTER_URL,
-} from "@/data/constants";
+import { REGISTER_URL, VISITOR_REGISTER_URL, EXHIBITOR_REGISTER_URL } from "@/data/constants";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
@@ -66,4 +62,3 @@ export function RegisterLink({
     </a>
   );
 }
-

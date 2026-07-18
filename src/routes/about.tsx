@@ -26,10 +26,26 @@ export const Route = createFileRoute("/about")({
 });
 
 const PILLARS = [
-  { icon: ShieldCheck, title: "Member Welfare", desc: "Group insurance, dispute redressal and welfare funds for tent-house owners, caterers, decorators and their workers." },
-  { icon: Scale, title: "Policy & Advocacy", desc: "Represents the industry before state departments on licensing, GST, venue regulations and labour policy." },
-  { icon: GraduationCap, title: "Skill & Standards", desc: "Training programmes, safety certifications and quality benchmarks that raise service standards across UP." },
-  { icon: Handshake, title: "Trade & Networking", desc: "Organises the Mahadhiveshan expo series to open new B2B markets for members across the country." },
+  {
+    icon: ShieldCheck,
+    title: "Member Welfare",
+    desc: "Group insurance, dispute redressal and welfare funds for tent-house owners, caterers, decorators and their workers.",
+  },
+  {
+    icon: Scale,
+    title: "Policy & Advocacy",
+    desc: "Represents the industry before state departments on licensing, GST, venue regulations and labour policy.",
+  },
+  {
+    icon: GraduationCap,
+    title: "Skill & Standards",
+    desc: "Training programmes, safety certifications and quality benchmarks that raise service standards across UP.",
+  },
+  {
+    icon: Handshake,
+    title: "Trade & Networking",
+    desc: "Organises the Mahadhiveshan expo series to open new B2B markets for members across the country.",
+  },
 ];
 
 const STATS = [
@@ -69,8 +85,12 @@ function About() {
             <span className="text-gradient-gold">for the industry.</span>
           </h1>
           <p className="mt-5 sm:mt-6 text-white/70 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto">
-            The <span className="text-white font-medium">Tent, Caterers &amp; Decorators Welfare Association of Uttar Pradesh</span> — the apex,
-            state-wide body representing tent houses, caterers, decorators and event professionals since 1998.
+            The{" "}
+            <span className="text-white font-medium">
+              Tent, Caterers &amp; Decorators Welfare Association of Uttar Pradesh
+            </span>{" "}
+            — the apex, state-wide body representing tent houses, caterers, decorators and event
+            professionals since 1998.
           </p>
         </div>
       </section>
@@ -104,9 +124,21 @@ function About() {
           />
           <div className="mt-10 sm:mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {[
-              { icon: Building2, title: "History", desc: "Founded in 1998 by 42 tent-house owners in Lucknow, the association today represents over 6,000 member businesses across 75 districts of Uttar Pradesh." },
-              { icon: Target, title: "Mission", desc: "To professionalise, standardise and elevate the tent, catering and decor industry — advocating for members, buyers and the artisans behind every event." },
-              { icon: Compass, title: "Vision", desc: "To make Uttar Pradesh the definitive national destination for wedding and event commerce by 2030 — recognised, regulated and celebrated." },
+              {
+                icon: Building2,
+                title: "History",
+                desc: "Founded in 1998 by 42 tent-house owners in Lucknow, the association today represents over 6,000 member businesses across 75 districts of Uttar Pradesh.",
+              },
+              {
+                icon: Target,
+                title: "Mission",
+                desc: "To professionalise, standardise and elevate the tent, catering and decor industry — advocating for members, buyers and the artisans behind every event.",
+              },
+              {
+                icon: Compass,
+                title: "Vision",
+                desc: "To make Uttar Pradesh the definitive national destination for wedding and event commerce by 2030 — recognised, regulated and celebrated.",
+              },
             ].map((b, i) => (
               <Reveal key={b.title} delay={i * 0.06}>
                 <Card className="p-6 sm:p-8 lg:p-10 h-full border-border/60">
@@ -201,9 +233,9 @@ function About() {
                     <p className="font-display text-2xl sm:text-3xl font-bold text-gradient-gold">
                       {m.year}
                     </p>
-                   <h3 className="mt-1.5 sm:mt-2 font-display text-lg sm:text-xl font-semibold text-white">
-                     {m.title}
-                   </h3>
+                    <h3 className="mt-1.5 sm:mt-2 font-display text-lg sm:text-xl font-semibold text-white">
+                      {m.title}
+                    </h3>
                     <p className="mt-2 text-white/60 text-sm leading-relaxed">{m.desc}</p>
                   </div>
                 </div>

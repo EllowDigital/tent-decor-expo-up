@@ -27,7 +27,9 @@ export function MobileEventBar() {
             <Calendar className="h-4 w-4 text-charcoal" />
           </span>
           <span className="min-w-0">
-            <span className="block text-[10px] uppercase tracking-widest text-gold font-medium">Upcoming</span>
+            <span className="block text-[10px] uppercase tracking-widest text-gold font-medium">
+              Upcoming
+            </span>
             <span className="block truncate text-xs font-medium text-charcoal">
               {upcoming.city} · {upcoming.dates}
             </span>
@@ -46,4 +48,3 @@ export function MobileEventBar() {
     </div>
   );
 }
-

@@ -10,12 +10,7 @@ import {
   CheckCircle2,
   Sparkles,
 } from "lucide-react";
-import {
-  EDITIONS,
-  CURRENT_EVENT_ID,
-  REGISTER_URL,
-  type Edition,
-} from "@/data/constants";
+import { EDITIONS, CURRENT_EVENT_ID, REGISTER_URL, type Edition } from "@/data/constants";
 import { RegisterLink } from "@/components/common/RegisterLink";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
@@ -50,7 +45,7 @@ function EventDetailsPage() {
   const { edition: e } = Route.useLoaderData() as { edition: Edition };
   const isUpcoming = e.status === "upcoming";
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(
-    `${e.venue}, Uttar Pradesh, India`
+    `${e.venue}, Uttar Pradesh, India`,
   )}&output=embed`;
 
   const stats = [
@@ -105,11 +100,7 @@ function EventDetailsPage() {
           )}
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <RegisterLink
-              kind="visitor"
-              size="lg"
-              className="h-12 sm:h-14 px-6 sm:px-8"
-            >
+            <RegisterLink kind="visitor" size="lg" className="h-12 sm:h-14 px-6 sm:px-8">
               <Ticket className="h-4 w-4" /> Get Free E-Pass
             </RegisterLink>
             <RegisterLink
@@ -126,12 +117,8 @@ function EventDetailsPage() {
           <div className="mt-12 sm:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10">
             {stats.map((s) => (
               <div key={s.v} className="bg-charcoal/95 backdrop-blur-sm p-5 sm:p-6">
-                <p className="font-display text-2xl sm:text-3xl font-bold text-gold">
-                  {s.k}
-                </p>
-                <p className="mt-1 text-[11px] uppercase tracking-[0.24em] text-white/60">
-                  {s.v}
-                </p>
+                <p className="font-display text-2xl sm:text-3xl font-bold text-gold">{s.k}</p>
+                <p className="mt-1 text-[11px] uppercase tracking-[0.24em] text-white/60">{s.v}</p>
               </div>
             ))}
           </div>
@@ -155,9 +142,7 @@ function EventDetailsPage() {
                 <f.icon className="h-5 w-5 text-gold" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] uppercase tracking-widest text-slate-muted">
-                  {f.label}
-                </p>
+                <p className="text-[10px] uppercase tracking-widest text-slate-muted">{f.label}</p>
                 <p className="mt-1 font-semibold text-charcoal text-sm sm:text-base leading-snug">
                   {f.value}
                 </p>
@@ -209,15 +194,17 @@ function EventDetailsPage() {
                 Free E-Pass
               </h2>
               <p className="mt-2 text-slate-muted text-sm leading-relaxed">
-                Complimentary trade entry for buyers, planners and industry
-                professionals. Register once, access all three show days.
+                Complimentary trade entry for buyers, planners and industry professionals. Register
+                once, access all three show days.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 <RegisterLink kind="visitor" size="lg">
                   <Ticket className="h-4 w-4" /> Get E-Pass
                 </RegisterLink>
                 <Button asChild variant="outline" size="lg" className="border-border">
-                  <Link to="/visitors">Visitor profile <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
+                  <Link to="/visitors">
+                    Visitor profile <ArrowRight className="ml-1.5 h-4 w-4" />
+                  </Link>
                 </Button>
               </div>
             </Card>
@@ -229,19 +216,24 @@ function EventDetailsPage() {
               <p className="mt-4 text-[10px] uppercase tracking-[0.28em] text-gold font-medium">
                 Exhibitors
               </p>
-              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold">
-                Book a stall
-              </h2>
+              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold">Book a stall</h2>
               <p className="mt-2 text-white/70 text-sm leading-relaxed">
-                Reserve a stall to showcase products to thousands of qualified
-                buyers. Prime locations sell out early.
+                Reserve a stall to showcase products to thousands of qualified buyers. Prime
+                locations sell out early.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 <RegisterLink kind="exhibitor" size="lg">
                   <Store className="h-4 w-4" /> Book stall
                 </RegisterLink>
-                <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 bg-transparent">
-                  <Link to="/exhibitors">Exhibitor profile <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                >
+                  <Link to="/exhibitors">
+                    Exhibitor profile <ArrowRight className="ml-1.5 h-4 w-4" />
+                  </Link>
                 </Button>
               </div>
             </Card>
@@ -254,7 +246,9 @@ function EventDetailsPage() {
                   <Calendar className="h-5 w-5 text-gold" />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-slate-muted font-medium">Save the date</p>
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-slate-muted font-medium">
+                    Save the date
+                  </p>
                   <p className="font-display text-base sm:text-lg text-charcoal">{e.dates}</p>
                 </div>
               </div>
@@ -286,11 +280,14 @@ function EventDetailsPage() {
               {e.venue}
             </h2>
             <p className="mt-3 text-slate-muted leading-relaxed">
-              {e.city}, Uttar Pradesh. Parking and hospitality lounges on-site
-              across all show days.
+              {e.city}, Uttar Pradesh. Parking and hospitality lounges on-site across all show days.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10">
+              <Button
+                asChild
+                variant="outline"
+                className="border-gold text-charcoal hover:bg-gold/10"
+              >
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.venue)}`}
                   target="_blank"

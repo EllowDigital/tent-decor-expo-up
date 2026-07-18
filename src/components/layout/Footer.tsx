@@ -1,5 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Mail, MapPin, Phone, Youtube, Twitter, ArrowUpRight } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Mail,
+  MapPin,
+  Phone,
+  Youtube,
+  Twitter,
+  ArrowUpRight,
+} from "lucide-react";
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,8 +49,8 @@ export function Footer() {
               <Logo className="h-12 sm:h-14 w-auto" />
             </div>
             <p className="mt-5 text-sm text-white/60 leading-relaxed max-w-sm">
-              India's premier B2B congregation for the tent, decor, catering and event
-              industry — hosted in the heart of Uttar Pradesh.
+              India's premier B2B congregation for the tent, decor, catering and event industry —
+              hosted in the heart of Uttar Pradesh.
             </p>
             <div className="mt-6 flex gap-3">
               {SOCIALS.map(({ icon: Icon, url, label }) => (
@@ -103,11 +112,15 @@ export function Footer() {
             <ul className="space-y-3 text-sm text-white/70">
               <li className="flex gap-3">
                 <Phone className="h-4 w-4 text-gold shrink-0 mt-0.5" />
-                <a href={`tel:${CONTACT.phone.replace(/\s+/g, "")}`} className="hover:text-gold">{CONTACT.phone}</a>
+                <a href={`tel:${CONTACT.phone.replace(/\s+/g, "")}`} className="hover:text-gold">
+                  {CONTACT.phone}
+                </a>
               </li>
               <li className="flex gap-3">
                 <Mail className="h-4 w-4 text-gold shrink-0 mt-0.5" />
-                <a href={`mailto:${CONTACT.email}`} className="hover:text-gold break-all">{CONTACT.email}</a>
+                <a href={`mailto:${CONTACT.email}`} className="hover:text-gold break-all">
+                  {CONTACT.email}
+                </a>
               </li>
               <li className="flex gap-3">
                 <MapPin className="h-4 w-4 text-gold shrink-0 mt-0.5" />

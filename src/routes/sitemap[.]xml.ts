@@ -36,10 +36,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           path: `/event/${e.slug}`,
           changefreq: e.status === "upcoming" ? "weekly" : "yearly",
           priority: e.status === "upcoming" ? "0.9" : "0.6",
-          lastmod:
-            e.status === "upcoming"
-              ? today
-              : (e.endDate || `${e.year}-12-31`).slice(0, 10),
+          lastmod: e.status === "upcoming" ? today : (e.endDate || `${e.year}-12-31`).slice(0, 10),
         }));
 
         // Ensure every static entry has a lastmod (defaults to today).

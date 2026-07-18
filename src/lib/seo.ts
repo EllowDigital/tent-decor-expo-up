@@ -9,8 +9,8 @@
 export const SITE_URL: string = (() => {
   const raw =
     (typeof import.meta !== "undefined" &&
-      (import.meta as unknown as { env?: Record<string, string | undefined> })
-        .env?.VITE_SITE_URL) ||
+      (import.meta as unknown as { env?: Record<string, string | undefined> }).env
+        ?.VITE_SITE_URL) ||
     "https://www.tentdecorexpo.com";
   return raw.replace(/\/+$/, "");
 })();
@@ -130,14 +130,16 @@ export const organizationJsonLd = () => ({
     postalCode: "208001",
     addressCountry: "IN",
   },
-  contactPoint: [{
-    "@type": "ContactPoint",
-    telephone: "+91-98765-43210",
-    email: "info@tentdecorexpoup.in",
-    contactType: "customer support",
-    areaServed: "IN",
-    availableLanguage: ["en", "hi"],
-  }],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+91-98765-43210",
+      email: "info@tentdecorexpoup.in",
+      contactType: "customer support",
+      areaServed: "IN",
+      availableLanguage: ["en", "hi"],
+    },
+  ],
   sameAs: [
     "https://www.facebook.com/tentdecorexpo",
     "https://www.instagram.com/tentdecorexpo",
@@ -147,9 +149,7 @@ export const organizationJsonLd = () => ({
 });
 
 /** BreadcrumbList JSON-LD helper. */
-export const breadcrumbJsonLd = (
-  items: Array<{ name: string; path: string }>,
-) => ({
+export const breadcrumbJsonLd = (items: Array<{ name: string; path: string }>) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: items.map((it, i) => ({
@@ -161,9 +161,7 @@ export const breadcrumbJsonLd = (
 });
 
 /** FAQPage JSON-LD helper. */
-export const faqJsonLd = (
-  faqs: Array<{ question: string; answer: string }>,
-) => ({
+export const faqJsonLd = (faqs: Array<{ question: string; answer: string }>) => ({
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: faqs.map((f) => ({
@@ -255,7 +253,6 @@ export const PAGE_SEO = {
       "Venue, dates, host partners and registration for the 4th Mahadhiveshan at Sanskar Lawn, Kanpur — 30 Aug to 1 Sep 2026.",
     image: "/assets/og-events.jpg",
   },
-
 } as const satisfies Record<string, PageSeoInput>;
 
 export type PageKey = keyof typeof PAGE_SEO;
@@ -279,9 +276,11 @@ export function validateHead(head: HeadDescriptor, expectedUrl: string): SeoIssu
   const canonical = head.links.find((l) => l.rel === "canonical")?.href;
 
   if (!title) issues.push({ level: "error", msg: "Missing <title>" });
-  else if (title.length > 65) issues.push({ level: "warn", msg: `Title ${title.length} chars (>65)` });
+  else if (title.length > 65)
+    issues.push({ level: "warn", msg: `Title ${title.length} chars (>65)` });
   if (!desc) issues.push({ level: "error", msg: "Missing meta description" });
-  else if (desc.length > 165) issues.push({ level: "warn", msg: `Description ${desc.length} chars (>165)` });
+  else if (desc.length > 165)
+    issues.push({ level: "warn", msg: `Description ${desc.length} chars (>165)` });
   if (!ogTitle) issues.push({ level: "error", msg: "Missing og:title" });
   if (!ogDesc) issues.push({ level: "error", msg: "Missing og:description" });
   if (!ogType) issues.push({ level: "error", msg: "Missing og:type" });

@@ -17,8 +17,6 @@ import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/layout/PageChrome";
 import { websiteJsonLd, organizationJsonLd } from "@/lib/seo";
 
-
-
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -51,13 +49,25 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold text-charcoal">This page didn't load</h1>
-        <p className="mt-2 text-sm text-slate-muted">Something went wrong. Please refresh or head back home.</p>
+        <p className="mt-2 text-sm text-slate-muted">
+          Something went wrong. Please refresh or head back home.
+        </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
-            onClick={() => { router.invalidate(); reset(); }}
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
             className="rounded-md bg-gradient-gold px-4 py-2 text-sm font-medium text-charcoal"
-          >Try again</button>
-          <a href="/" className="rounded-md border border-input px-4 py-2 text-sm font-medium text-charcoal hover:bg-accent">Go home</a>
+          >
+            Try again
+          </button>
+          <a
+            href="/"
+            className="rounded-md border border-input px-4 py-2 text-sm font-medium text-charcoal hover:bg-accent"
+          >
+            Go home
+          </a>
         </div>
       </div>
     </div>
@@ -83,8 +93,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "color-scheme", content: "light" },
       { name: "format-detection", content: "telephone=no" },
       { name: "referrer", content: "strict-origin-when-cross-origin" },
-      { name: "robots", content: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" },
-      { name: "googlebot", content: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" },
+      {
+        name: "robots",
+        content: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      },
+      {
+        name: "googlebot",
+        content: "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+      },
       { name: "bingbot", content: "index,follow" },
       { name: "rating", content: "general" },
       { name: "revisit-after", content: "7 days" },
@@ -94,7 +110,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "geo.placename", content: "Kanpur" },
       { name: "geo.position", content: "26.4499;80.3319" },
       { name: "ICBM", content: "26.4499, 80.3319" },
-      { name: "keywords", content: "Tent Decor Expo UP, Mahadhiveshan, Kanpur 2026, tent expo India, decor expo, catering expo, wedding industry, event industry, B2B trade show, TCDWA UP" },
+      {
+        name: "keywords",
+        content:
+          "Tent Decor Expo UP, Mahadhiveshan, Kanpur 2026, tent expo India, decor expo, catering expo, wedding industry, event industry, B2B trade show, TCDWA UP",
+      },
       // og:title / og:description are set per-route via buildHead().
 
       { property: "og:type", content: "website" },
@@ -113,7 +133,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "dns-prefetch", href: "https://fonts.gstatic.com" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap",
+      },
     ],
     scripts: [
       {
@@ -135,7 +158,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <head><HeadContent /></head>
+      <head>
+        <HeadContent />
+      </head>
       <body>
         {children}
         <Scripts />
@@ -187,8 +212,6 @@ function RootComponent() {
       <Footer />
       <ScrollToTop />
       <Toaster position="top-center" richColors />
-
     </QueryClientProvider>
-
   );
 }

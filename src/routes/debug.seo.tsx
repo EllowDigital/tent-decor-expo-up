@@ -1,14 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { EDITIONS } from "@/data/constants";
-import {
-  PAGE_SEO,
-  SITE_URL,
-  abs,
-  buildHead,
-  validateHead,
-  type SeoIssue,
-} from "@/lib/seo";
+import { PAGE_SEO, SITE_URL, abs, buildHead, validateHead, type SeoIssue } from "@/lib/seo";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -154,8 +147,9 @@ function LiveDomPanel() {
     if (typeof document === "undefined") return;
     const meta = (sel: string) =>
       (document.head.querySelector(sel) as HTMLMetaElement | null)?.content || undefined;
-    const canonical =
-      (document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null)?.href;
+    const canonical = (
+      document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null
+    )?.href;
     const scripts = Array.from(
       document.head.querySelectorAll('script[type="application/ld+json"]'),
     ) as HTMLScriptElement[];
@@ -194,7 +188,10 @@ function LiveDomPanel() {
     return [
       { label: "Title present", ok: !!snap.title && !/^Lovable/i.test(snap.title) },
       { label: "Meta description", ok: !!snap.description && snap.description.length <= 165 },
-      { label: "Canonical link (absolute)", ok: !!snap.canonical && /^https?:\/\//i.test(snap.canonical) },
+      {
+        label: "Canonical link (absolute)",
+        ok: !!snap.canonical && /^https?:\/\//i.test(snap.canonical),
+      },
       { label: "og:title", ok: !!snap.ogTitle },
       { label: "og:description", ok: !!snap.ogDescription },
       { label: "og:url (absolute)", ok: !!snap.ogUrl && /^https?:\/\//i.test(snap.ogUrl) },
@@ -202,7 +199,10 @@ function LiveDomPanel() {
       { label: "og:image", ok: !!snap.ogImage },
       { label: "twitter:card", ok: !!snap.twitterCard },
       { label: "twitter:image", ok: !!snap.twitterImage },
-      { label: "JSON-LD blocks parse", ok: snap.jsonLd.every((j) => j.ok) && snap.jsonLd.length > 0 },
+      {
+        label: "JSON-LD blocks parse",
+        ok: snap.jsonLd.every((j) => j.ok) && snap.jsonLd.length > 0,
+      },
       {
         label: "Canonical matches og:url",
         ok: !!snap.canonical && !!snap.ogUrl && snap.canonical === snap.ogUrl,
@@ -223,7 +223,9 @@ function LiveDomPanel() {
             {snap && <> Last scan {snap.scannedAt}.</>}
           </p>
         </div>
-        <Button onClick={scan} size="sm" variant="outline">Re-scan</Button>
+        <Button onClick={scan} size="sm" variant="outline">
+          Re-scan
+        </Button>
       </div>
 
       {snap && (
@@ -263,16 +265,12 @@ function LiveDomPanel() {
               JSON-LD blocks ({snap.jsonLd.length})
             </p>
             <ul className="mt-1 flex flex-wrap gap-1.5">
-              {snap.jsonLd.length === 0 && (
-                <li className="text-xs text-slate-muted">— none —</li>
-              )}
+              {snap.jsonLd.length === 0 && <li className="text-xs text-slate-muted">— none —</li>}
               {snap.jsonLd.map((b, i) => (
                 <li
                   key={i}
                   className={`rounded px-2 py-0.5 text-[11px] font-medium ${
-                    b.ok
-                      ? "bg-slate-100 text-slate-700"
-                      : "bg-rose-100 text-rose-800"
+                    b.ok ? "bg-slate-100 text-slate-700" : "bg-rose-100 text-rose-800"
                   }`}
                 >
                   {b.type}
@@ -287,31 +285,41 @@ function LiveDomPanel() {
               href="/sitemap.xml"
               target="_blank"
               rel="noreferrer"
-            >Open sitemap.xml</a>
+            >
+              Open sitemap.xml
+            </a>
             <a
               className="rounded-md border border-input px-3 py-1.5 hover:bg-accent"
               href="/sitemap-images.xml"
               target="_blank"
               rel="noreferrer"
-            >Open sitemap-images.xml</a>
+            >
+              Open sitemap-images.xml
+            </a>
             <a
               className="rounded-md border border-input px-3 py-1.5 hover:bg-accent"
               href="/robots.txt"
               target="_blank"
               rel="noreferrer"
-            >Open robots.txt</a>
+            >
+              Open robots.txt
+            </a>
             <a
               className="rounded-md border border-input px-3 py-1.5 hover:bg-accent"
               href={`https://search.google.com/test/rich-results?url=${encodeURIComponent(snap.url)}`}
               target="_blank"
               rel="noreferrer"
-            >Test in Rich Results</a>
+            >
+              Test in Rich Results
+            </a>
             <a
               className="rounded-md border border-input px-3 py-1.5 hover:bg-accent"
               href={`https://www.linkedin.com/post-inspector/inspect/${encodeURIComponent(snap.url)}`}
               target="_blank"
               rel="noreferrer"
-            >LinkedIn Post Inspector</a>
+            >
+              LinkedIn Post Inspector
+            </a>
           </div>
         </>
       )}
@@ -341,8 +349,11 @@ function RouteCard({ row }: { row: Row }) {
     errCount > 0
       ? { text: `${errCount} error${errCount > 1 ? "s" : ""}`, cls: "bg-rose-100 text-rose-800" }
       : warnCount > 0
-      ? { text: `${warnCount} warning${warnCount > 1 ? "s" : ""}`, cls: "bg-amber-100 text-amber-800" }
-      : { text: "OK", cls: "bg-emerald-100 text-emerald-800" };
+        ? {
+            text: `${warnCount} warning${warnCount > 1 ? "s" : ""}`,
+            cls: "bg-amber-100 text-amber-800",
+          }
+        : { text: "OK", cls: "bg-emerald-100 text-emerald-800" };
 
   return (
     <Card className="p-4 sm:p-5">
@@ -373,9 +384,7 @@ function RouteCard({ row }: { row: Row }) {
       <div className="mt-4">
         <p className="text-[11px] uppercase tracking-widest text-slate-muted">JSON-LD</p>
         <ul className="mt-1 flex flex-wrap gap-1.5">
-          {jsonLd.length === 0 && (
-            <li className="text-xs text-slate-muted">— none —</li>
-          )}
+          {jsonLd.length === 0 && <li className="text-xs text-slate-muted">— none —</li>}
           {jsonLd.map((b, i) => (
             <li
               key={i}
@@ -390,12 +399,7 @@ function RouteCard({ row }: { row: Row }) {
       {row.issues.length > 0 && (
         <ul className="mt-4 space-y-1 border-t border-border pt-3 text-xs">
           {row.issues.map((i, idx) => (
-            <li
-              key={idx}
-              className={
-                i.level === "error" ? "text-rose-700" : "text-amber-700"
-              }
-            >
+            <li key={idx} className={i.level === "error" ? "text-rose-700" : "text-amber-700"}>
               <span className="font-semibold uppercase mr-1">{i.level}</span>
               {i.msg}
             </li>
