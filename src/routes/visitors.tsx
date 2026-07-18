@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Ticket, CheckCircle2, Calendar, MapPin, Users, Handshake, ShieldCheck, BadgeCheck } from "lucide-react";
+import visitorImg from "@/assets/g1.jpg";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, REGISTER_URL } from "@/data/constants";
 import { EpassDialog } from "@/components/common/EpassDialog";
