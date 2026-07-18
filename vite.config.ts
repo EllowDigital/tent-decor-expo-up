@@ -16,9 +16,12 @@ if (process.env.VERCEL === "1" || process.env.DEPLOY_TARGET === "vercel") {
 } else if (process.env.DEPLOY_TARGET === "netlify" || process.env.NETLIFY === "true") {
   nitroPreset = "netlify";
 }
+export default defineConfig({
+  tanstackStart: {
+    server: { entry: "server" },
+  },
 
-
-
+  nitro: nitroPreset ? { preset: nitroPreset } : undefined,
 
 
   vite: {
