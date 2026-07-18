@@ -214,10 +214,10 @@ function TicketCard({
       </div>
 
       {/* Countdown stub */}
-      <div className="px-5 sm:px-6 py-4 sm:py-5 bg-pearl">
+      <div className="px-4 sm:px-6 py-4 sm:py-5 bg-pearl">
         {cd ? (
           <>
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <span className="text-[10px] uppercase tracking-[0.28em] text-slate-muted font-medium">Boarding in</span>
               {upcoming.startDate && upcoming.endDate && (
                 <AddToCalendar
@@ -230,9 +230,11 @@ function TicketCard({
                   start={upcoming.startDate}
                   end={upcoming.endDate}
                   label="Add to Calendar"
+                  className="w-full sm:w-auto"
                 />
               )}
             </div>
+
             <div className="mt-3 grid grid-cols-4 gap-2" role="timer" aria-live="polite">
               {[
                 { v: cd.days, l: "Days" },
