@@ -563,14 +563,16 @@ function ClosingCTA({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
 /* ---------------- countdown hook ---------------- */
 
 function useCountdown(iso?: string) {
-  const [now, setNow] = useState(() => Date.now());
+  const target = iso ? new Date(iso).getTime() : 0;
+  // Start at target so SSR and first client render both produce zeros → no hydration mismatch.
+  const [now, setNow] = useState(target);
   useEffect(() => {
     if (!iso) return;
+    setNow(Date.now());
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, [iso]);
   if (!iso) return null;
-  const target = new Date(iso).getTime();
   const diff = Math.max(0, target - now);
   const days = Math.floor(diff / 86400000);
   const hours = Math.floor((diff % 86400000) / 3600000);
@@ -578,3 +580,4 @@ function useCountdown(iso?: string) {
   const seconds = Math.floor((diff % 60000) / 1000);
   return { days, hours, minutes, seconds };
 }
+
