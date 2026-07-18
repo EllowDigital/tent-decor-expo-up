@@ -77,4 +77,3 @@ export function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
     </span>
   );
 }
-

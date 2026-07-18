@@ -23,7 +23,6 @@ export default defineConfig({
 
   nitro: nitroPreset ? { preset: nitroPreset } : undefined,
 
-
   vite: {
     server: {
       host: "0.0.0.0",

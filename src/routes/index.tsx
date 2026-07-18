@@ -1,13 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Suspense, lazy, useEffect, useState } from "react";
-import {
-  ArrowRight,
-  MapPin,
-  Ticket,
-  Users,
-  ChevronDown,
-  Plane,
-} from "lucide-react";
+import { ArrowRight, MapPin, Ticket, Users, ChevronDown, Plane } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { EDITIONS, REGISTER_URL, CURRENT_EVENT_ID } from "@/data/constants";
@@ -72,7 +65,6 @@ function Home() {
     </>
   );
 }
-
 
 /* ---------------- HERO (boarding-pass ticket) ---------------- */
 
@@ -350,8 +342,6 @@ function TicketCard({
     </div>
   );
 }
-
-
 
 /* ---------------- countdown hook ---------------- */
 

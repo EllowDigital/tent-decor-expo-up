@@ -13,12 +13,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  EDITIONS,
-  GALLERY,
-  INDUSTRY_CATEGORIES,
-  TESTIMONIALS,
-} from "@/data/constants";
+import { EDITIONS, GALLERY, INDUSTRY_CATEGORIES, TESTIMONIALS } from "@/data/constants";
 import { Reveal } from "@/components/common/Reveal";
 
 /**
