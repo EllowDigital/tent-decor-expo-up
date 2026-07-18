@@ -170,24 +170,28 @@ function Fact({ icon, label, value }: { icon: React.ReactNode; label: string; va
 
 /* ---------------- HOW TO REGISTER ---------------- */
 
-function HowToRegister() {
+function HowToRegister({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
+  const eventName = `${upcoming.edition} · ${upcoming.city} ${upcoming.year}`;
   const steps = [
     {
       icon: Ticket,
       title: "Free Visitor E-Pass",
-      desc: "For trade buyers, planners and industry professionals. Instant confirmation to your inbox.",
+      desc: "For trade buyers, planners and industry professionals. Fill a short form and get an instant reference.",
+      action: "epass" as const,
       cta: "Get E-Pass",
     },
     {
       icon: Store,
       title: "Exhibitor Stall Booking",
       desc: "9 sqm to premium custom stalls. Our team responds within one business day.",
+      action: "stall" as const,
       cta: "Book a Stall",
     },
     {
       icon: CheckCircle2,
       title: "Arrive & Attend",
       desc: "Show your E-Pass at the venue. Walk-in registration is also available on all three days.",
+      action: null,
       cta: null,
     },
   ];
@@ -200,7 +204,7 @@ function HowToRegister() {
             Three simple steps.
           </h2>
           <p className="mt-4 text-slate-muted leading-relaxed">
-            Registration for every edition happens at <span className="text-charcoal font-medium">tentdecorexpo.com</span>. It only takes a minute.
+            Get your E-Pass right here in under a minute — or book an exhibitor stall on the official portal.
           </p>
         </div>
 
@@ -209,7 +213,7 @@ function HowToRegister() {
             const Icon = s.icon;
             return (
               <li key={s.title} className="relative">
-                <Card className="h-full p-6 sm:p-7 border-border/60">
+                <Card className="h-full p-6 sm:p-7 border-border/60 flex flex-col">
                   <div className="flex items-start gap-4">
                     <div className="h-10 w-10 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
                       <Icon className="h-5 w-5 text-gold" />
@@ -219,9 +223,25 @@ function HowToRegister() {
                       <h3 className="mt-0.5 font-display text-lg sm:text-xl font-semibold text-charcoal">{s.title}</h3>
                     </div>
                   </div>
-                  <p className="mt-4 text-sm text-slate-muted leading-relaxed">{s.desc}</p>
-                  {s.cta && (
-                    <RegisterLink size="sm" variant="outline" className="mt-5" showIcon>
+                  <p className="mt-4 text-sm text-slate-muted leading-relaxed flex-1">{s.desc}</p>
+                  {s.action === "epass" && (
+                    <EpassDialog
+                      eventName={eventName}
+                      eventDate={upcoming.dates}
+                      eventVenue={upcoming.venue}
+                      trigger={
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="mt-5 border-gold text-charcoal hover:bg-gold/10 w-fit"
+                        >
+                          <Ticket className="mr-1.5 h-4 w-4" /> {s.cta}
+                        </Button>
+                      }
+                    />
+                  )}
+                  {s.action === "stall" && (
+                    <RegisterLink size="sm" variant="outline" className="mt-5 w-fit" showIcon>
                       {s.cta}
                     </RegisterLink>
                   )}
