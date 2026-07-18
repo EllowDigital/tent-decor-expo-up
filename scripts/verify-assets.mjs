@@ -16,9 +16,10 @@ import { globSync } from "glob";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const SEARCH_ROOTS = ["dist", ".output/public", ".vercel/output/static", "public"].filter((d) =>
+const SEARCH_ROOTS = ["dist/client", "dist", "public"].filter((d) =>
   existsSync(path.join(ROOT, d)),
 );
+
 
 
 if (SEARCH_ROOTS.length === 0) {

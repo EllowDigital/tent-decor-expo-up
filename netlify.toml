@@ -1,12 +1,3 @@
 [build]
   command = "npm run build"
-  publish = "dist"
-
-# Pure static site. SPA fallback so client-side routes (e.g. /about, /event/:slug)
-# resolve to index.html on hard-refresh instead of returning 404.
-# Static files (sitemap.xml, robots.txt, assets) are served first; the fallback
-# only kicks in for unmatched paths.
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  publish = "dist/client"
