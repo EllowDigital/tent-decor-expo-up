@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, ArrowUpRight, Calendar, MapPin, CheckCircle2, Ticket, Store, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Calendar, MapPin, Ticket, Store, Users } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { Button } from "@/components/ui/button";
 import { STATS, EDITIONS, GALLERY, REGISTER_URL } from "@/data/constants";
@@ -31,6 +31,7 @@ function Home() {
   return (
     <>
       <Hero upcoming={upcoming} />
+      <FactStrip upcoming={upcoming} />
       <HowToRegister upcoming={upcoming} />
       <Stats />
       <EventsRow upcoming={upcoming} past={past} />
@@ -44,136 +45,156 @@ function Home() {
 
 function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
   const cd = useCountdown(upcoming.startDate);
+  const eventName = `${upcoming.edition} · ${upcoming.city} ${upcoming.year}`;
+
   return (
     <section className="relative overflow-hidden -mt-16 sm:-mt-20 pt-16 sm:pt-20">
+      {/* Background */}
       <div className="absolute inset-0">
         <img src={heroBg} alt="" className="h-full w-full object-cover" fetchPriority="high" />
-        <div className="absolute inset-0 bg-charcoal/80" />
+        <div className="absolute inset-0 bg-gradient-to-br from-charcoal/95 via-charcoal/85 to-charcoal/70" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-14 pb-16 sm:pt-20 sm:pb-24 lg:pt-28 lg:pb-32">
-        <Reveal>
-          <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/5 px-3 py-1.5">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-gold opacity-60 animate-ping" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
-            </span>
-            <span className="text-[11px] uppercase tracking-[0.28em] text-gold font-medium">
-              {upcoming.status === "upcoming" ? "Upcoming Edition" : "Next Edition"}
-            </span>
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          {/* Left: heading + CTAs */}
+          <div className="lg:col-span-7">
+            <Reveal>
+              <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/[0.04] px-3 py-1.5">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-gold opacity-70 animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
+                </span>
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-gold font-medium">
+                  {upcoming.status === "upcoming" ? "Upcoming Edition" : "Next Edition"} · {upcoming.year}
+                </span>
+              </div>
+
+              <h1 className="mt-6 font-display font-bold text-white leading-[1.05] text-[clamp(2rem,5.5vw,4.75rem)]">
+                {upcoming.edition}
+                <span className="block text-gradient-gold mt-1">{upcoming.city} {upcoming.year}</span>
+              </h1>
+
+              <p className="mt-5 max-w-xl text-white/70 text-base sm:text-lg leading-relaxed">
+                {upcoming.summary}
+              </p>
+
+              <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
+                <EpassDialog
+                  eventName={eventName}
+                  eventDate={upcoming.dates}
+                  eventVenue={upcoming.venue}
+                  trigger={
+                    <Button
+                      size="lg"
+                      className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-12 sm:h-14 px-6 sm:px-8"
+                      aria-label="Start guided E-Pass registration"
+                    >
+                      <Ticket className="mr-2 h-4 w-4" /> Get Free E-Pass
+                    </Button>
+                  }
+                />
+                <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent h-12 sm:h-14 px-6 sm:px-8">
+                  <Link to="/events/$year" params={{ year: upcoming.year }}>
+                    Event details <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </Reveal>
           </div>
 
-          <h1 className="mt-6 font-display font-bold text-white leading-[1.05] text-[clamp(2.25rem,6.5vw,5.5rem)] max-w-4xl">
-            {upcoming.edition}: <span className="text-gradient-gold">{upcoming.city} {upcoming.year}</span>
-          </h1>
-
-          <p className="mt-5 max-w-2xl text-white/75 text-base sm:text-lg leading-relaxed">
-            {upcoming.summary}
-          </p>
-
-          {/* Key facts */}
-          <dl className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 max-w-3xl">
-            <Fact icon={<Calendar className="h-4 w-4" />} label="Dates" value={upcoming.dates} />
-            <Fact icon={<MapPin className="h-4 w-4" />} label="Venue" value={upcoming.venue} />
-            <Fact icon={<Users className="h-4 w-4" />} label="Scale" value={`${upcoming.exhibitors} exhibitors · ${upcoming.visitors} visitors`} />
-          </dl>
-
-          {/* Countdown */}
+          {/* Right: countdown card */}
           {cd && (
-            <div className="mt-8">
-              <div className="flex flex-wrap gap-2 sm:gap-3" role="timer" aria-live="polite" aria-label="Time until event starts">
-                {[
-                  { v: cd.days, l: "Days" },
-                  { v: cd.hours, l: "Hours" },
-                  { v: cd.minutes, l: "Min" },
-                  { v: cd.seconds, l: "Sec" },
-                ].map((u) => (
-                  <div key={u.l} className="min-w-[68px] rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-center">
-                    <div className="font-display text-2xl sm:text-3xl font-bold text-gold tabular-nums">
-                      {String(u.v).padStart(2, "0")}
-                    </div>
-                    <div className="text-[10px] uppercase tracking-widest text-white/60 mt-1">{u.l}</div>
+            <div className="lg:col-span-5">
+              <Reveal delay={0.1}>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-6 sm:p-7">
+                  <div className="flex items-center gap-2 text-gold">
+                    <Calendar className="h-4 w-4" />
+                    <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] font-medium">Counting down</span>
                   </div>
-                ))}
-              </div>
-              {upcoming.startDate && (
-                <CountdownMeta
-                  startISO={upcoming.startDate}
-                  endISO={upcoming.endDate}
-                  timezone={upcoming.timezone}
-                  className="mt-4"
-                  tone="light"
-                />
-              )}
+
+                  <div
+                    className="mt-5 grid grid-cols-4 gap-2 sm:gap-3"
+                    role="timer"
+                    aria-live="polite"
+                    aria-label="Time until event starts"
+                  >
+                    {[
+                      { v: cd.days, l: "Days" },
+                      { v: cd.hours, l: "Hrs" },
+                      { v: cd.minutes, l: "Min" },
+                      { v: cd.seconds, l: "Sec" },
+                    ].map((u) => (
+                      <div key={u.l} className="rounded-lg border border-white/10 bg-charcoal/40 py-3 sm:py-4 text-center">
+                        <div className="font-display font-bold text-gold tabular-nums text-2xl sm:text-3xl leading-none">
+                          {String(u.v).padStart(2, "0")}
+                        </div>
+                        <div className="text-[9px] sm:text-[10px] uppercase tracking-widest text-white/50 mt-1.5">{u.l}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {upcoming.startDate && (
+                    <CountdownMeta
+                      startISO={upcoming.startDate}
+                      endISO={upcoming.endDate}
+                      timezone={upcoming.timezone}
+                      className="mt-4"
+                      tone="light"
+                    />
+                  )}
+
+                  {upcoming.startDate && upcoming.endDate && (
+                    <div className="mt-5 pt-5 border-t border-white/10">
+                      <AddToCalendar
+                        variant="ghostLight"
+                        size="sm"
+                        title={eventName}
+                        description={`${upcoming.summary} Register at ${REGISTER_URL}`}
+                        location={upcoming.venue}
+                        timezone={upcoming.timezone}
+                        start={upcoming.startDate}
+                        end={upcoming.endDate}
+                        label="Add to Calendar"
+                      />
+                    </div>
+                  )}
+                </div>
+              </Reveal>
             </div>
           )}
-
-          {/* Primary CTAs */}
-          <div className="mt-9 flex flex-col sm:flex-row flex-wrap gap-3">
-            <EpassDialog
-              eventName={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
-              eventDate={upcoming.dates}
-              eventVenue={upcoming.venue}
-              trigger={
-                <Button
-                  size="lg"
-                  className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-14 px-8"
-                  aria-label="Start guided E-Pass registration"
-                >
-                  <Ticket className="mr-2 h-4 w-4" /> Get Free E-Pass
-                </Button>
-              }
-            />
-            <StallBookingDialog
-              eventName={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
-              eventDate={upcoming.dates}
-              eventVenue={upcoming.venue}
-              trigger={
-                <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 bg-transparent h-14 px-8">
-                  <Store className="mr-2 h-4 w-4" /> Book Exhibitor Stall
-                </Button>
-              }
-            />
-            {upcoming.startDate && upcoming.endDate && (
-              <AddToCalendar
-                variant="ghostLight"
-                size="lg"
-                title={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
-                description={`${upcoming.summary} Register at ${REGISTER_URL}`}
-                location={upcoming.venue}
-                timezone={upcoming.timezone}
-                start={upcoming.startDate}
-                end={upcoming.endDate}
-              />
-            )}
-            <Button asChild size="lg" variant="ghost" className="text-white hover:bg-white/10 h-14 px-6">
-              <Link to="/events/$year" params={{ year: upcoming.year }}>
-                Event details <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-
-          <p className="mt-4 text-xs text-white/50">
-            Prefer the full portal? Register at{" "}
-            <a href={REGISTER_URL} target="_blank" rel="noopener noreferrer" className="text-gold underline underline-offset-4 hover:text-gold-light">
-              tentdecorexpo.com
-            </a>
-          </p>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
 }
 
-function Fact({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+/* ---------------- FACT STRIP ---------------- */
+
+function FactStrip({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
+  const facts = [
+    { icon: Calendar, label: "Dates", value: upcoming.dates },
+    { icon: MapPin, label: "Venue", value: upcoming.venue },
+    { icon: Users, label: "Scale", value: `${upcoming.exhibitors} exhibitors · ${upcoming.visitors} visitors` },
+  ];
   return (
-    <div className="rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3">
-      <div className="flex items-center gap-2 text-gold text-[10px] uppercase tracking-widest">
-        {icon}
-        <span>{label}</span>
+    <section className="border-b border-border bg-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <dl className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border">
+          {facts.map((f) => (
+            <div key={f.label} className="flex items-start gap-3 py-5 sm:py-6 sm:px-6 first:sm:pl-0 last:sm:pr-0">
+              <div className="h-9 w-9 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
+                <f.icon className="h-4 w-4 text-gold" />
+              </div>
+              <div className="min-w-0">
+                <dt className="text-[10px] uppercase tracking-widest text-slate-muted">{f.label}</dt>
+                <dd className="mt-0.5 text-sm sm:text-base text-charcoal font-medium leading-snug">{f.value}</dd>
+              </div>
+            </div>
+          ))}
+        </dl>
       </div>
-      <p className="mt-1 text-sm sm:text-[15px] text-white font-medium leading-snug">{value}</p>
-    </div>
+    </section>
   );
 }
 
@@ -181,84 +202,75 @@ function Fact({ icon, label, value }: { icon: React.ReactNode; label: string; va
 
 function HowToRegister({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
   const eventName = `${upcoming.edition} · ${upcoming.city} ${upcoming.year}`;
-  const steps = [
-    {
-      icon: Ticket,
-      title: "Free Visitor E-Pass",
-      desc: "For trade buyers, planners and industry professionals. Fill a short form and get an instant reference.",
-      action: "epass" as const,
-      cta: "Get E-Pass",
-    },
-    {
-      icon: Store,
-      title: "Exhibitor Stall Booking",
-      desc: "9 sqm to premium custom stalls. Our team responds within one business day.",
-      action: "stall" as const,
-      cta: "Book a Stall",
-    },
-    {
-      icon: CheckCircle2,
-      title: "Arrive & Attend",
-      desc: "Show your E-Pass at the venue. Walk-in registration is also available on all three days.",
-      action: null,
-      cta: null,
-    },
-  ];
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-white border-b border-border">
+    <section className="py-16 sm:py-20 lg:py-24 bg-pearl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">How to attend</span>
           <h2 className="mt-3 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,3rem)] leading-tight">
-            Three simple steps.
+            Two ways to join.
           </h2>
           <p className="mt-4 text-slate-muted leading-relaxed">
-            Get your E-Pass right here in under a minute — or book an exhibitor stall on the official portal.
+            Trade visitors register free in under a minute. Exhibitors can request a stall — our team responds within one business day.
           </p>
         </div>
 
-        <ol className="mt-10 grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {steps.map((s, i) => {
-            const Icon = s.icon;
-            return (
-              <li key={s.title} className="relative">
-                <Card className="h-full p-6 sm:p-7 border-border/60 flex flex-col">
-                  <div className="flex items-start gap-4">
-                    <div className="h-10 w-10 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
-                      <Icon className="h-5 w-5 text-gold" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-[10px] uppercase tracking-widest text-slate-muted">Step {i + 1}</div>
-                      <h3 className="mt-0.5 font-display text-lg sm:text-xl font-semibold text-charcoal">{s.title}</h3>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-sm text-slate-muted leading-relaxed flex-1">{s.desc}</p>
-                  {s.action === "epass" && (
-                    <EpassDialog
-                      eventName={eventName}
-                      eventDate={upcoming.dates}
-                      eventVenue={upcoming.venue}
-                      trigger={
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="mt-5 border-gold text-charcoal hover:bg-gold/10 w-fit"
-                        >
-                          <Ticket className="mr-1.5 h-4 w-4" /> {s.cta}
-                        </Button>
-                      }
-                    />
-                  )}
-                  {s.action === "stall" && (
-                    <RegisterLink size="sm" variant="outline" className="mt-5 w-fit" showIcon>
-                      {s.cta}
-                    </RegisterLink>
-                  )}
-                </Card>
-              </li>
-            );
-          })}
-        </ol>
+        <div className="mt-10 grid gap-4 sm:gap-6 md:grid-cols-2">
+          {/* E-Pass card */}
+          <Card className="p-6 sm:p-8 border-border/60 bg-white flex flex-col">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
+                <Ticket className="h-5 w-5 text-gold" />
+              </div>
+              <span className="text-[10px] uppercase tracking-widest text-slate-muted">Visitors</span>
+            </div>
+            <h3 className="mt-5 font-display text-xl sm:text-2xl font-semibold text-charcoal">Free Visitor E-Pass</h3>
+            <p className="mt-3 text-sm text-slate-muted leading-relaxed flex-1">
+              For trade buyers, planners and industry professionals. Fill a short form and get an instant reference code.
+            </p>
+            <EpassDialog
+              eventName={eventName}
+              eventDate={upcoming.dates}
+              eventVenue={upcoming.venue}
+              trigger={
+                <Button size="lg" className="mt-6 bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 w-fit">
+                  <Ticket className="mr-2 h-4 w-4" /> Get E-Pass
+                </Button>
+              }
+            />
+          </Card>
+
+          {/* Stall card */}
+          <Card className="p-6 sm:p-8 border-border/60 bg-white flex flex-col">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 shrink-0 rounded-lg bg-charcoal/[0.06] grid place-items-center">
+                <Store className="h-5 w-5 text-charcoal" />
+              </div>
+              <span className="text-[10px] uppercase tracking-widest text-slate-muted">Exhibitors</span>
+            </div>
+            <h3 className="mt-5 font-display text-xl sm:text-2xl font-semibold text-charcoal">Exhibitor Stall Booking</h3>
+            <p className="mt-3 text-sm text-slate-muted leading-relaxed flex-1">
+              From 9 sqm shell schemes to premium custom stalls. Share your requirements and we'll follow up with pricing and layout.
+            </p>
+            <StallBookingDialog
+              eventName={eventName}
+              eventDate={upcoming.dates}
+              eventVenue={upcoming.venue}
+              trigger={
+                <Button size="lg" variant="outline" className="mt-6 border-charcoal text-charcoal hover:bg-charcoal hover:text-white w-fit">
+                  <Store className="mr-2 h-4 w-4" /> Book a Stall
+                </Button>
+              }
+            />
+          </Card>
+        </div>
+
+        <p className="mt-8 text-xs sm:text-sm text-slate-muted">
+          Prefer the full portal? Register at{" "}
+          <a href={REGISTER_URL} target="_blank" rel="noopener noreferrer" className="text-charcoal font-medium underline underline-offset-4 decoration-gold hover:text-gold">
+            tentdecorexpo.com
+          </a>
+        </p>
       </div>
     </section>
   );
@@ -268,9 +280,9 @@ function HowToRegister({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
 
 function Stats() {
   return (
-    <section className="py-14 sm:py-16 bg-pearl border-b border-border">
+    <section className="py-14 sm:py-16 lg:py-20 bg-white border-y border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 sm:gap-6">
           {STATS.map((s) => (
             <div key={s.label} className="text-center sm:text-left">
               <div className="font-display font-bold text-gradient-gold text-[clamp(2rem,5vw,3.5rem)] leading-none">
@@ -295,17 +307,21 @@ function EventsRow({
   past: (typeof EDITIONS)[number] | undefined;
 }) {
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-white">
+    <section className="py-16 sm:py-20 lg:py-24 bg-pearl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-8 sm:mb-10">
-          <div>
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4 mb-8 sm:mb-10">
+          <div className="min-w-0">
             <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">Editions</span>
-            <h2 className="mt-2 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,3rem)]">
+            <h2 className="mt-2 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,3rem)] leading-tight">
               This year & recent past.
             </h2>
           </div>
-          <Button asChild variant="ghost" className="text-charcoal hover:bg-gold/10">
-            <Link to="/events">All editions <ArrowRight className="ml-1.5 h-4 w-4" /></Link>
+          <Button asChild variant="ghost" className="text-charcoal hover:bg-gold/10 shrink-0">
+            <Link to="/events">
+              <span className="hidden sm:inline">All editions</span>
+              <span className="sm:hidden">All</span>
+              <ArrowRight className="ml-1.5 h-4 w-4" />
+            </Link>
           </Button>
         </div>
 
@@ -332,19 +348,6 @@ function EventsRow({
               <Button asChild size="sm" variant="outline" className="border-charcoal/20">
                 <Link to="/events/$year" params={{ year: upcoming.year }}>Details</Link>
               </Button>
-              {upcoming.startDate && upcoming.endDate && (
-                <AddToCalendar
-                  size="sm"
-                  variant="outline"
-                  title={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
-                  description={`${upcoming.summary} Register at ${REGISTER_URL}`}
-                  location={upcoming.venue}
-                  timezone={upcoming.timezone}
-                  start={upcoming.startDate}
-                  end={upcoming.endDate}
-                  label="Add to Calendar"
-                />
-              )}
             </div>
           </Card>
 
@@ -374,15 +377,19 @@ function EventsRow({
 
 function GalleryPreview() {
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-pearl">
+    <section className="py-16 sm:py-20 lg:py-24 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
-          <div>
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4 mb-8">
+          <div className="min-w-0">
             <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">Moments</span>
-            <h2 className="mt-2 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,3rem)]">From the show floor.</h2>
+            <h2 className="mt-2 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,3rem)] leading-tight">From the show floor.</h2>
           </div>
-          <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10">
-            <Link to="/gallery">Full gallery <ArrowRight className="ml-2 h-4 w-4" /></Link>
+          <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10 shrink-0">
+            <Link to="/gallery">
+              <span className="hidden sm:inline">Full gallery</span>
+              <span className="sm:hidden">Gallery</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </Button>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
@@ -416,7 +423,7 @@ function ClosingCTA({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <RegisterLink size="lg" variant="gold" showIcon>Register at tentdecorexpo.com</RegisterLink>
-          <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 bg-transparent h-14 px-8">
+          <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 bg-transparent h-12 sm:h-14 px-6 sm:px-8">
             <a href={REGISTER_URL} target="_blank" rel="noopener noreferrer" aria-label="Open the registration site in a new tab">
               Open portal <ArrowUpRight className="ml-2 h-4 w-4" />
             </a>
