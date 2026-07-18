@@ -120,13 +120,13 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Navbar />
-      <main id="main" className="min-h-dvh pt-16 sm:pt-20 pb-20 sm:pb-0">
+      <main id="main" className="min-h-dvh pt-16 sm:pt-20">
         <Outlet />
       </main>
       <Footer />
-      <MobileEventBar />
       <ScrollToTop />
       <Toaster position="top-center" richColors />
+
     </QueryClientProvider>
 
   );
