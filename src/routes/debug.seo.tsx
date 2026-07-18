@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { EDITIONS } from "@/data/constants";
 import {
   PAGE_SEO,
@@ -10,12 +10,15 @@ import {
   type SeoIssue,
 } from "@/lib/seo";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/debug/seo")({
   head: () => ({
     meta: [
       { title: "SEO debug — Tent Decor Expo UP" },
-      { name: "robots", content: "noindex,nofollow" },
+      { name: "description", content: "Internal SEO validator for Tent Decor Expo UP." },
+      { name: "robots", content: "noindex,nofollow,noarchive" },
+      { name: "googlebot", content: "noindex,nofollow" },
     ],
   }),
   component: SeoDebug,
