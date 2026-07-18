@@ -286,10 +286,10 @@ function Gallery() {
             <>
               <ul
                 role="list"
-                className="columns-2 md:columns-3 xl:columns-4 gap-3 sm:gap-4 lg:gap-5 [column-fill:_balance]"
+                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5"
               >
                 {shown.map((g, i) => (
-                  <li key={`${g.src}-${g._idx}-${i}`} className="break-inside-avoid mb-3 sm:mb-4 lg:mb-5 inline-block w-full">
+                  <li key={`${g.src}-${g._idx}-${i}`} className="w-full">
                     <Reveal delay={Math.min((i % PAGE) * 0.02, 0.2)}>
                       <button
                         onClick={() => setLightbox(i)}
@@ -302,10 +302,10 @@ function Gallery() {
                           idx={g._idx}
                           priority={i < 4}
                         />
-                        <span className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 rounded-full bg-charcoal/75 backdrop-blur-md text-gold text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold">
+                        <span className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 rounded-full bg-charcoal/75 backdrop-blur-md text-gold text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold z-10">
                           {g.year || "Archive"}
                         </span>
-                        <span className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/30 to-transparent opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 sm:p-5 text-left">
+                        <span className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/30 to-transparent opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 sm:p-5 text-left z-10">
                           <span className="text-[10px] uppercase tracking-[0.24em] text-gold font-semibold">{g.category}</span>
                           <span className="mt-1 text-white font-medium text-sm sm:text-base leading-snug line-clamp-2">{g.title}</span>
                         </span>
@@ -314,6 +314,7 @@ function Gallery() {
                   </li>
                 ))}
               </ul>
+
 
               <div ref={sentinelRef} aria-hidden className="h-1" />
               {hasMore && (
