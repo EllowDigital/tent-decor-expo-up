@@ -33,6 +33,7 @@ async function main() {
   const targets = WIDTHS.flatMap((w) => [
     path.join(OUT_DIR, `hero-bg-${w}.jpg`),
     path.join(OUT_DIR, `hero-bg-${w}.webp`),
+    path.join(OUT_DIR, `hero-bg-${w}.avif`),
   ]);
 
   const upToDate = await Promise.all(
