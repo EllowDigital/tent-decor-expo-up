@@ -33,7 +33,7 @@ export const Route = createFileRoute("/event/$slug")({
         { name: "description", content: desc },
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
-        { property: "og:type", content: e.status === "upcoming" ? "event" : "article" },
+        { property: "og:type", content: e.status === "upcoming" ? "website" : "article" },
         { property: "og:url", content: url },
         { property: "og:site_name", content: "Tent Decor Expo UP" },
         { property: "og:image", content: image },

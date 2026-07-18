@@ -40,7 +40,7 @@ export const Route = createFileRoute("/event-details")({
       title: `Event details — ${e.edition} · ${e.city} ${e.year}`,
       description: `${e.dates} · ${e.venue}. ${e.summary}`,
       image: e.cover,
-      type: e.status === "upcoming" ? "event" : "article",
+      type: e.status === "upcoming" ? "website" : "article",
     });
   },
   component: EventDetailsPage,
