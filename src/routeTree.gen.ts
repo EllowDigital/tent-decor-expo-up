@@ -9,9 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VisitorsRouteImport } from './routes/visitors'
 import { Route as UpcomingRouteImport } from './routes/upcoming'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ExhibitorsRouteImport } from './routes/exhibitors'
 import { Route as EpassStatusRouteImport } from './routes/epass-status'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -19,6 +21,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
 import { Route as EventsYearRouteImport } from './routes/events.$year'
 
+const VisitorsRoute = VisitorsRouteImport.update({
+  id: '/visitors',
+  path: '/visitors',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UpcomingRoute = UpcomingRouteImport.update({
   id: '/upcoming',
   path: '/upcoming',
@@ -32,6 +39,11 @@ const MembersRoute = MembersRouteImport.update({
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExhibitorsRoute = ExhibitorsRouteImport.update({
+  id: '/exhibitors',
+  path: '/exhibitors',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EpassStatusRoute = EpassStatusRouteImport.update({
@@ -70,9 +82,11 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/epass-status': typeof EpassStatusRoute
+  '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/upcoming': typeof UpcomingRoute
+  '/visitors': typeof VisitorsRoute
   '/events/$year': typeof EventsYearRoute
   '/events/': typeof EventsIndexRoute
 }
@@ -81,9 +95,11 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/epass-status': typeof EpassStatusRoute
+  '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/upcoming': typeof UpcomingRoute
+  '/visitors': typeof VisitorsRoute
   '/events/$year': typeof EventsYearRoute
   '/events': typeof EventsIndexRoute
 }
@@ -93,9 +109,11 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/epass-status': typeof EpassStatusRoute
+  '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/upcoming': typeof UpcomingRoute
+  '/visitors': typeof VisitorsRoute
   '/events/$year': typeof EventsYearRoute
   '/events/': typeof EventsIndexRoute
 }
@@ -106,9 +124,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/epass-status'
+    | '/exhibitors'
     | '/gallery'
     | '/members'
     | '/upcoming'
+    | '/visitors'
     | '/events/$year'
     | '/events/'
   fileRoutesByTo: FileRoutesByTo
@@ -117,9 +137,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/epass-status'
+    | '/exhibitors'
     | '/gallery'
     | '/members'
     | '/upcoming'
+    | '/visitors'
     | '/events/$year'
     | '/events'
   id:
@@ -128,9 +150,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/epass-status'
+    | '/exhibitors'
     | '/gallery'
     | '/members'
     | '/upcoming'
+    | '/visitors'
     | '/events/$year'
     | '/events/'
   fileRoutesById: FileRoutesById
@@ -140,15 +164,24 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   EpassStatusRoute: typeof EpassStatusRoute
+  ExhibitorsRoute: typeof ExhibitorsRoute
   GalleryRoute: typeof GalleryRoute
   MembersRoute: typeof MembersRoute
   UpcomingRoute: typeof UpcomingRoute
+  VisitorsRoute: typeof VisitorsRoute
   EventsYearRoute: typeof EventsYearRoute
   EventsIndexRoute: typeof EventsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/visitors': {
+      id: '/visitors'
+      path: '/visitors'
+      fullPath: '/visitors'
+      preLoaderRoute: typeof VisitorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/upcoming': {
       id: '/upcoming'
       path: '/upcoming'
@@ -168,6 +201,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exhibitors': {
+      id: '/exhibitors'
+      path: '/exhibitors'
+      fullPath: '/exhibitors'
+      preLoaderRoute: typeof ExhibitorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/epass-status': {
@@ -220,9 +260,11 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   EpassStatusRoute: EpassStatusRoute,
+  ExhibitorsRoute: ExhibitorsRoute,
   GalleryRoute: GalleryRoute,
   MembersRoute: MembersRoute,
   UpcomingRoute: UpcomingRoute,
+  VisitorsRoute: VisitorsRoute,
   EventsYearRoute: EventsYearRoute,
   EventsIndexRoute: EventsIndexRoute,
 }

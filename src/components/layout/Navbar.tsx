@@ -3,24 +3,17 @@ import { AnimatePresence, motion } from "motion/react";
 import { Menu, X, Ticket, Store } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
-import { EpassDialog } from "@/components/common/EpassDialog";
-import { StallBookingDialog } from "@/components/common/StallBookingDialog";
 import { Button } from "@/components/ui/button";
-import { EDITIONS, NAV_LINKS } from "@/data/constants";
+import { NAV_LINKS } from "@/data/constants";
 import { cn } from "@/lib/utils";
+
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const upcoming = EDITIONS.find((e) => e.status === "upcoming") ?? EDITIONS[0];
-  const eventCtx = upcoming
-    ? {
-        eventName: `${upcoming.edition} · ${upcoming.city} ${upcoming.year}`,
-        eventDate: upcoming.dates,
-        eventVenue: upcoming.venue,
-      }
-    : {};
+
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -73,23 +66,18 @@ export function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-2">
-            <EpassDialog
-              {...eventCtx}
-              trigger={
-                <Button variant="outline" size="sm" className="border-gold text-charcoal hover:bg-gold/10 h-10 px-4">
-                  <Ticket className="mr-1.5 h-4 w-4" /> Get E-Pass
-                </Button>
-              }
-            />
-            <StallBookingDialog
-              {...eventCtx}
-              trigger={
-                <Button size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-4">
-                  <Store className="mr-1.5 h-4 w-4" /> Book Stall
-                </Button>
-              }
-            />
+            <Button asChild variant="outline" size="sm" className="border-gold text-charcoal hover:bg-gold/10 h-10 px-4">
+              <Link to="/visitors">
+                <Ticket className="mr-1.5 h-4 w-4" /> Visitors
+              </Link>
+            </Button>
+            <Button asChild size="sm" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-10 px-4">
+              <Link to="/exhibitors">
+                <Store className="mr-1.5 h-4 w-4" /> Exhibitors
+              </Link>
+            </Button>
           </div>
+
 
           <button
             className="lg:hidden p-2 rounded-md text-charcoal hover:bg-pearl"
@@ -128,23 +116,18 @@ export function Navbar() {
                 );
               })}
               <div className="pt-3 grid grid-cols-2 gap-2">
-                <EpassDialog
-                  {...eventCtx}
-                  trigger={
-                    <Button variant="outline" className="border-gold text-charcoal hover:bg-gold/10 w-full">
-                      <Ticket className="mr-1.5 h-4 w-4" /> E-Pass
-                    </Button>
-                  }
-                />
-                <StallBookingDialog
-                  {...eventCtx}
-                  trigger={
-                    <Button className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 w-full">
-                      <Store className="mr-1.5 h-4 w-4" /> Book Stall
-                    </Button>
-                  }
-                />
+                <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10 w-full">
+                  <Link to="/visitors">
+                    <Ticket className="mr-1.5 h-4 w-4" /> Visitors
+                  </Link>
+                </Button>
+                <Button asChild className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 w-full">
+                  <Link to="/exhibitors">
+                    <Store className="mr-1.5 h-4 w-4" /> Exhibitors
+                  </Link>
+                </Button>
               </div>
+
             </div>
           </motion.div>
         )}
