@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
-import { Button } from "@/components/ui/button";
+import { RegisterLink } from "@/components/common/RegisterLink";
 import { NAV_LINKS } from "@/data/constants";
 import { cn } from "@/lib/utils";
 
@@ -61,12 +61,8 @@ export function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
-            <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10">
-              <Link to="/register">Get E-Pass</Link>
-            </Button>
-            <Button asChild className="bg-gradient-gold text-charcoal hover:opacity-90 shadow-gold">
-              <Link to="/register">Book Stall</Link>
-            </Button>
+            <RegisterLink variant="outline">Get E-Pass</RegisterLink>
+            <RegisterLink variant="gold" showIcon>Book Stall</RegisterLink>
           </div>
 
           <button
@@ -102,12 +98,8 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="pt-3 grid grid-cols-2 gap-2">
-                <Button asChild variant="outline" className="border-gold text-charcoal">
-                  <Link to="/register">Get E-Pass</Link>
-                </Button>
-                <Button asChild className="bg-gradient-gold text-charcoal">
-                  <Link to="/register">Book Stall</Link>
-                </Button>
+                <RegisterLink variant="outline">Get E-Pass</RegisterLink>
+                <RegisterLink variant="gold">Book Stall</RegisterLink>
               </div>
             </div>
           </motion.div>

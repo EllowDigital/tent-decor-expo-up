@@ -9,26 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RegisterRouteImport } from './routes/register'
 import { Route as GalleryRouteImport } from './routes/gallery'
-import { Route as Event2026RouteImport } from './routes/event-2026'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EventsIndexRouteImport } from './routes/events.index'
+import { Route as EventsYearRouteImport } from './routes/events.$year'
 
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Event2026Route = Event2026RouteImport.update({
-  id: '/event-2026',
-  path: '/event-2026',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -46,31 +36,41 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventsIndexRoute = EventsIndexRouteImport.update({
+  id: '/events/',
+  path: '/events/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsYearRoute = EventsYearRouteImport.update({
+  id: '/events/$year',
+  path: '/events/$year',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/event-2026': typeof Event2026Route
   '/gallery': typeof GalleryRoute
-  '/register': typeof RegisterRoute
+  '/events/$year': typeof EventsYearRoute
+  '/events/': typeof EventsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/event-2026': typeof Event2026Route
   '/gallery': typeof GalleryRoute
-  '/register': typeof RegisterRoute
+  '/events/$year': typeof EventsYearRoute
+  '/events': typeof EventsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/event-2026': typeof Event2026Route
   '/gallery': typeof GalleryRoute
-  '/register': typeof RegisterRoute
+  '/events/$year': typeof EventsYearRoute
+  '/events/': typeof EventsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -78,51 +78,37 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
-    | '/event-2026'
     | '/gallery'
-    | '/register'
+    | '/events/$year'
+    | '/events/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/event-2026' | '/gallery' | '/register'
+  to: '/' | '/about' | '/contact' | '/gallery' | '/events/$year' | '/events'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
-    | '/event-2026'
     | '/gallery'
-    | '/register'
+    | '/events/$year'
+    | '/events/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
-  Event2026Route: typeof Event2026Route
   GalleryRoute: typeof GalleryRoute
-  RegisterRoute: typeof RegisterRoute
+  EventsYearRoute: typeof EventsYearRoute
+  EventsIndexRoute: typeof EventsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/gallery': {
       id: '/gallery'
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/event-2026': {
-      id: '/event-2026'
-      path: '/event-2026'
-      fullPath: '/event-2026'
-      preLoaderRoute: typeof Event2026RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -146,6 +132,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/events/': {
+      id: '/events/'
+      path: '/events'
+      fullPath: '/events/'
+      preLoaderRoute: typeof EventsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events/$year': {
+      id: '/events/$year'
+      path: '/events/$year'
+      fullPath: '/events/$year'
+      preLoaderRoute: typeof EventsYearRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -153,9 +153,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
-  Event2026Route: Event2026Route,
   GalleryRoute: GalleryRoute,
-  RegisterRoute: RegisterRoute,
+  EventsYearRoute: EventsYearRoute,
+  EventsIndexRoute: EventsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

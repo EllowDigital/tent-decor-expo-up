@@ -8,6 +8,7 @@ import { Reveal, Counter } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { RegisterLink } from "@/components/common/RegisterLink";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -60,11 +61,9 @@ function Home() {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
-              <Button asChild size="lg" className="bg-gradient-gold text-charcoal hover:opacity-90 shadow-gold h-14 px-8 text-base">
-                <Link to="/event-2026">Explore Event <ArrowRight className="ml-2 h-4 w-4" /></Link>
-              </Button>
+              <RegisterLink size="lg" variant="gold" showIcon>Get Free E-Pass</RegisterLink>
               <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 h-14 px-8 text-base bg-transparent">
-                <Link to="/gallery">View Gallery</Link>
+                <Link to="/events/2026">Explore Kanpur 2026 <ArrowRight className="ml-2 h-4 w-4" /></Link>
               </Button>
             </div>
           </motion.div>
@@ -163,7 +162,7 @@ function Home() {
                 <p className="text-lg text-gold font-medium">4th Mahadhiveshan</p>
                 <p className="mt-4 text-slate-muted leading-relaxed">30 August – 1 September 2026 · Sanskar Lawn, Kanpur. Hosted by Shamiyana Furniture Association.</p>
                 <Button asChild className="mt-6 bg-gradient-gold text-charcoal">
-                  <Link to="/event-2026">Explore Kanpur 2026 <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                  <Link to="/events/$year" params={{ year: "2026" }}>Explore Kanpur 2026 <ArrowRight className="ml-2 h-4 w-4" /></Link>
                 </Button>
               </Card>
             </Reveal>
@@ -175,7 +174,7 @@ function Home() {
                 <p className="text-lg text-gold font-medium">3rd Mahadhiveshan</p>
                 <p className="mt-4 text-white/70 leading-relaxed">Organised in Lucknow by the parent association — 15,000+ visitors and 180+ exhibitors marked the largest gathering to date.</p>
                 <Button asChild variant="outline" className="mt-6 border-gold text-gold hover:bg-gold/10 bg-transparent">
-                  <Link to="/gallery">See Highlights</Link>
+                  <Link to="/events/$year" params={{ year: "2025" }}>Revisit Lucknow 2025</Link>
                 </Button>
               </Card>
             </Reveal>
