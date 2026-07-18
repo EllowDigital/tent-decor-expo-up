@@ -162,7 +162,7 @@ function Home() {
                 <p className="text-lg text-gold font-medium">4th Mahadhiveshan</p>
                 <p className="mt-4 text-slate-muted leading-relaxed">30 August – 1 September 2026 · Sanskar Lawn, Kanpur. Hosted by Shamiyana Furniture Association.</p>
                 <Button asChild className="mt-6 bg-gradient-gold text-charcoal">
-                  <Link to="/event-2026">Explore Kanpur 2026 <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                  <Link to="/events/$year" params={{ year: "2026" }}>Explore Kanpur 2026 <ArrowRight className="ml-2 h-4 w-4" /></Link>
                 </Button>
               </Card>
             </Reveal>
@@ -174,7 +174,7 @@ function Home() {
                 <p className="text-lg text-gold font-medium">3rd Mahadhiveshan</p>
                 <p className="mt-4 text-white/70 leading-relaxed">Organised in Lucknow by the parent association — 15,000+ visitors and 180+ exhibitors marked the largest gathering to date.</p>
                 <Button asChild variant="outline" className="mt-6 border-gold text-gold hover:bg-gold/10 bg-transparent">
-                  <Link to="/gallery">See Highlights</Link>
+                  <Link to="/events/$year" params={{ year: "2025" }}>Revisit Lucknow 2025</Link>
                 </Button>
               </Card>
             </Reveal>
