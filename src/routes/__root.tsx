@@ -95,8 +95,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "geo.position", content: "26.4499;80.3319" },
       { name: "ICBM", content: "26.4499, 80.3319" },
       { name: "keywords", content: "Tent Decor Expo UP, Mahadhiveshan, Kanpur 2026, tent expo India, decor expo, catering expo, wedding industry, event industry, B2B trade show, TCDWA UP" },
-      { property: "og:title", content: "Tent Decor Expo UP — Kanpur 2026" },
-      { property: "og:description", content: "Connect • Learn • Grow — the 4th Mahadhiveshan of India's wedding and event economy. 30 August – 1 September 2026, Sanskar Lawn, Kanpur." },
+      // og:title / og:description are set per-route via buildHead().
+
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Tent Decor Expo UP" },
       { property: "og:locale", content: "en_IN" },
