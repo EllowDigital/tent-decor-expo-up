@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
-import { LEADERSHIP, COMMITTEE } from "@/data/constants";
-import { Crown, Users, MapPin } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LEADERSHIP, COMMITTEE, CITY_CHAPTERS } from "@/data/constants";
+import { Crown, Users, MapPin, Building2 } from "lucide-react";
 
 export const Route = createFileRoute("/members")({
   head: () => ({
