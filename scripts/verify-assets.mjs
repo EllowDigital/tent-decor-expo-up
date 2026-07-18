@@ -10,7 +10,7 @@
  * identically in local `bun run build`, Cloudflare, and Vercel — no dev server
  * required, no flaky HTTP.
  */
-import { readFile, stat } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { globSync } from "glob";
 import path from "node:path";
@@ -23,6 +23,7 @@ const SEARCH_ROOTS = ["dist", ".output/public", ".vercel/output/static", "public
 
 if (IS_NETLIFY_BUILD) {
   const netlifyServerFn = path.join(ROOT, ".netlify/functions/server/server.mjs");
+  const netlifyMainFn = path.join(ROOT, ".netlify/functions/server/main.mjs");
   if (!existsSync(netlifyServerFn)) {
     console.error(
       "[verify-assets] ❌ Netlify SSR function missing: .netlify/functions/server/server.mjs",
@@ -30,6 +31,12 @@ if (IS_NETLIFY_BUILD) {
     console.error(
       "[verify-assets] Expected Nitro preset 'netlify' to emit the SSR function for all routes.",
     );
+    process.exit(1);
+  }
+  const main = existsSync(netlifyMainFn) ? await readFile(netlifyMainFn, "utf8") : "";
+  if (!main.includes('./_ssr/ssr.mjs') && !main.includes('"./_ssr/ssr.mjs"')) {
+    console.error("[verify-assets] ❌ Netlify SSR handler is not wired to TanStack SSR.");
+    console.error("[verify-assets] Expected .netlify/functions/server/main.mjs to import _ssr/ssr.mjs.");
     process.exit(1);
   }
   console.log("[verify-assets] ✅ Netlify SSR function exists.");
