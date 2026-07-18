@@ -145,7 +145,7 @@ function TicketCard({
 
 
       {/* Main body */}
-      <div className="px-5 sm:px-6 py-5 sm:py-6">
+      <div className="px-4 sm:px-6 py-5 sm:py-6">
         {/* Route: FROM → TO */}
         <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3">
           <div className="min-w-0">
