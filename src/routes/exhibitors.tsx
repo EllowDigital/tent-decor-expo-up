@@ -18,16 +18,16 @@ import { Button } from "@/components/ui/button";
 import { EDITIONS, EXHIBITOR_CATEGORIES, REGISTER_URL } from "@/data/constants";
 import { StallBookingDialog } from "@/components/common/StallBookingDialog";
 
+import { buildHead, PAGE_SEO, breadcrumbJsonLd } from "@/lib/seo";
+
 export const Route = createFileRoute("/exhibitors")({
-  head: () => ({
-    meta: [
-      { title: "For Exhibitors — Tent Decor Expo UP" },
-      { name: "description", content: "Exhibitor profile for Tent Decor Expo UP. Stall categories, sizes, audience and how to book your presence at the Mahadhiveshan." },
-      { property: "og:title", content: "Exhibitor Profile — Tent Decor Expo UP" },
-      { property: "og:description", content: "Book a stall at UP's largest B2B tent, decor & catering expo. Shell schemes and premium custom stalls available." },
-      { property: "og:url", content: "/exhibitors" },
-    ],
-    links: [{ rel: "canonical", href: "/exhibitors" }],
+  head: () => buildHead({
+    ...PAGE_SEO.exhibitors,
+    extraJsonLd: [breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Attend", path: "/registration" },
+      { name: "For Exhibitors", path: "/exhibitors" },
+    ])],
   }),
   component: ExhibitorsPage,
 });
