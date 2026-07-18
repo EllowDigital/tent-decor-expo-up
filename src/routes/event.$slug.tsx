@@ -133,7 +133,7 @@ function EditionPage() {
       {/* HERO */}
       <section className="relative min-h-[70vh] sm:min-h-[80vh] flex items-end overflow-hidden -mt-16 sm:-mt-20 pt-16 sm:pt-20">
         <div className="absolute inset-0">
-          <img src={e.cover} alt="" width={1920} height={1080} sizes="100vw" decoding="async" /* @ts-ignore */ fetchpriority="high" className="h-full w-full object-cover" />
+          <img src={e.cover} alt="" width={1920} height={1080} sizes="100vw" decoding="async" fetchPriority="high" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/60 to-charcoal/95" />
         </div>
         <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
