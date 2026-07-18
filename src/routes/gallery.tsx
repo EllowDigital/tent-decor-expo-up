@@ -6,6 +6,7 @@ import {
   Images, Sparkles, LayoutGrid, Camera,
 } from "lucide-react";
 import { Reveal } from "@/components/common/Reveal";
+import { GalleryImage } from "@/components/gallery/GalleryImage";
 import { GALLERY, EDITIONS } from "@/data/constants";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
