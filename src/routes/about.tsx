@@ -4,18 +4,10 @@ import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
 import { MILESTONES } from "@/data/constants";
 import { Building2, Target, Compass, ShieldCheck, Handshake, GraduationCap, Scale, Sparkles, ArrowRight } from "lucide-react";
+import { buildHead, PAGE_SEO } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About — Tent Decor Expo UP" },
-      { name: "description", content: "The Tent, Caterers & Decorators Welfare Association of UP — history, mission, vision and the goals behind Tent Decor Expo UP." },
-      { property: "og:title", content: "About — Tent Decor Expo UP" },
-      { property: "og:description", content: "History, mission and vision of Uttar Pradesh's apex tent, catering and decor industry body." },
-      { property: "og:url", content: "/about" },
-    ],
-    links: [{ rel: "canonical", href: "/about" }],
-  }),
+  head: () => buildHead(PAGE_SEO.about),
   component: About,
 });
 
