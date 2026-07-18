@@ -33,7 +33,6 @@ function Home() {
     <>
       <Hero upcoming={upcoming} />
       <CategoryMarquee />
-      <UpcomingBanner upcoming={upcoming} />
       <AboutSnippet />
       <WhyAttendExhibit />
       <TwoPaths />
