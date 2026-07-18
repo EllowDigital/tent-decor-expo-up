@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Play, ChevronLeft, ChevronRight, Search, ArrowDownUp } from "lucide-react";
+import {
+  X, Play, ChevronLeft, ChevronRight, Search, ArrowDownUp,
+  Images, Sparkles, LayoutGrid, Camera,
+} from "lucide-react";
 import { Reveal } from "@/components/common/Reveal";
 import { GALLERY, EDITIONS } from "@/data/constants";
 import { cn } from "@/lib/utils";
@@ -24,9 +27,8 @@ const SORT_LABEL: Record<SortKey, string> = {
   popular: "Popular",
   az: "A–Z",
 };
-const PAGE = 8;
+const PAGE = 12;
 
-// Deterministic pseudo-popularity so the ordering is stable across renders.
 function hashScore(s: string) {
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
@@ -38,7 +40,6 @@ type GalleryItem = (typeof GALLERY)[number] & { _idx: number; _pop: number };
 function Gallery() {
   const YEARS = useMemo(() => ["All", ...EDITIONS.map((e) => e.year)], []);
 
-  // Enrich once.
   const ALL = useMemo<GalleryItem[]>(
     () => GALLERY.map((g, i) => ({ ...g, _idx: i, _pop: hashScore(g.title) })),
     [],
@@ -66,13 +67,11 @@ function Gallery() {
     return sorted;
   }, [ALL, category, year, q, sort]);
 
-  // Reset window when filters/sort change.
   useEffect(() => { setVisible(PAGE); }, [category, year, q, sort]);
 
   const shown = items.slice(0, visible);
   const hasMore = visible < items.length;
 
-  // Infinite scroll sentinel.
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (!hasMore) return;
@@ -97,105 +96,163 @@ function Gallery() {
     [shown.length],
   );
 
+  const activeFilterCount =
+    (category !== "All" ? 1 : 0) + (year !== "All" ? 1 : 0) + (q.trim() ? 1 : 0);
+
+  const stats = useMemo(() => ({
+    photos: ALL.length,
+    editions: EDITIONS.length,
+    categories: CATEGORIES.length - 1,
+  }), [ALL.length]);
+
   return (
     <>
       {/* HERO */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-charcoal relative overflow-hidden">
-        <div className="absolute inset-0 opacity-25">
-          <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-gold blur-[140px]" />
-          <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-gold blur-[120px]" />
+      <section className="relative overflow-hidden bg-charcoal text-white">
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <div className="absolute -top-24 right-1/4 h-72 w-72 sm:h-96 sm:w-96 rounded-full bg-gold blur-[140px]" />
+          <div className="absolute -bottom-24 left-1/4 h-72 w-72 sm:h-96 sm:w-96 rounded-full bg-gold blur-[120px]" />
         </div>
-        <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-[11px] sm:text-xs uppercase tracking-[0.32em] text-gold font-medium">Gallery</span>
-          <h1 className="mt-4 font-display font-bold text-white leading-[1.05] text-[clamp(2rem,6vw,4.5rem)]">
-            Moments that <span className="text-gradient-gold">defined</span> the industry.
-          </h1>
-          <p className="mt-5 text-white/70 text-base sm:text-lg">A visual journey across every Mahadhiveshan edition.</p>
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 text-[11px] sm:text-xs uppercase tracking-[0.28em] text-gold font-medium">
+              <Sparkles className="h-3.5 w-3.5" /> Gallery
+            </span>
+            <h1 className="mt-4 font-display font-bold leading-[1.05] text-4xl sm:text-5xl lg:text-6xl xl:text-7xl">
+              Moments that <span className="text-gradient-gold">defined</span> the industry.
+            </h1>
+            <p className="mt-5 text-white/70 text-base sm:text-lg max-w-2xl leading-relaxed">
+              A visual journey across every Mahadhiveshan — the stages, the craft, the crowds, the culture.
+            </p>
+          </div>
+
+          <div className="mt-10 sm:mt-12 grid grid-cols-3 gap-3 sm:gap-4 max-w-2xl">
+            {[
+              { v: `${stats.photos}+`, l: "Photos", Icon: Images },
+              { v: stats.editions, l: "Editions", Icon: LayoutGrid },
+              { v: stats.categories, l: "Categories", Icon: Camera },
+            ].map(({ v, l, Icon }) => (
+              <div
+                key={l}
+                className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur px-4 py-3 sm:px-5 sm:py-4"
+              >
+                <Icon className="h-4 w-4 text-gold" />
+                <p className="mt-2 font-display text-xl sm:text-2xl lg:text-3xl font-bold text-gradient-gold leading-none">
+                  {v}
+                </p>
+                <p className="mt-1.5 text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/60">
+                  {l}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* FILTER BAR */}
-      <section className="py-6 sm:py-8 bg-white border-b border-border sticky top-16 sm:top-20 z-30 backdrop-blur-md bg-white/90">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-4">
-          {/* Search + Sort row */}
-          <div className="flex flex-col sm:flex-row items-stretch gap-3 max-w-3xl mx-auto">
-            <div className="relative flex-1 min-w-0">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-muted pointer-events-none" />
+      <section className="sticky top-16 sm:top-20 z-30 bg-white/90 backdrop-blur-md border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 sm:py-5 space-y-4">
+          {/* Row 1: search + sort */}
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 sm:gap-3">
+            <div className="relative min-w-0">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-muted pointer-events-none" />
               <Input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Search moments…"
                 aria-label="Search moments"
-                className="pl-11 h-11 bg-pearl border-border/60"
+                className="pl-10 h-11 bg-pearl border-border/60"
               />
             </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <ArrowDownUp className="h-4 w-4 text-slate-muted" aria-hidden />
-              <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
-                <SelectTrigger aria-label="Sort photos" className="h-11 w-full sm:w-40 bg-pearl border-border/60">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {(Object.keys(SORT_LABEL) as SortKey[]).map((k) => (
-                    <SelectItem key={k} value={k}>{SORT_LABEL[k]}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
+              <SelectTrigger
+                aria-label="Sort photos"
+                className="h-11 w-[110px] sm:w-40 bg-pearl border-border/60 shrink-0"
+              >
+                <ArrowDownUp className="h-4 w-4 text-slate-muted mr-1" aria-hidden />
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {(Object.keys(SORT_LABEL) as SortKey[]).map((k) => (
+                  <SelectItem key={k} value={k}>{SORT_LABEL[k]}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Row 2: year chips (scroll on mobile) */}
+          <div className="-mx-4 sm:mx-0 overflow-x-auto scrollbar-none">
+            <div className="flex items-center gap-2 px-4 sm:px-0 whitespace-nowrap">
+              <span className="text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Year</span>
+              {YEARS.map((y) => (
+                <button
+                  key={y}
+                  onClick={() => setYear(y)}
+                  aria-pressed={year === y}
+                  className={cn(
+                    "shrink-0 h-8 px-3.5 rounded-full text-[11px] font-semibold tracking-wider uppercase transition-all border",
+                    year === y
+                      ? "bg-charcoal text-gold border-charcoal"
+                      : "bg-white text-charcoal/70 border-border/60 hover:border-charcoal hover:text-charcoal",
+                  )}
+                >
+                  {y}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Year filter */}
-          <div className="flex flex-wrap justify-center gap-2">
-            <span className="text-[11px] uppercase tracking-widest text-slate-muted self-center mr-2">Year</span>
-            {YEARS.map((y) => (
-              <button
-                key={y}
-                onClick={() => setYear(y)}
-                aria-pressed={year === y}
-                className={cn(
-                  "min-h-9 px-4 py-1.5 rounded-full text-xs font-medium tracking-wider uppercase transition-all",
-                  year === y
-                    ? "bg-charcoal text-gold shadow-elegant"
-                    : "bg-pearl text-slate-muted hover:text-charcoal hover:bg-muted",
-                )}
-              >
-                {y}
-              </button>
-            ))}
+          {/* Row 3: category chips (scroll on mobile) */}
+          <div className="-mx-4 sm:mx-0 overflow-x-auto scrollbar-none">
+            <div className="flex items-center gap-2 px-4 sm:px-0 whitespace-nowrap">
+              <span className="text-[10px] uppercase tracking-[0.24em] text-slate-muted shrink-0 mr-1">Category</span>
+              {CATEGORIES.map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setCategory(c)}
+                  aria-pressed={category === c}
+                  className={cn(
+                    "shrink-0 h-9 px-4 rounded-full text-xs sm:text-sm font-medium transition-all border",
+                    category === c
+                      ? "bg-gradient-gold text-charcoal border-transparent shadow-sm"
+                      : "bg-white text-charcoal/70 border-border/60 hover:border-gold hover:text-charcoal",
+                  )}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Category filter */}
-          <div className="flex flex-wrap justify-center gap-2">
-            <span className="text-[11px] uppercase tracking-widest text-slate-muted self-center mr-2">Category</span>
-            {CATEGORIES.map((c) => (
+          {/* Row 4: meta */}
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-muted">
+            <p role="status" aria-live="polite">
+              Showing <span className="text-charcoal font-semibold">{Math.min(visible, items.length)}</span>
+              {" "}of <span className="text-charcoal font-semibold">{items.length}</span> moments
+            </p>
+            {activeFilterCount > 0 && (
               <button
-                key={c}
-                onClick={() => setCategory(c)}
-                aria-pressed={category === c}
-                className={cn(
-                  "min-h-9 px-4 sm:px-5 py-2 rounded-full text-sm font-medium transition-all",
-                  category === c
-                    ? "bg-gradient-gold text-charcoal shadow-gold"
-                    : "bg-pearl text-slate-muted hover:text-charcoal hover:bg-muted",
-                )}
+                onClick={() => { setCategory("All"); setYear("All"); setQ(""); }}
+                className="inline-flex items-center gap-1.5 text-charcoal font-medium hover:text-gold"
               >
-                {c}
+                <X className="h-3.5 w-3.5" /> Clear {activeFilterCount} filter{activeFilterCount > 1 ? "s" : ""}
               </button>
-            ))}
+            )}
           </div>
-
-          <p className="text-center text-xs text-slate-muted" role="status" aria-live="polite">
-            Showing <span className="text-charcoal font-semibold">{Math.min(visible, items.length)}</span> of {items.length} moments
-          </p>
         </div>
       </section>
 
       {/* MASONRY */}
-      <section className="py-12 sm:py-16 bg-white">
+      <section className="py-10 sm:py-14 lg:py-16 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {items.length === 0 ? (
-            <div className="py-24 text-center">
-              <p className="font-display text-2xl text-charcoal">No moments match those filters.</p>
+            <div className="py-20 sm:py-28 text-center">
+              <div className="mx-auto h-14 w-14 rounded-full bg-pearl grid place-items-center">
+                <Search className="h-5 w-5 text-slate-muted" />
+              </div>
+              <p className="mt-5 font-display text-xl sm:text-2xl text-charcoal">
+                No moments match those filters.
+              </p>
               <p className="mt-2 text-sm text-slate-muted">Try clearing a filter or the search box.</p>
               <button
                 onClick={() => { setCategory("All"); setYear("All"); setQ(""); }}
@@ -208,14 +265,14 @@ function Gallery() {
             <>
               <ul
                 role="list"
-                className="columns-2 md:columns-3 xl:columns-4 gap-3 sm:gap-4 space-y-3 sm:space-y-4"
+                className="columns-2 md:columns-3 xl:columns-4 gap-3 sm:gap-4 [column-fill:_balance] space-y-3 sm:space-y-4"
               >
                 {shown.map((g, i) => (
                   <li key={`${g.src}-${g._idx}-${i}`} className="break-inside-avoid">
-                    <Reveal delay={Math.min((i % PAGE) * 0.03, 0.3)}>
+                    <Reveal delay={Math.min((i % PAGE) * 0.02, 0.2)}>
                       <button
                         onClick={() => setLightbox(i)}
-                        className="block w-full overflow-hidden rounded-xl group relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
+                        className="block w-full overflow-hidden rounded-2xl group relative bg-pearl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2"
                         aria-label={`Open ${g.title}`}
                       >
                         <img
@@ -226,14 +283,14 @@ function Gallery() {
                           sizes="(min-width: 1280px) 22vw, (min-width: 768px) 30vw, 48vw"
                           loading="lazy"
                           decoding="async"
-                          className="w-full h-auto transition-transform duration-700 group-hover:scale-110"
+                          className="w-full h-auto transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
                         />
-                        <span className="absolute top-3 left-3 rounded-full bg-charcoal/70 backdrop-blur-md text-gold text-[10px] uppercase tracking-widest px-2.5 py-1 font-medium">
-                          {g.year}
+                        <span className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 rounded-full bg-charcoal/75 backdrop-blur-md text-gold text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold">
+                          {g.year || "Archive"}
                         </span>
-                        <span className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity flex flex-col justify-end p-4 sm:p-5 text-left">
-                          <span className="text-[11px] uppercase tracking-widest text-gold">{g.category}</span>
-                          <span className="mt-1 text-white font-medium text-sm sm:text-base">{g.title}</span>
+                        <span className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/30 to-transparent opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5 sm:p-5 text-left">
+                          <span className="text-[10px] uppercase tracking-[0.24em] text-gold font-semibold">{g.category}</span>
+                          <span className="mt-1 text-white font-medium text-sm sm:text-base leading-snug line-clamp-2">{g.title}</span>
                         </span>
                       </button>
                     </Reveal>
@@ -241,15 +298,15 @@ function Gallery() {
                 ))}
               </ul>
 
-              {/* Sentinel + Load more */}
               <div ref={sentinelRef} aria-hidden className="h-1" />
               {hasMore && (
                 <div className="mt-10 flex justify-center">
                   <button
                     onClick={() => setVisible((v) => Math.min(v + PAGE, items.length))}
-                    className="min-h-11 px-6 rounded-full bg-charcoal text-gold text-sm font-medium hover:bg-charcoal/90"
+                    className="inline-flex items-center gap-2 min-h-11 px-6 rounded-full bg-charcoal text-gold text-sm font-semibold hover:bg-charcoal/90 transition-colors"
                   >
                     Load more
+                    <span className="text-white/50">· {items.length - visible} left</span>
                   </button>
                 </div>
               )}
@@ -261,29 +318,34 @@ function Gallery() {
       {/* Aftermovies */}
       <section className="py-16 sm:py-20 lg:py-24 bg-pearl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-[11px] sm:text-xs uppercase tracking-[0.32em] text-gold font-medium">Aftermovies</span>
-            <h2 className="mt-4 font-display font-bold text-charcoal text-[clamp(1.75rem,4.5vw,3rem)]">Watch the story unfold.</h2>
+          <div className="max-w-2xl">
+            <span className="text-[11px] sm:text-xs uppercase tracking-[0.28em] text-gold font-medium">Aftermovies</span>
+            <h2 className="mt-2 font-display font-bold text-charcoal text-3xl sm:text-4xl lg:text-5xl">
+              Watch the story unfold.
+            </h2>
+            <p className="mt-3 text-sm sm:text-base text-slate-muted">
+              Short films from recent editions of the Mahadhiveshan.
+            </p>
           </div>
-          <div className="mt-10 sm:mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[
               { title: "Lucknow 2025 — Official Aftermovie", desc: "The 3rd Mahadhiveshan in 3 minutes." },
               { title: "Behind the Mandap", desc: "Craftsmen who build India's grandest weddings." },
               { title: "Voices of the Association", desc: "Members share what the expo means." },
             ].map((v, i) => (
-              <Reveal key={v.title} delay={i * 0.08}>
-                <Card className="overflow-hidden hover-lift border-border/60">
+              <Reveal key={v.title} delay={i * 0.06}>
+                <Card className="overflow-hidden border-border/60 bg-white group hover:border-gold/60 hover:shadow-md transition-all">
                   <button
                     type="button"
-                    className="relative aspect-video w-full bg-charcoal grid place-items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                    className="relative aspect-video w-full bg-charcoal grid place-items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
                     aria-label={`Play ${v.title}`}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-gold/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-gold/25 via-transparent to-charcoal/50" />
                     <div className="relative h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-gradient-gold grid place-items-center shadow-gold group-hover:scale-110 transition-transform">
-                      <Play className="h-5 w-5 sm:h-6 sm:w-6 text-charcoal fill-charcoal ml-1" />
+                      <Play className="h-5 w-5 sm:h-6 sm:w-6 text-charcoal fill-charcoal ml-0.5" />
                     </div>
                   </button>
-                  <div className="p-4 sm:p-5">
+                  <div className="p-5">
                     <h3 className="font-display text-base sm:text-lg font-semibold text-charcoal">{v.title}</h3>
                     <p className="mt-1 text-sm text-slate-muted">{v.desc}</p>
                   </div>
@@ -294,7 +356,6 @@ function Gallery() {
         </div>
       </section>
 
-      {/* LIGHTBOX */}
       <Lightbox
         items={shown}
         index={lightbox}
@@ -326,7 +387,6 @@ function Lightbox({
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const restoreFocusRef = useRef<HTMLElement | null>(null);
 
-  // Body scroll lock while open.
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -334,11 +394,9 @@ function Lightbox({
     return () => { document.body.style.overflow = prev; };
   }, [open]);
 
-  // Focus management + focus trap + keyboard nav.
   useEffect(() => {
     if (!open) return;
     restoreFocusRef.current = (document.activeElement as HTMLElement) ?? null;
-    // Move focus into the dialog.
     const t = setTimeout(() => closeBtnRef.current?.focus(), 0);
 
     function onKey(e: KeyboardEvent) {
@@ -395,7 +453,7 @@ function Lightbox({
             <button
               ref={closeBtnRef}
               onClick={onClose}
-              className="absolute top-2 right-2 sm:top-4 sm:right-4 min-h-11 min-w-11 h-11 w-11 rounded-full bg-white/10 text-white grid place-items-center hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 h-11 w-11 rounded-full bg-white/10 text-white grid place-items-center hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
               aria-label="Close gallery"
             >
               <X className="h-5 w-5" aria-hidden />
@@ -403,7 +461,7 @@ function Lightbox({
 
             <button
               onClick={onPrev}
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 min-h-11 min-w-11 h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-white/10 text-white grid place-items-center hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-white/10 text-white grid place-items-center hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
               aria-label="Previous photo"
             >
               <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
@@ -411,7 +469,7 @@ function Lightbox({
 
             <button
               onClick={onNext}
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 min-h-11 min-w-11 h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-white/10 text-white grid place-items-center hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-white/10 text-white grid place-items-center hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
               aria-label="Next photo"
             >
               <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />
@@ -427,10 +485,10 @@ function Lightbox({
               <img
                 src={current.src}
                 alt={current.title}
-                className="max-h-[75vh] sm:max-h-[80dvh] max-w-full w-auto h-auto rounded-lg shadow-elegant object-contain"
+                className="max-h-[70vh] sm:max-h-[80dvh] max-w-full w-auto h-auto rounded-lg shadow-elegant object-contain"
               />
               <figcaption className="text-center text-white/90 px-4">
-                <p id={descId} className="text-[11px] sm:text-xs uppercase tracking-widest text-gold">
+                <p id={descId} className="text-[11px] sm:text-xs uppercase tracking-[0.24em] text-gold font-semibold">
                   {current.category} · {current.year}
                 </p>
                 <p id={titleId} className="mt-1 font-display text-base sm:text-lg">{current.title}</p>
