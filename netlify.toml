@@ -5,11 +5,10 @@
 [build.environment]
   DEPLOY_TARGET = "netlify"
 
-# Nitro's `netlify` preset emits a Netlify Function that handles SSR for every
-# route. TanStack Start writes the Function bundle under `.netlify/functions/`
-# and static client assets under `dist/`. The catch-all redirect below hands
-# every request to the SSR function so sitemap.xml, robots.txt, JSON-LD, and
-# app routes are all rendered server-side (no SPA fallback).
+# Nitro's `netlify` preset emits the SSR Function at
+# `.netlify/functions/server`. Static client assets are published from `dist/`.
+# The catch-all redirect hands every unmatched request to the SSR function so
+# app routes, dynamic routes and XML server routes render server-side.
 [functions]
   directory = ".netlify/functions"
   node_bundler = "esbuild"

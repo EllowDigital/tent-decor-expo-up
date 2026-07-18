@@ -10,18 +10,34 @@ const analyze = process.env.ANALYZE === "1" || process.env.ANALYZE === "true";
 // and continue to use the default cloudflare-module preset (nitro: undefined).
 //   DEPLOY_TARGET=vercel  (or Vercel's own VERCEL=1) → nitro `vercel` preset
 //   DEPLOY_TARGET=netlify                            → nitro `netlify` preset
-let nitroPreset: string | undefined;
+type NitroTargetConfig = {
+  preset: string;
+  output?: {
+    dir?: string;
+    publicDir?: string;
+  };
+};
+
+let nitroConfig: NitroTargetConfig | undefined;
 if (process.env.VERCEL === "1" || process.env.DEPLOY_TARGET === "vercel") {
-  nitroPreset = "vercel";
+  nitroConfig = { preset: "vercel" };
 } else if (process.env.DEPLOY_TARGET === "netlify" || process.env.NETLIFY === "true") {
-  nitroPreset = "netlify";
+  nitroConfig = {
+    preset: "netlify",
+    output: {
+      // Keep Netlify's SSR function in the directory configured by netlify.toml.
+      dir: ".netlify/functions",
+      // Static client assets are published from dist/ and served before SSR.
+      publicDir: "dist",
+    },
+  };
 }
 export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
 
-  nitro: nitroPreset ? { preset: nitroPreset } : undefined,
+  nitro: nitroConfig,
 
   vite: {
     server: {
