@@ -117,6 +117,60 @@ function Members() {
           </p>
         </div>
       </section>
+
+      {/* City chapters */}
+      <section className="py-16 sm:py-20 bg-pearl">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading eyebrow="City Chapters" title="Local committees across UP." subtitle="Tap a city to see its local president, secretary and committee." />
+          <div className="mt-10">
+            <Tabs defaultValue={CITY_CHAPTERS[0].city} className="w-full">
+              <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+                <TabsList className="inline-flex h-auto flex-nowrap gap-1 bg-white/60 border border-border/60 p-1">
+                  {CITY_CHAPTERS.map((c) => (
+                    <TabsTrigger
+                      key={c.city}
+                      value={c.city}
+                      className="whitespace-nowrap data-[state=active]:bg-charcoal data-[state=active]:text-white text-charcoal/70 hover:text-charcoal px-4 py-2 text-sm"
+                    >
+                      {c.city}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
+              {CITY_CHAPTERS.map((c) => (
+                <TabsContent key={c.city} value={c.city} className="mt-8">
+                  <div className="flex items-center gap-2 text-slate-muted text-sm">
+                    <Building2 className="h-4 w-4 text-gold" />
+                    <span className="uppercase tracking-widest text-[11px]">{c.city} chapter</span>
+                    <span className="text-slate-muted/60">·</span>
+                    <span>{c.members.length} committee members</span>
+                  </div>
+                  <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {c.members.map((m, i) => (
+                      <Reveal key={m.name} delay={i * 0.03}>
+                        <Card className="p-5 h-full border-border/60 bg-white hover:border-gold/60 transition-colors">
+                          <div className="flex items-start gap-3">
+                            <div className="h-10 w-10 shrink-0 rounded-full bg-gold/10 grid place-items-center">
+                              <Users className="h-4 w-4 text-gold" />
+                            </div>
+                            <div className="min-w-0">
+                              <h3 className="font-display text-base font-semibold text-charcoal truncate">{m.name}</h3>
+                              <p className="mt-0.5 text-xs text-gold">{m.role}</p>
+                              <p className="mt-2 inline-flex items-center gap-1 text-xs text-charcoal/70">
+                                <MapPin className="h-3 w-3 text-gold" /> {c.city}
+                              </p>
+                            </div>
+                          </div>
+                        </Card>
+                      </Reveal>
+                    ))}
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
