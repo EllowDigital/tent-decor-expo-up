@@ -71,7 +71,7 @@ function useCountdown(target?: string) {
 }
 
 function EditionPage() {
-  const { edition: e } = Route.useLoaderData();
+  const { edition: e } = Route.useLoaderData() as { edition: Edition };
   const time = useCountdown(e.startDate);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const idx = EDITIONS.findIndex((x) => x.slug === e.slug);
