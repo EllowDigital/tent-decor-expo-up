@@ -1,0 +1,17 @@
+{
+  "name": "Tent Decor Expo UP",
+  "short_name": "TDX UP",
+  "description": "India's premier B2B tent, decor, catering & event expo. Kanpur 2026 — the 4th Mahadhiveshan.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#0f0f0f",
+  "lang": "en-IN",
+  "categories": ["business", "events", "productivity"],
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "48x48", "type": "image/x-icon" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
