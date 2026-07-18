@@ -54,7 +54,7 @@ function useRows(): Row[] {
         title,
         description: desc,
         image: e.cover,
-        type: e.status === "upcoming" ? "event" : "article",
+        type: e.status === "upcoming" ? "website" : "article",
         extraJsonLd: [
           {
             "@context": "https://schema.org",
