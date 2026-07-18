@@ -255,7 +255,16 @@ function EditionPage() {
                   </Button>
                 }
               />
-              <RegisterLink size="lg" variant="outline">Book Your Stall</RegisterLink>
+              <StallBookingDialog
+                eventName={`${e.edition} · ${e.city} ${e.year}`}
+                eventDate={e.dates}
+                eventVenue={e.venue}
+                trigger={
+                  <Button size="lg" variant="outline" className="border-gold text-charcoal hover:bg-gold/10 h-14 px-8">
+                    <Store className="mr-2 h-4 w-4" /> Book Your Stall
+                  </Button>
+                }
+              />
               {e.endDate && (
                 <AddToCalendar
                   variant="outline"
@@ -263,6 +272,7 @@ function EditionPage() {
                   title={`${e.edition} · ${e.city} ${e.year}`}
                   description={`${e.summary} Register at ${REGISTER_URL}`}
                   location={e.venue}
+                  timezone={e.timezone}
                   start={e.startDate}
                   end={e.endDate}
                 />
