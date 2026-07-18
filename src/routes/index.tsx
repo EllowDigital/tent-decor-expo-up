@@ -4,7 +4,7 @@ import { ArrowRight, MapPin, Ticket, Users, ChevronDown, Plane } from "lucide-re
 
 import { Button } from "@/components/ui/button";
 import { EDITIONS, REGISTER_URL, CURRENT_EVENT_ID } from "@/data/constants";
-import { Reveal } from "@/components/common/Reveal";
+
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
 import { HeroBackground } from "@/components/common/HeroBackground";
@@ -87,7 +87,7 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left: headline + intro */}
             <div className="lg:col-span-6">
-              <Reveal>
+              <div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/[0.04] px-3 py-1.5">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="absolute inline-flex h-full w-full rounded-full bg-gold opacity-70 animate-ping" />
@@ -130,16 +130,15 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
                     </Link>
                   </Button>
                 </div>
-              </Reveal>
+              </div>
             </div>
 
             {/* Right: boarding-pass ticket */}
             <div className="lg:col-span-6">
-              <Reveal delay={0.1}>
-                <TicketCard upcoming={upcoming} cd={cd} eventName={eventName} />
-              </Reveal>
+              <TicketCard upcoming={upcoming} cd={cd} eventName={eventName} />
             </div>
           </div>
+
         </div>
       </div>
 
