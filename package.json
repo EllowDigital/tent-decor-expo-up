@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "prebuild": "node scripts/gen-hero-variants.mjs",
     "build": "vite build",
+    "postbuild": "node scripts/verify-assets.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
+    "verify:assets": "node scripts/verify-assets.mjs",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
