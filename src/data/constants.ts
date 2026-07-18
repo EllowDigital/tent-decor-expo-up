@@ -33,6 +33,7 @@ export const INDUSTRY_CATEGORIES = [
 export const NAV_LINKS = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
+  { label: "Members", to: "/members" },
   { label: "Editions", to: "/events" },
   { label: "Gallery", to: "/gallery" },
   { label: "Contact", to: "/contact" },
