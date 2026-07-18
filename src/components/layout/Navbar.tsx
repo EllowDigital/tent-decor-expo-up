@@ -31,9 +31,10 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between gap-4">
+        <div className="flex h-16 sm:h-20 items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="Home">
-            <Logo className={cn("w-auto transition-all", scrolled ? "h-11" : "h-14")} />
+            <Logo className={cn("w-auto transition-all", scrolled ? "h-9 sm:h-11" : "h-10 sm:h-14")} />
+
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
