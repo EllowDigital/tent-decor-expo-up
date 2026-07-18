@@ -55,7 +55,17 @@ export const siteConfig = {
     { label: "Events", to: "/events" },
     { label: "Members", to: "/members" },
     { label: "Gallery", to: "/gallery" },
-    { label: "Registration", to: "/registration" },
+    {
+      label: "Attend",
+      to: "/registration",
+      children: [
+        { label: "For Visitors", to: "/visitors", description: "Who should attend & what to expect" },
+        { label: "For Exhibitors", to: "/exhibitors", description: "Book a stall, sponsorships & pricing" },
+        { label: "Registration", to: "/registration", description: "Central portal for all passes" },
+        { label: "E-Pass Status", to: "/epass-status", description: "Check your registration" },
+        { label: "Event Details", to: "/event-details", description: "Upcoming edition full details" },
+      ],
+    },
     { label: "Contact", to: "/contact" },
   ] as const,
 } as const;
