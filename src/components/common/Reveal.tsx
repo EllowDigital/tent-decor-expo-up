@@ -1,4 +1,11 @@
-import { motion, useInView, useMotionValue, useTransform, animate } from "motion/react";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+  animate,
+} from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export function Reveal({
@@ -13,6 +20,7 @@ export function Reveal({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   // Positive margin => trigger BEFORE the element scrolls into view, so
   // above-the-fold content (hero) reveals immediately on mount and below-fold
   // sections pre-animate slightly ahead of the scroll.
@@ -25,6 +33,12 @@ export function Reveal({
     return () => clearTimeout(t);
   }, []);
   const show = inView || forced;
+
+  // Reduced motion: render children with no transform / no animation.
+  if (prefersReducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
       ref={ref}
@@ -38,19 +52,23 @@ export function Reveal({
   );
 }
 
-
 export function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
-  const count = useMotionValue(0);
+  const prefersReducedMotion = useReducedMotion();
+  const count = useMotionValue(prefersReducedMotion ? to : 0);
   const rounded = useTransform(count, (v) => Math.round(v).toLocaleString());
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      count.set(to);
+      return;
+    }
     if (inView) {
       const controls = animate(count, to, { duration: 2, ease: "easeOut" });
       return () => controls.stop();
     }
-  }, [inView, to, count]);
+  }, [inView, to, count, prefersReducedMotion]);
 
   return (
     <span ref={ref} className="tabular-nums inline-flex">
@@ -59,3 +77,4 @@ export function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
     </span>
   );
 }
+
