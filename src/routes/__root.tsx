@@ -14,13 +14,9 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import {
-  CursorGlow,
-  LoadingScreen,
-  PageTransition,
-  ScrollProgress,
-  ScrollToTop,
-} from "@/components/layout/PageChrome";
+import { ScrollToTop } from "@/components/layout/PageChrome";
+import { MobileEventBar } from "@/components/layout/MobileEventBar";
+
 
 function NotFoundComponent() {
   return (
@@ -110,18 +106,15 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <LoadingScreen />
-      <ScrollProgress />
-      <CursorGlow />
       <Navbar />
-      <main className="min-h-screen pt-20">
-        <PageTransition>
-          <Outlet />
-        </PageTransition>
+      <main id="main" className="min-h-dvh pt-16 sm:pt-20 pb-20 sm:pb-0">
+        <Outlet />
       </main>
       <Footer />
+      <MobileEventBar />
       <ScrollToTop />
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
+
   );
 }
