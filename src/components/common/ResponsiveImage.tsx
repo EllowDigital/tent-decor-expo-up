@@ -42,8 +42,7 @@ export function ResponsiveImage({
       sizes={sizes}
       loading={priority ? "eager" : "lazy"}
       decoding="async"
-      // @ts-expect-error — fetchpriority is valid HTML but not yet in React DOM types on this version
-      fetchpriority={priority ? "high" : "auto"}
+      fetchPriority={priority ? "high" : "auto"}
       className={cn(className)}
     />
   );
