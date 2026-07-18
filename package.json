@@ -8,7 +8,7 @@
     "prebuild": "node scripts/gen-hero-variants.mjs",
     "build": "vite build",
     "build:analyze": "ANALYZE=1 vite build",
-    "postbuild": "node scripts/verify-assets.mjs",
+    "postbuild": "node scripts/fix-netlify-ssr.mjs && node scripts/verify-assets.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "verify:assets": "node scripts/verify-assets.mjs",
