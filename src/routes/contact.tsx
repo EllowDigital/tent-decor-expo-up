@@ -14,18 +14,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CONTACT, FAQS } from "@/data/constants";
+import { buildHead, PAGE_SEO } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — Tent Decor Expo UP" },
-      { name: "description", content: "Reach the Kanpur 2026 team — phone, email, venue and social. FAQs answered." },
-      { property: "og:title", content: "Contact — Tent Decor Expo UP" },
-      { property: "og:description", content: "Get in touch with the Tent Decor Expo UP team." },
-      { property: "og:url", content: "/contact" },
-    ],
-    links: [{ rel: "canonical", href: "/contact" }],
-  }),
+  head: () => buildHead(PAGE_SEO.contact),
   component: Contact,
 });
 
