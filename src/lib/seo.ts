@@ -96,52 +96,154 @@ export const websiteJsonLd = () => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: SITE_NAME,
+  alternateName: ["TDX UP", "Mahadhiveshan"],
   url: SITE_URL,
   publisher: { "@type": "Organization", name: ORG_NAME, url: SITE_URL },
   inLanguage: "en-IN",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE_URL}/gallery?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+});
+
+/** Sitewide Organization JSON-LD with contact + social profiles. */
+export const organizationJsonLd = () => ({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: ORG_NAME,
+  alternateName: SITE_NAME,
+  url: SITE_URL,
+  logo: `${SITE_URL}/apple-touch-icon.png`,
+  description:
+    "Uttar Pradesh's apex tent, catering and decor industry body, organiser of the annual Mahadhiveshan (Tent Decor Expo UP).",
+  email: "info@tentdecorexpoup.in",
+  telephone: "+91-98765-43210",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Sanskar Lawn",
+    addressLocality: "Kanpur",
+    addressRegion: "Uttar Pradesh",
+    postalCode: "208001",
+    addressCountry: "IN",
+  },
+  contactPoint: [{
+    "@type": "ContactPoint",
+    telephone: "+91-98765-43210",
+    email: "info@tentdecorexpoup.in",
+    contactType: "customer support",
+    areaServed: "IN",
+    availableLanguage: ["en", "hi"],
+  }],
+  sameAs: [
+    "https://www.facebook.com/tentdecorexpo",
+    "https://www.instagram.com/tentdecorexpo",
+    "https://www.youtube.com/@tentdecorexpo",
+    "https://twitter.com/tentdecorexpo",
+  ],
+});
+
+/** BreadcrumbList JSON-LD helper. */
+export const breadcrumbJsonLd = (
+  items: Array<{ name: string; path: string }>,
+) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((it, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: it.name,
+    item: abs(it.path),
+  })),
+});
+
+/** FAQPage JSON-LD helper. */
+export const faqJsonLd = (
+  faqs: Array<{ question: string; answer: string }>,
+) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.question,
+    acceptedAnswer: { "@type": "Answer", text: f.answer },
+  })),
 });
 
 /**
- * Registry of the 6 main pages (used both by their routes and by the
- * /debug/seo validator so the two stay in sync).
+ * Registry of pages (used both by their routes and by the /debug/seo
+ * validator so the two stay in sync).
  */
 export const PAGE_SEO = {
   home: {
     path: "/",
     title: "Tent Decor Expo UP — Kanpur 2026 | 4th Mahadhiveshan",
     description:
-      "UP's premier B2B tent, decor and event expo. 30 Aug – 1 Sep 2026 at Sanskar Lawn, Kanpur.",
+      "India's premier B2B tent, decor, catering & event expo. 30 Aug – 1 Sep 2026 at Sanskar Lawn, Kanpur. Free trade E-Pass.",
     image: "/assets/og-home.jpg",
   },
   about: {
     path: "/about",
-    title: "About — Tent Decor Expo UP",
+    title: "About TCDWA UP — Tent Decor Expo UP",
     description:
-      "The Tent, Caterers & Decorators Welfare Association of UP — history, mission, vision and the goals behind Tent Decor Expo UP.",
+      "The Tent, Caterers & Decorators Welfare Association of UP — 6,000+ members, mission, vision and the story behind the Mahadhiveshan.",
   },
   events: {
     path: "/events",
-    title: "Editions — Tent Decor Expo UP",
+    title: "Editions & Past Events — Tent Decor Expo UP",
     description:
-      "Every edition of the Mahadhiveshan — from the 2015 founding congress to Kanpur 2026 and beyond.",
+      "Every edition of the Mahadhiveshan — from the 2015 founding congress to Kanpur 2026. Photos, highlights and archives.",
   },
   gallery: {
     path: "/gallery",
-    title: "Gallery — Tent Decor Expo UP",
+    title: "Gallery — Tent Decor Expo UP Photos & Videos",
     description:
-      "Highlights, aftermovies and unforgettable moments from every edition of the Mahadhiveshan.",
+      "Highlights, aftermovies and unforgettable moments from every edition of the Tent Decor Expo UP Mahadhiveshan.",
   },
   contact: {
     path: "/contact",
-    title: "Contact — Tent Decor Expo UP",
+    title: "Contact Us — Tent Decor Expo UP Kanpur 2026",
     description:
-      "Reach the Kanpur 2026 team — phone, email, venue and social. FAQs answered.",
+      "Reach the Kanpur 2026 team — phone, email, venue map and social links. Visitor, exhibitor and sponsorship queries.",
   },
   registration: {
     path: "/registration",
-    title: "Registration & Booking — Tent Decor Expo UP",
+    title: "Register — Visitor E-Pass & Exhibitor Booking",
     description:
-      "Join the next Tent Decor Expo UP — Visitor E-Pass and Exhibitor Stall Booking. Official external portal for the current edition.",
+      "Join Tent Decor Expo UP 2026 — free Visitor E-Pass and Exhibitor Stall Booking via the official portal.",
+  },
+  visitors: {
+    path: "/visitors",
+    title: "For Visitors — Free Trade E-Pass | TDX UP 2026",
+    description:
+      "Trade visitor profile for Tent Decor Expo UP. What a free E-Pass includes, who should attend and how to register.",
+  },
+  exhibitors: {
+    path: "/exhibitors",
+    title: "For Exhibitors — Stall Booking | TDX UP 2026",
+    description:
+      "Exhibit at Tent Decor Expo UP Kanpur 2026. Stall types, inclusions, categories and step-by-step booking process.",
+  },
+  members: {
+    path: "/members",
+    title: "Members & Leadership — TCDWA UP Association",
+    description:
+      "President, office-bearers, executive committee and 6,000+ members of the Tent, Caterers & Decorators Welfare Association of UP.",
+  },
+  epassStatus: {
+    path: "/epass-status",
+    title: "E-Pass Status — Tent Decor Expo UP",
+    description:
+      "Check your Tent Decor Expo UP E-Pass registration status with your reference code. Fast, secure lookup.",
+  },
+  eventDetails: {
+    path: "/event-details",
+    title: "Kanpur 2026 Event Details — Tent Decor Expo UP",
+    description:
+      "Venue, dates, host partners and registration for the 4th Mahadhiveshan at Sanskar Lawn, Kanpur — 30 Aug to 1 Sep 2026.",
   },
 } as const satisfies Record<string, PageSeoInput>;
 
