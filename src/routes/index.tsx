@@ -271,6 +271,27 @@ function TicketCard({
   );
 }
 
+/* ---------------- CATEGORY MARQUEE ---------------- */
+
+function CategoryMarquee() {
+  const items = [...INDUSTRY_CATEGORIES, "Sound", "SFX", "AV & Lighting", "Mandap"];
+  const loop = [...items, ...items];
+  return (
+    <section id="next" aria-label="Industry categories" className="bg-charcoal border-y border-white/10 overflow-hidden scroll-mt-20">
+      <div className="relative flex" role="marquee">
+        <div className="flex shrink-0 animate-marquee gap-10 py-4 sm:py-5 pr-10 whitespace-nowrap">
+          {loop.map((c, i) => (
+            <span key={i} className="inline-flex items-center gap-3 text-white/75 text-sm sm:text-base font-medium tracking-wide">
+              <span className="h-1 w-1 rounded-full bg-gold" aria-hidden />
+              {c}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- ABOUT SNIPPET ---------------- */
 
 function AboutSnippet() {
