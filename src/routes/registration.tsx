@@ -3,24 +3,10 @@ import { ArrowRight, CheckCircle2, ExternalLink, Mail, MapPin, Phone, Store, Tic
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/common/Reveal";
 import { EDITIONS, VISITOR_REGISTER_URL, EXHIBITOR_REGISTER_URL, CONTACT } from "@/data/constants";
+import { buildHead, PAGE_SEO } from "@/lib/seo";
 
 export const Route = createFileRoute("/registration")({
-  head: () => ({
-    meta: [
-      { title: "Registration & Booking — Tent Decor Expo UP" },
-      {
-        name: "description",
-        content: "Join the next Tent Decor Expo UP — Visitor E-Pass and Exhibitor Stall Booking. Official external portal for the current edition.",
-      },
-      { property: "og:title", content: "Registration & Booking — Tent Decor Expo UP" },
-      {
-        property: "og:description",
-        content: "Get your Visitor E-Pass or book Exhibitor stall space for the upcoming Tent Decor Expo UP edition.",
-      },
-      { property: "og:url", content: "/registration" },
-    ],
-    links: [{ rel: "canonical", href: "/registration" }],
-  }),
+  head: () => buildHead(PAGE_SEO.registration),
   component: RegistrationPage,
 });
 
