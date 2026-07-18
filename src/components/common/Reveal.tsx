@@ -1,5 +1,5 @@
 import { motion, useInView, useMotionValue, useTransform, animate } from "motion/react";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export function Reveal({
   children,
@@ -13,19 +13,31 @@ export function Reveal({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  // Positive margin => trigger BEFORE the element scrolls into view, so
+  // above-the-fold content (hero) reveals immediately on mount and below-fold
+  // sections pre-animate slightly ahead of the scroll.
+  const inView = useInView(ref, { once: true, margin: "200px 0px 200px 0px" });
+  // Safety fallback: force-reveal after a short delay in case IntersectionObserver
+  // hasn't fired yet (e.g. hydration timing, hidden ancestors during SSR).
+  const [forced, setForced] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setForced(true), 600);
+    return () => clearTimeout(t);
+  }, []);
+  const show = inView || forced;
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      animate={show ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}
     </motion.div>
   );
 }
+
 
 export function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
