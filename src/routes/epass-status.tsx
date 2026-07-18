@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   HelpCircle,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -306,7 +307,7 @@ function Detail({
   label,
   value,
 }: {
-  icon: any;
+  icon: LucideIcon;
   label: string;
   value: React.ReactNode;
 }) {
@@ -329,7 +330,7 @@ function HelpCard({
   href,
   to,
 }: {
-  icon: any;
+  icon: LucideIcon;
   title: string;
   desc: string;
   cta: string;

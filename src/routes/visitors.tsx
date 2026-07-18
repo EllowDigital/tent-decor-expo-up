@@ -15,6 +15,7 @@ import {
   QrCode,
   DoorOpen,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { assets } from "@/lib/assets";
 const visitorImg = assets.gallery.g1;
 import { Button } from "@/components/ui/button";
@@ -342,7 +343,7 @@ function VisitorsPage() {
   );
 }
 
-function MetaRow({ icon: Icon, label, value }: { icon: any; label: string; value: string }) {
+function MetaRow({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return (
     <div className="flex items-start gap-3">
       <span className="h-8 w-8 shrink-0 rounded-md bg-gold/15 grid place-items-center">

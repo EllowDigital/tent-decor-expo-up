@@ -13,6 +13,7 @@ import {
   Handshake,
   Trophy,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { assets } from "@/lib/assets";
 const exhibitorImg = assets.gallery.g6;
 import { Button } from "@/components/ui/button";
@@ -421,7 +422,7 @@ function ExhibitorsPage() {
   );
 }
 
-function MetaRow({ icon: Icon, label, value }: { icon: any; label: string; value: string }) {
+function MetaRow({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return (
     <div className="flex items-start gap-3">
       <span className="h-8 w-8 shrink-0 rounded-md bg-gold/15 grid place-items-center">
