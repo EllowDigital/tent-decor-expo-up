@@ -6,17 +6,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { LEADERSHIP, COMMITTEE, CITY_CHAPTERS } from "@/data/constants";
 import { Crown, Users, MapPin, Search, Sparkles } from "lucide-react";
+import { buildHead, PAGE_SEO, breadcrumbJsonLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/members")({
-  head: () => ({
-    meta: [
-      { title: "Members — Tent Decor Expo UP" },
-      { name: "description", content: "Office-bearers, executive committee and district conveners of the Tent, Caterers & Decorators Welfare Association of UP." },
-      { property: "og:title", content: "Members — Tent Decor Expo UP" },
-      { property: "og:description", content: "Meet the President, secretariat and committee leading the association across Uttar Pradesh." },
-      { property: "og:url", content: "/members" },
-    ],
-    links: [{ rel: "canonical", href: "/members" }],
+  head: () => buildHead({
+    ...PAGE_SEO.members,
+    extraJsonLd: [breadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "About", path: "/about" },
+      { name: "Members", path: "/members" },
+    ])],
   }),
   component: Members,
 });

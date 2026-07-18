@@ -1,4 +1,38 @@
 User-agent: *
 Allow: /
+Disallow: /debug/
+Disallow: /debug.seo
+Disallow: /epass-status?
+Disallow: /*?*utm_
+Disallow: /*?*fbclid
 
+# Explicitly allow CSS/JS for rendering
+Allow: /*.css$
+Allow: /*.js$
+Allow: /assets/
+
+# AI crawlers — allow (site benefits from AI-search visibility)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Sitemaps
 Sitemap: https://www.tentdecorexpo.com/sitemap.xml
+Sitemap: https://www.tentdecorexpo.com/sitemap-images.xml

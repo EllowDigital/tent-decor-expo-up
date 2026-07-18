@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisitorsRouteImport } from './routes/visitors'
 import { Route as UpcomingRouteImport } from './routes/upcoming'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SitemapImagesDotxmlRouteImport } from './routes/sitemap-images[.]xml'
 import { Route as RegistrationRouteImport } from './routes/registration'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as GalleryRouteImport } from './routes/gallery'
@@ -38,6 +39,11 @@ const UpcomingRoute = UpcomingRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapImagesDotxmlRoute = SitemapImagesDotxmlRouteImport.update({
+  id: '/sitemap-images.xml',
+  path: '/sitemap-images.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegistrationRoute = RegistrationRouteImport.update({
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/registration': typeof RegistrationRoute
+  '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
@@ -128,6 +135,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/registration': typeof RegistrationRoute
+  '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
@@ -146,6 +154,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/registration': typeof RegistrationRoute
+  '/sitemap-images.xml': typeof SitemapImagesDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/members'
     | '/registration'
+    | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/upcoming'
     | '/visitors'
@@ -182,6 +192,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/members'
     | '/registration'
+    | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/upcoming'
     | '/visitors'
@@ -199,6 +210,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/members'
     | '/registration'
+    | '/sitemap-images.xml'
     | '/sitemap.xml'
     | '/upcoming'
     | '/visitors'
@@ -217,6 +229,7 @@ export interface RootRouteChildren {
   GalleryRoute: typeof GalleryRoute
   MembersRoute: typeof MembersRoute
   RegistrationRoute: typeof RegistrationRoute
+  SitemapImagesDotxmlRoute: typeof SitemapImagesDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UpcomingRoute: typeof UpcomingRoute
   VisitorsRoute: typeof VisitorsRoute
@@ -246,6 +259,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap-images.xml': {
+      id: '/sitemap-images.xml'
+      path: '/sitemap-images.xml'
+      fullPath: '/sitemap-images.xml'
+      preLoaderRoute: typeof SitemapImagesDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/registration': {
@@ -345,6 +365,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryRoute: GalleryRoute,
   MembersRoute: MembersRoute,
   RegistrationRoute: RegistrationRoute,
+  SitemapImagesDotxmlRoute: SitemapImagesDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   UpcomingRoute: UpcomingRoute,
   VisitorsRoute: VisitorsRoute,
