@@ -8,6 +8,7 @@ import { Reveal, Counter } from "@/components/common/Reveal";
 import { Card } from "@/components/ui/card";
 import { RegisterLink } from "@/components/common/RegisterLink";
 import { EpassDialog } from "@/components/common/EpassDialog";
+import { StallBookingDialog } from "@/components/common/StallBookingDialog";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
 
