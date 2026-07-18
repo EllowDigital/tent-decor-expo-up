@@ -7,7 +7,7 @@
  * one resolves to a real file on disk. Fails the build (exit 1) on any miss.
  *
  * Rationale: we run this offline against the produced bundle so it works
- * identically in local `bun run build`, Cloudflare, and Vercel — no dev server
+ * identically in local `bun run build` and Netlify — no dev server
  * required, no flaky HTTP.
  */
 import { readFile } from "node:fs/promises";
