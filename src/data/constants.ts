@@ -32,10 +32,12 @@ export const INDUSTRY_CATEGORIES = [
 
 export const NAV_LINKS = [
   { label: "Home", to: "/" },
-  { label: "About Us", to: "/about" },
+  { label: "About", to: "/about" },
+  { label: "Events", to: "/events" },
   { label: "Members", to: "/members" },
-  { label: "Editions", to: "/events" },
   { label: "Gallery", to: "/gallery" },
+  { label: "Visitors", to: "/visitors" },
+  { label: "Exhibitors", to: "/exhibitors" },
   { label: "Contact", to: "/contact" },
 ] as const;
 
