@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
+import { abs, SITE_URL } from "@/lib/seo";
 
 export const Route = createFileRoute("/event/$slug")({
   loader: ({ params }) => {
@@ -24,6 +25,8 @@ export const Route = createFileRoute("/event/$slug")({
     const title = `${e.city} ${e.year} · ${e.edition} — Tent Decor Expo UP`;
     const desc = `${e.edition} · ${e.dates} · ${e.venue}. ${e.summary}`;
     const path = `/event/${params.slug}`;
+    const url = abs(path);
+    const image = abs(e.cover);
     return {
       meta: [
         { title },
@@ -31,16 +34,30 @@ export const Route = createFileRoute("/event/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: e.status === "upcoming" ? "event" : "article" },
-        { property: "og:url", content: path },
-        { property: "og:image", content: e.cover },
+        { property: "og:url", content: url },
+        { property: "og:site_name", content: "Tent Decor Expo UP" },
+        { property: "og:image", content: image },
         { property: "og:image:alt", content: `${e.edition} — ${e.city} ${e.year}` },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: title },
         { name: "twitter:description", content: desc },
-        { name: "twitter:image", content: e.cover },
+        { name: "twitter:image", content: image },
       ],
-      links: [{ rel: "canonical", href: path }],
+      links: [{ rel: "canonical", href: url }],
       scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: title,
+            description: desc,
+            url,
+            inLanguage: "en-IN",
+            isPartOf: { "@type": "WebSite", name: "Tent Decor Expo UP", url: SITE_URL },
+            primaryImageOfPage: { "@type": "ImageObject", url: image },
+          }),
+        },
         {
           type: "application/ld+json",
           children: JSON.stringify({
@@ -52,8 +69,9 @@ export const Route = createFileRoute("/event/$slug")({
             eventStatus: "https://schema.org/EventScheduled",
             eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
             location: { "@type": "Place", name: e.venue, address: { "@type": "PostalAddress", addressLocality: e.city, addressRegion: "Uttar Pradesh", addressCountry: "IN" } },
-            image: [e.cover],
+            image: [image],
             description: e.summary,
+            url,
             organizer: { "@type": "Organization", name: e.host, url: "https://www.tentdecorexpo.com" },
           }),
         },
