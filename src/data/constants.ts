@@ -10,8 +10,10 @@ import p2 from "@/assets/p2.jpg";
 import p3 from "@/assets/p3.jpg";
 import p4 from "@/assets/p4.jpg";
 
-// External registration & E-Pass portal. All CTAs across the site link here.
+// External registration & E-Pass portal. Swap these every year — the whole site picks up the new URLs.
 export const REGISTER_URL = "https://www.tentdecorexpo.com";
+export const VISITOR_REGISTER_URL = "https://www.tentdecorexpo.com/e-pass"; // visitor E-Pass form
+export const EXHIBITOR_REGISTER_URL = "https://www.tentdecorexpo.com/book-stall"; // exhibitor stall booking form
 
 export const INDUSTRY_CATEGORIES = [
   "Tent Infrastructure",
