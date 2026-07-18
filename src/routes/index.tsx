@@ -226,7 +226,7 @@ function TicketCard({
               <span className="text-[10px] uppercase tracking-[0.28em] text-slate-muted font-medium">Boarding in</span>
               {upcoming.startDate && upcoming.endDate && (
                 <AddToCalendar
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   title={eventName}
                   description={`${upcoming.summary} Register at ${REGISTER_URL}`}
