@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Calendar, MapPin, Ticket, Store, Users, Sparkles, Trophy, Handshake, ChevronDown } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Ticket, Store, Users, Sparkles, Trophy, Handshake, ChevronDown, Quote, TrendingUp, Building2, Rocket, Award } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { Button } from "@/components/ui/button";
-import { EDITIONS, GALLERY, INDUSTRY_CATEGORIES, REGISTER_URL } from "@/data/constants";
+import { EDITIONS, GALLERY, INDUSTRY_CATEGORIES, REGISTER_URL, TESTIMONIALS } from "@/data/constants";
 import { Reveal } from "@/components/common/Reveal";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
@@ -26,10 +26,13 @@ function Home() {
     <>
       <Hero upcoming={upcoming} />
       <CategoryMarquee />
-      <FactStrip upcoming={upcoming} />
+      <UpcomingBanner upcoming={upcoming} />
+      <AboutSnippet />
+      <WhyAttendExhibit />
       <WhyAttend />
       <TwoPaths />
       <GalleryPreview />
+      <Testimonials />
       <ClosingCTA upcoming={upcoming} />
     </>
   );
@@ -87,7 +90,7 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent h-11 sm:h-13 px-5 sm:px-7">
-                    <Link to="/events/$year" params={{ year: upcoming.year }}>
+                    <Link to="/event/$slug" params={{ slug: upcoming.slug }}>
                       Event details <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -198,34 +201,183 @@ function CategoryMarquee() {
   );
 }
 
-/* ---------------- FACT STRIP ---------------- */
+/* ---------------- UPCOMING BANNER (highlight next event) ---------------- */
 
-function FactStrip({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
-  const facts = [
-    { icon: Calendar, label: "Dates", value: upcoming.dates },
-    { icon: MapPin, label: "Venue", value: upcoming.venue },
-    { icon: Users, label: "Scale", value: `${upcoming.exhibitors} exhibitors · ${upcoming.visitors} visitors` },
-  ];
+function UpcomingBanner({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
   return (
-    <section className="border-b border-border bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <dl className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-border">
-          {facts.map((f) => (
-            <div key={f.label} className="flex items-start gap-3 py-5 sm:py-6 sm:px-6 first:sm:pl-0 last:sm:pr-0">
-              <div className="h-9 w-9 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
-                <f.icon className="h-4 w-4 text-gold" />
-              </div>
-              <div className="min-w-0">
-                <dt className="text-[10px] uppercase tracking-widest text-slate-muted">{f.label}</dt>
-                <dd className="mt-0.5 text-sm sm:text-base text-charcoal font-medium leading-snug">{f.value}</dd>
-              </div>
-            </div>
-          ))}
-        </dl>
+    <section className="bg-white border-b border-border">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+          <div className="min-w-0">
+            <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium inline-flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Upcoming Event
+            </span>
+            <h2 className="mt-3 font-display font-bold text-charcoal leading-tight text-[clamp(1.5rem,4vw,2.5rem)]">
+              {upcoming.edition} · <span className="text-gradient-gold">{upcoming.city} {upcoming.year}</span>
+            </h2>
+            <dl className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              {[
+                { icon: Calendar, label: "Dates", value: upcoming.dates },
+                { icon: MapPin, label: "Venue", value: upcoming.venue },
+                { icon: Users, label: "Host", value: upcoming.host },
+              ].map((f) => (
+                <div key={f.label} className="flex items-start gap-3">
+                  <div className="h-9 w-9 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
+                    <f.icon className="h-4 w-4 text-gold" />
+                  </div>
+                  <div className="min-w-0">
+                    <dt className="text-[10px] uppercase tracking-widest text-slate-muted">{f.label}</dt>
+                    <dd className="mt-0.5 text-sm sm:text-base text-charcoal font-medium leading-snug">{f.value}</dd>
+                  </div>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div className="shrink-0">
+            <Button asChild size="lg" className="bg-charcoal text-white hover:bg-charcoal/90 h-12 px-6">
+              <Link to="/event/$slug" params={{ slug: upcoming.slug }}>
+                Event details <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
+
+/* ---------------- ABOUT SNIPPET ---------------- */
+
+function AboutSnippet() {
+  return (
+    <section className="py-14 sm:py-20 bg-white">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+        <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">About the association</span>
+        <h2 className="mt-3 font-display font-bold text-charcoal leading-tight text-[clamp(1.5rem,4vw,2.5rem)]">
+          Uniting UP's tent, catering and decor industry since 1998.
+        </h2>
+        <p className="mt-5 text-slate-muted text-base sm:text-lg leading-relaxed">
+          The Tent, Caterers & Decorators Welfare Association of UP is the state's apex body for the wedding and event industry — representing 6,000+ member businesses across 75 districts. The Mahadhiveshan is our flagship expo, hosted in a different city every year.
+        </p>
+        <div className="mt-7">
+          <Button asChild variant="outline" className="border-gold text-charcoal hover:bg-gold/10">
+            <Link to="/about">Read more about us <ArrowRight className="ml-2 h-4 w-4" /></Link>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- WHY ATTEND / WHY EXHIBIT (dual grid) ---------------- */
+
+function WhyAttendExhibit() {
+  const visit = [
+    { icon: Users, title: "Meet the industry", desc: "25,000+ trade buyers, planners and hoteliers across 3 days." },
+    { icon: Sparkles, title: "Discover innovation", desc: "New tent, decor, lighting and catering tech from leading brands." },
+    { icon: Rocket, title: "Source & partner", desc: "Bulk deals, dealer tie-ups and regional distribution." },
+  ];
+  const exhibit = [
+    { icon: TrendingUp, title: "Generate leads", desc: "Face-to-face with decision makers from UP, Bihar and MP." },
+    { icon: Building2, title: "Launch products", desc: "Central stage demos, media coverage and buyer meetings." },
+    { icon: Award, title: "Recognition", desc: "Innovation Awards and association-backed policy platforms." },
+  ];
+  return (
+    <section className="py-16 sm:py-20 lg:py-24 bg-pearl">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl">
+          <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">Value for both sides</span>
+          <h2 className="mt-3 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,3rem)] leading-tight">
+            Why attend. Why exhibit.
+          </h2>
+        </div>
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <div className="rounded-2xl border border-border/60 bg-white p-6 sm:p-8">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="h-10 w-10 rounded-lg bg-gold/10 grid place-items-center">
+                  <Ticket className="h-5 w-5 text-gold" />
+                </span>
+                <h3 className="font-display text-xl sm:text-2xl font-semibold text-charcoal">For Visitors</h3>
+              </div>
+              <Link to="/visitors" className="text-sm text-gold hover:underline shrink-0">Details →</Link>
+            </div>
+            <ul className="mt-6 space-y-4">
+              {visit.map((v) => (
+                <li key={v.title} className="flex items-start gap-3">
+                  <span className="h-9 w-9 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
+                    <v.icon className="h-4 w-4 text-gold" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-display text-base font-semibold text-charcoal">{v.title}</p>
+                    <p className="mt-1 text-sm text-slate-muted leading-relaxed">{v.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl border border-gold/30 bg-charcoal text-white p-6 sm:p-8">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="h-10 w-10 rounded-lg bg-gold/15 grid place-items-center">
+                  <Store className="h-5 w-5 text-gold" />
+                </span>
+                <h3 className="font-display text-xl sm:text-2xl font-semibold">For Exhibitors</h3>
+              </div>
+              <Link to="/exhibitors" className="text-sm text-gold hover:underline shrink-0">Details →</Link>
+            </div>
+            <ul className="mt-6 space-y-4">
+              {exhibit.map((v) => (
+                <li key={v.title} className="flex items-start gap-3">
+                  <span className="h-9 w-9 shrink-0 rounded-lg bg-gold/15 grid place-items-center">
+                    <v.icon className="h-4 w-4 text-gold" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-display text-base font-semibold text-white">{v.title}</p>
+                    <p className="mt-1 text-sm text-white/70 leading-relaxed">{v.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- TESTIMONIALS ---------------- */
+
+function Testimonials() {
+  return (
+    <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl">
+          <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">Legacy</span>
+          <h2 className="mt-3 font-display font-bold text-charcoal text-[clamp(1.75rem,4vw,3rem)] leading-tight">
+            What past editions delivered.
+          </h2>
+          <p className="mt-3 text-slate-muted">Real voices from exhibitors and industry leaders across UP.</p>
+        </div>
+        <div className="mt-10 grid gap-4 sm:gap-6 md:grid-cols-3">
+          {TESTIMONIALS.map((t) => (
+            <figure key={t.name} className="rounded-2xl border border-border/60 bg-pearl p-6 sm:p-7 flex flex-col">
+              <Quote className="h-6 w-6 text-gold" aria-hidden />
+              <blockquote className="mt-4 text-charcoal text-sm sm:text-base leading-relaxed flex-1">
+                "{t.quote}"
+              </blockquote>
+              <figcaption className="mt-6 pt-4 border-t border-border/60">
+                <p className="font-display text-base font-semibold text-charcoal">{t.name}</p>
+                <p className="text-xs text-slate-muted mt-0.5">{t.role}</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 
 /* ---------------- WHY / WHAT WE DO ---------------- */
 
@@ -371,7 +523,7 @@ function ClosingCTA({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
             <Link to="/registration"><Ticket className="mr-2 h-4 w-4" /> Register Now</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 bg-transparent h-12 sm:h-14 px-6 sm:px-8">
-            <Link to="/events/$year" params={{ year: upcoming.year }}>Event details</Link>
+            <Link to="/event/$slug" params={{ slug: upcoming.slug }}>Event details</Link>
           </Button>
         </div>
       </div>

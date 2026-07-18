@@ -18,8 +18,8 @@ export function MobileEventBar() {
     >
       <div className="mx-auto max-w-3xl px-3 py-2.5 flex items-center gap-3">
         <Link
-          to="/events/$year"
-          params={{ year: upcoming.year }}
+          to="/event/$slug"
+          params={{ slug: upcoming.slug }}
           className="flex items-center gap-2 min-w-0 flex-1"
           aria-label={`View ${upcoming.edition} in ${upcoming.city}`}
         >

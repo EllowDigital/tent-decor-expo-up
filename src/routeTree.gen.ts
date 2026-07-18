@@ -20,7 +20,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
-import { Route as EventsYearRouteImport } from './routes/events.$year'
+import { Route as EventSlugRouteImport } from './routes/event.$slug'
 
 const VisitorsRoute = VisitorsRouteImport.update({
   id: '/visitors',
@@ -77,9 +77,9 @@ const EventsIndexRoute = EventsIndexRouteImport.update({
   path: '/events/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EventsYearRoute = EventsYearRouteImport.update({
-  id: '/events/$year',
-  path: '/events/$year',
+const EventSlugRoute = EventSlugRouteImport.update({
+  id: '/event/$slug',
+  path: '/event/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -94,7 +94,7 @@ export interface FileRoutesByFullPath {
   '/registration': typeof RegistrationRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
-  '/events/$year': typeof EventsYearRoute
+  '/event/$slug': typeof EventSlugRoute
   '/events/': typeof EventsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -108,7 +108,7 @@ export interface FileRoutesByTo {
   '/registration': typeof RegistrationRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
-  '/events/$year': typeof EventsYearRoute
+  '/event/$slug': typeof EventSlugRoute
   '/events': typeof EventsIndexRoute
 }
 export interface FileRoutesById {
@@ -123,7 +123,7 @@ export interface FileRoutesById {
   '/registration': typeof RegistrationRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
-  '/events/$year': typeof EventsYearRoute
+  '/event/$slug': typeof EventSlugRoute
   '/events/': typeof EventsIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,7 +139,7 @@ export interface FileRouteTypes {
     | '/registration'
     | '/upcoming'
     | '/visitors'
-    | '/events/$year'
+    | '/event/$slug'
     | '/events/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -153,7 +153,7 @@ export interface FileRouteTypes {
     | '/registration'
     | '/upcoming'
     | '/visitors'
-    | '/events/$year'
+    | '/event/$slug'
     | '/events'
   id:
     | '__root__'
@@ -167,7 +167,7 @@ export interface FileRouteTypes {
     | '/registration'
     | '/upcoming'
     | '/visitors'
-    | '/events/$year'
+    | '/event/$slug'
     | '/events/'
   fileRoutesById: FileRoutesById
 }
@@ -182,7 +182,7 @@ export interface RootRouteChildren {
   RegistrationRoute: typeof RegistrationRoute
   UpcomingRoute: typeof UpcomingRoute
   VisitorsRoute: typeof VisitorsRoute
-  EventsYearRoute: typeof EventsYearRoute
+  EventSlugRoute: typeof EventSlugRoute
   EventsIndexRoute: typeof EventsIndexRoute
 }
 
@@ -265,11 +265,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/events/$year': {
-      id: '/events/$year'
-      path: '/events/$year'
-      fullPath: '/events/$year'
-      preLoaderRoute: typeof EventsYearRouteImport
+    '/event/$slug': {
+      id: '/event/$slug'
+      path: '/event/$slug'
+      fullPath: '/event/$slug'
+      preLoaderRoute: typeof EventSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -286,7 +286,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegistrationRoute: RegistrationRoute,
   UpcomingRoute: UpcomingRoute,
   VisitorsRoute: VisitorsRoute,
-  EventsYearRoute: EventsYearRoute,
+  EventSlugRoute: EventSlugRoute,
   EventsIndexRoute: EventsIndexRoute,
 }
 export const routeTree = rootRouteImport

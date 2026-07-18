@@ -10,8 +10,10 @@ import p2 from "@/assets/p2.jpg";
 import p3 from "@/assets/p3.jpg";
 import p4 from "@/assets/p4.jpg";
 
-// External registration & E-Pass portal. All CTAs across the site link here.
+// External registration & E-Pass portal. Swap these every year — the whole site picks up the new URLs.
 export const REGISTER_URL = "https://www.tentdecorexpo.com";
+export const VISITOR_REGISTER_URL = "https://www.tentdecorexpo.com/e-pass"; // visitor E-Pass form
+export const EXHIBITOR_REGISTER_URL = "https://www.tentdecorexpo.com/book-stall"; // exhibitor stall booking form
 
 export const INDUSTRY_CATEGORIES = [
   "Tent Infrastructure",
@@ -124,7 +126,7 @@ export const COMMITTEE = [
 // Multi-year editions. Add a new entry each year to publish a fresh event page.
 export type Edition = {
   year: string;
-  slug: string;
+  slug: string; // URL slug — e.g. "kanpur-2026"
   edition: string;
   status: "upcoming" | "past";
   city: string;
@@ -138,6 +140,7 @@ export type Edition = {
   visitors: string;
   summary: string;
   highlights: string[];
+  chiefGuests?: { name: string; role: string }[];
   cover: string;
   photos: string[];
 };
@@ -145,7 +148,7 @@ export type Edition = {
 export const EDITIONS: Edition[] = [
   {
     year: "2026",
-    slug: "2026",
+    slug: "kanpur-2026",
     edition: "4th Mahadhiveshan",
     status: "upcoming",
     city: "Kanpur",
@@ -166,12 +169,18 @@ export const EDITIONS: Edition[] = [
       "Live central-stage demos and Innovation Awards",
       "Three days of hospitality lounges and networking galas",
     ],
+    chiefGuests: [
+      { name: "Shri Yogi Adityanath", role: "Hon'ble Chief Minister of Uttar Pradesh (Invited)" },
+      { name: "Shri Nand Gopal Gupta 'Nandi'", role: "Cabinet Minister, MSME, Govt. of UP (Invited)" },
+      { name: "Vijay Kumar", role: "President, TCDWA UP" },
+      { name: "Prem Chandra Awasthi", role: "President, Shamiyana Furniture Association" },
+    ],
     cover: g6,
     photos: [g6, g2, g4, g5, g3, g7],
   },
   {
     year: "2025",
-    slug: "2025",
+    slug: "lucknow-2025",
     edition: "3rd Mahadhiveshan",
     status: "past",
     city: "Lucknow",
@@ -189,12 +198,16 @@ export const EDITIONS: Edition[] = [
       "Live wedding mandap demonstrations",
       "Signature Awadhi hospitality dinners",
     ],
+    chiefGuests: [
+      { name: "Shri Brajesh Pathak", role: "Deputy CM, Uttar Pradesh" },
+      { name: "Vijay Kumar", role: "President, TCDWA UP" },
+    ],
     cover: g1,
     photos: [g1, g4, g2, g5, g3, g7],
   },
   {
     year: "2019",
-    slug: "2019",
+    slug: "varanasi-2019",
     edition: "2nd Mahadhiveshan",
     status: "past",
     city: "Varanasi",
@@ -215,7 +228,7 @@ export const EDITIONS: Edition[] = [
   },
   {
     year: "2015",
-    slug: "2015",
+    slug: "lucknow-2015",
     edition: "1st Mahadhiveshan",
     status: "past",
     city: "Lucknow",
@@ -233,6 +246,73 @@ export const EDITIONS: Edition[] = [
     ],
     cover: g5,
     photos: [g5, g4, g2],
+  },
+];
+
+// City-wise chapters — hierarchical members structure for the Members page.
+export const CITY_CHAPTERS = [
+  {
+    city: "Lucknow",
+    members: [
+      { name: "Anil Srivastava", role: "City President" },
+      { name: "Rakesh Verma", role: "City Secretary" },
+      { name: "Sunil Kashyap", role: "Treasurer" },
+      { name: "Manoj Rastogi", role: "Executive Member" },
+    ],
+  },
+  {
+    city: "Kanpur",
+    members: [
+      { name: "Suresh Yadav", role: "City President" },
+      { name: "Prem Chandra Awasthi", role: "City Secretary" },
+      { name: "Rajeev Nigam", role: "Treasurer" },
+      { name: "Harish Tandon", role: "Executive Member" },
+    ],
+  },
+  {
+    city: "Varanasi",
+    members: [
+      { name: "Mohd. Aslam", role: "City President" },
+      { name: "Vinod Gupta", role: "City Secretary" },
+      { name: "Ashok Pandey", role: "Treasurer" },
+    ],
+  },
+  {
+    city: "Agra",
+    members: [
+      { name: "Ramesh Chandra Gupta", role: "City President" },
+      { name: "Vikas Sharma", role: "City Secretary" },
+      { name: "Deepak Agarwal", role: "Treasurer" },
+    ],
+  },
+  {
+    city: "Prayagraj",
+    members: [
+      { name: "Deepak Sahu", role: "City President" },
+      { name: "Ajay Mishra", role: "City Secretary" },
+      { name: "Sanjay Tripathi", role: "Executive Member" },
+    ],
+  },
+  {
+    city: "Gorakhpur",
+    members: [
+      { name: "Neeraj Pandey", role: "City President" },
+      { name: "Rakesh Singh", role: "City Secretary" },
+    ],
+  },
+  {
+    city: "Meerut",
+    members: [
+      { name: "Praveen Chaurasia", role: "City President" },
+      { name: "Vipin Jain", role: "City Secretary" },
+    ],
+  },
+  {
+    city: "Bareilly",
+    members: [
+      { name: "Kailash Nath", role: "City President" },
+      { name: "Rajendra Prasad", role: "City Secretary" },
+    ],
   },
 ];
 
