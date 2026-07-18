@@ -12,7 +12,9 @@ export const Route = createFileRoute("/exhibitors")({
       { name: "description", content: "Exhibitor profile for Tent Decor Expo UP. Stall categories, sizes, audience and how to book your presence at the Mahadhiveshan." },
       { property: "og:title", content: "Exhibitor Profile — Tent Decor Expo UP" },
       { property: "og:description", content: "Book a stall at UP's largest B2B tent, decor & catering expo. Shell schemes and premium custom stalls available." },
+      { property: "og:url", content: "/exhibitors" },
     ],
+    links: [{ rel: "canonical", href: "/exhibitors" }],
   }),
   component: ExhibitorsPage,
 });
