@@ -26,10 +26,13 @@ function Home() {
     <>
       <Hero upcoming={upcoming} />
       <CategoryMarquee />
-      <FactStrip upcoming={upcoming} />
+      <UpcomingBanner upcoming={upcoming} />
+      <AboutSnippet />
+      <WhyAttendExhibit />
       <WhyAttend />
       <TwoPaths />
       <GalleryPreview />
+      <Testimonials />
       <ClosingCTA upcoming={upcoming} />
     </>
   );
