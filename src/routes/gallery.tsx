@@ -18,7 +18,9 @@ export const Route = createFileRoute("/gallery")({
       { name: "description", content: "Highlights, aftermovies and unforgettable moments from every edition of the Mahadhiveshan." },
       { property: "og:title", content: "Gallery — Tent Decor Expo UP" },
       { property: "og:description", content: "Tent, decoration, lighting, catering and VIP moments across every edition." },
+      { property: "og:url", content: "/gallery" },
     ],
+    links: [{ rel: "canonical", href: "/gallery" }],
   }),
   component: Gallery,
 });
