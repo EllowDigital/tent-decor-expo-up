@@ -138,7 +138,6 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
               <TicketCard upcoming={upcoming} cd={cd} eventName={eventName} />
             </div>
           </div>
-
         </div>
       </div>
 

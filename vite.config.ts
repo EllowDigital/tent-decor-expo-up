@@ -16,6 +16,10 @@ export default defineConfig({
   },
 
   vite: {
+    // ✅ Add this resolve block to handle TS paths natively
+    resolve: {
+      tsconfigPaths: true,
+    },
     server: {
       host: "0.0.0.0",
       allowedHosts: true,
