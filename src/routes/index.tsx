@@ -79,31 +79,64 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
 
           {/* Countdown */}
           {cd && (
-            <div className="mt-8 flex flex-wrap gap-2 sm:gap-3">
-              {[
-                { v: cd.days, l: "Days" },
-                { v: cd.hours, l: "Hours" },
-                { v: cd.minutes, l: "Min" },
-                { v: cd.seconds, l: "Sec" },
-              ].map((u) => (
-                <div key={u.l} className="min-w-[68px] rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-center">
-                  <div className="font-display text-2xl sm:text-3xl font-bold text-gold tabular-nums">
-                    {String(u.v).padStart(2, "0")}
+            <div className="mt-8">
+              <div className="flex flex-wrap gap-2 sm:gap-3" role="timer" aria-live="polite" aria-label="Time until event starts">
+                {[
+                  { v: cd.days, l: "Days" },
+                  { v: cd.hours, l: "Hours" },
+                  { v: cd.minutes, l: "Min" },
+                  { v: cd.seconds, l: "Sec" },
+                ].map((u) => (
+                  <div key={u.l} className="min-w-[68px] rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-center">
+                    <div className="font-display text-2xl sm:text-3xl font-bold text-gold tabular-nums">
+                      {String(u.v).padStart(2, "0")}
+                    </div>
+                    <div className="text-[10px] uppercase tracking-widest text-white/60 mt-1">{u.l}</div>
                   </div>
-                  <div className="text-[10px] uppercase tracking-widest text-white/60 mt-1">{u.l}</div>
-                </div>
-              ))}
+                ))}
+              </div>
+              {upcoming.startDate && (
+                <CountdownMeta
+                  startISO={upcoming.startDate}
+                  endISO={upcoming.endDate}
+                  timezone={upcoming.timezone}
+                  className="mt-4"
+                  tone="light"
+                />
+              )}
             </div>
           )}
 
           {/* Primary CTAs */}
           <div className="mt-9 flex flex-col sm:flex-row flex-wrap gap-3">
-            <RegisterLink size="lg" variant="gold" showIcon ariaLabel="Get your free E-Pass at tentdecorexpo.com">
-              Get Free E-Pass
-            </RegisterLink>
+            <EpassDialog
+              eventName={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+              eventDate={upcoming.dates}
+              eventVenue={upcoming.venue}
+              trigger={
+                <Button
+                  size="lg"
+                  className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-14 px-8"
+                  aria-label="Start guided E-Pass registration"
+                >
+                  <Ticket className="mr-2 h-4 w-4" /> Get Free E-Pass
+                </Button>
+              }
+            />
             <RegisterLink size="lg" variant="outline" ariaLabel="Book an exhibitor stall at tentdecorexpo.com" className="border-white/40 text-white hover:bg-white/10">
               Book Exhibitor Stall
             </RegisterLink>
+            {upcoming.startDate && upcoming.endDate && (
+              <AddToCalendar
+                variant="ghostLight"
+                size="lg"
+                title={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
+                description={`${upcoming.summary} Register at ${REGISTER_URL}`}
+                location={upcoming.venue}
+                start={upcoming.startDate}
+                end={upcoming.endDate}
+              />
+            )}
             <Button asChild size="lg" variant="ghost" className="text-white hover:bg-white/10 h-14 px-6">
               <Link to="/events/$year" params={{ year: upcoming.year }}>
                 Event details <ArrowRight className="ml-2 h-4 w-4" />
@@ -112,7 +145,7 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
           </div>
 
           <p className="mt-4 text-xs text-white/50">
-            Registration is free and hosted at{" "}
+            Prefer the full portal? Register at{" "}
             <a href={REGISTER_URL} target="_blank" rel="noopener noreferrer" className="text-gold underline underline-offset-4 hover:text-gold-light">
               tentdecorexpo.com
             </a>
