@@ -49,7 +49,7 @@ function EventsIndex() {
                   >
                     <Card className="overflow-hidden border-2 border-gold shadow-gold grid md:grid-cols-[1.2fr_1fr]">
                       <div className="relative aspect-[4/3] md:aspect-auto overflow-hidden">
-                        <img src={e.cover} alt={e.edition} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <img src={e.cover} alt={e.edition} width={800} height={600} sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                         <div className="absolute inset-0 bg-gradient-to-tr from-charcoal/60 via-charcoal/10 to-transparent" />
                         <div className="absolute top-6 left-6 rounded-full bg-gradient-gold text-charcoal text-xs uppercase tracking-[0.28em] font-semibold px-4 py-1.5">
                           Upcoming

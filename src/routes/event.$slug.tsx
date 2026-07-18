@@ -133,7 +133,7 @@ function EditionPage() {
       {/* HERO */}
       <section className="relative min-h-[70vh] sm:min-h-[80vh] flex items-end overflow-hidden -mt-16 sm:-mt-20 pt-16 sm:pt-20">
         <div className="absolute inset-0">
-          <img src={e.cover} alt="" className="h-full w-full object-cover" fetchPriority="high" />
+          <img src={e.cover} alt="" width={1920} height={1080} sizes="100vw" decoding="async" /* @ts-ignore */ fetchpriority="high" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/60 to-charcoal/95" />
         </div>
         <div className="relative z-10 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
@@ -302,7 +302,7 @@ function EditionPage() {
                   onClick={() => setLightbox(i)}
                   className={`overflow-hidden rounded-xl group relative ${i === 0 ? "col-span-2 aspect-[16/9]" : "aspect-square"}`}
                 >
-                  <img src={p} alt={`${e.city} ${e.year}`} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <img src={p} alt={`${e.city} ${e.year}`} width={600} height={600} sizes="(min-width: 768px) 25vw, 50vw" loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors" />
                 </button>
               ))}
@@ -374,7 +374,7 @@ function EditionPage() {
               {e.photos.map((p, i) => (
                 <Reveal key={`${p}-${i}`} delay={i * 0.04}>
                   <button onClick={() => setLightbox(i)} className="block w-full break-inside-avoid overflow-hidden rounded-xl group relative">
-                    <img src={p} alt={`${e.city} ${e.year} photo ${i + 1}`} loading="lazy" className="w-full h-auto transition-transform duration-700 group-hover:scale-110" />
+                    <img src={p} alt={`${e.city} ${e.year} photo ${i + 1}`} width={800} height={800} sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" loading="lazy" decoding="async" className="w-full h-auto transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </button>
                 </Reveal>
