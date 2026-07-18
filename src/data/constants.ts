@@ -126,7 +126,7 @@ export const COMMITTEE = [
 // Multi-year editions. Add a new entry each year to publish a fresh event page.
 export type Edition = {
   year: string;
-  slug: string;
+  slug: string; // URL slug — e.g. "kanpur-2026"
   edition: string;
   status: "upcoming" | "past";
   city: string;
@@ -140,6 +140,7 @@ export type Edition = {
   visitors: string;
   summary: string;
   highlights: string[];
+  chiefGuests?: { name: string; role: string }[];
   cover: string;
   photos: string[];
 };
