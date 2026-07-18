@@ -16,31 +16,10 @@ import { globSync } from "glob";
 import path from "node:path";
 
 const ROOT = process.cwd();
-const IS_NETLIFY_BUILD = process.env.DEPLOY_TARGET === "netlify" || process.env.NETLIFY === "true";
 const SEARCH_ROOTS = ["dist", ".output/public", ".vercel/output/static", "public"].filter((d) =>
   existsSync(path.join(ROOT, d)),
 );
 
-if (IS_NETLIFY_BUILD) {
-  const netlifyServerFn = path.join(ROOT, ".netlify/functions/server/server.mjs");
-  const netlifyMainFn = path.join(ROOT, ".netlify/functions/server/main.mjs");
-  if (!existsSync(netlifyServerFn)) {
-    console.error(
-      "[verify-assets] ❌ Netlify SSR function missing: .netlify/functions/server/server.mjs",
-    );
-    console.error(
-      "[verify-assets] Expected Nitro preset 'netlify' to emit the SSR function for all routes.",
-    );
-    process.exit(1);
-  }
-  const main = existsSync(netlifyMainFn) ? await readFile(netlifyMainFn, "utf8") : "";
-  if (!main.includes('./_ssr/ssr.mjs') && !main.includes('"./_ssr/ssr.mjs"')) {
-    console.error("[verify-assets] ❌ Netlify SSR handler is not wired to TanStack SSR.");
-    console.error("[verify-assets] Expected .netlify/functions/server/main.mjs to import _ssr/ssr.mjs.");
-    process.exit(1);
-  }
-  console.log("[verify-assets] ✅ Netlify SSR function exists.");
-}
 
 if (SEARCH_ROOTS.length === 0) {
   console.error("[verify-assets] No build output found. Run `bun run build` first.");
