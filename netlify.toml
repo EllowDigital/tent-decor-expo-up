@@ -1,19 +1,12 @@
 [build]
-  command = "DEPLOY_TARGET=netlify npm run build"
+  command = "npm run build"
   publish = "dist"
 
-[build.environment]
-  DEPLOY_TARGET = "netlify"
-
-# Nitro's `netlify` preset emits the SSR Function at
-# `.netlify/functions/server`. Static client assets are published from `dist/`.
-# The catch-all redirect hands every unmatched request to the SSR function so
-# app routes, dynamic routes and XML server routes render server-side.
-[functions]
-  directory = ".netlify/functions"
-  node_bundler = "esbuild"
-
+# Pure static site. SPA fallback so client-side routes (e.g. /about, /event/:slug)
+# resolve to index.html on hard-refresh instead of returning 404.
+# Static files (sitemap.xml, robots.txt, assets) are served first; the fallback
+# only kicks in for unmatched paths.
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/server"
+  to = "/index.html"
   status = 200
