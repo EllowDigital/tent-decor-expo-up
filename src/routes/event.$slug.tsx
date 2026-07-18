@@ -12,7 +12,7 @@ import { StallBookingDialog } from "@/components/common/StallBookingDialog";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
 
-export const Route = createFileRoute("/events/$year")({
+export const Route = createFileRoute("/event/$slug")({
   loader: ({ params }) => {
     const edition = EDITIONS.find((e) => e.slug === params.year);
     if (!edition) throw notFound();
