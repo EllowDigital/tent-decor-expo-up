@@ -30,7 +30,7 @@ export type PageSeoInput = {
   title: string;
   description: string;
   image?: string;
-  type?: "website" | "article" | "event";
+  type?: "website" | "article";
   /** Emit a WebPage JSON-LD block (default: true). */
   webPageSchema?: boolean;
   /** Extra JSON-LD blocks to inline. */
