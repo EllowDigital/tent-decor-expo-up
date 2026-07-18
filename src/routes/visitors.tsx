@@ -20,7 +20,7 @@ import { assets } from "@/lib/assets";
 const visitorImg = assets.gallery.g1;
 import { Button } from "@/components/ui/button";
 import { EDITIONS, REGISTER_URL } from "@/data/constants";
-import { EpassDialog } from "@/components/common/EpassDialog";
+import { EpassDialog } from "@/components/common/LazyDialogs";
 
 import { buildHead, PAGE_SEO, breadcrumbJsonLd } from "@/lib/seo";
 

@@ -48,10 +48,18 @@ type Props = {
   eventName?: string;
   eventDate?: string;
   eventVenue?: string;
+  /** Open immediately on mount. Used by the lazy loader to preserve first-click UX. */
+  defaultOpen?: boolean;
 };
 
-export function StallBookingDialog({ trigger, eventName, eventDate, eventVenue }: Props) {
-  const [open, setOpen] = useState(false);
+export function StallBookingDialog({
+  trigger,
+  eventName,
+  eventDate,
+  eventVenue,
+  defaultOpen = false,
+}: Props) {
+  const [open, setOpen] = useState(defaultOpen);
   const [done, setDone] = useState<{ code: string; company: string; email: string } | null>(null);
 
   const form = useForm<FormValues>({

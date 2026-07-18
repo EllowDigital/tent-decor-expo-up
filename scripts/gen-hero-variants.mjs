@@ -33,6 +33,7 @@ async function main() {
   const targets = WIDTHS.flatMap((w) => [
     path.join(OUT_DIR, `hero-bg-${w}.jpg`),
     path.join(OUT_DIR, `hero-bg-${w}.webp`),
+    path.join(OUT_DIR, `hero-bg-${w}.avif`),
   ]);
 
   const upToDate = await Promise.all(
@@ -59,14 +60,20 @@ async function main() {
 
   for (const w of WIDTHS) {
     try {
-      await sharp(SRC)
-        .resize({ width: w })
+      const pipeline = () => sharp(SRC).resize({ width: w });
+      await pipeline()
         .jpeg({ quality: 78, mozjpeg: true })
         .toFile(path.join(OUT_DIR, `hero-bg-${w}.jpg`));
-      await sharp(SRC)
-        .resize({ width: w })
+      await pipeline()
         .webp({ quality: 76 })
         .toFile(path.join(OUT_DIR, `hero-bg-${w}.webp`));
+      try {
+        await pipeline()
+          .avif({ quality: 55, effort: 4 })
+          .toFile(path.join(OUT_DIR, `hero-bg-${w}.avif`));
+      } catch (err) {
+        warn(`AVIF encode failed for width=${w} (${err?.message || err})`);
+      }
     } catch (err) {
       warn(`failed to write width=${w} (${err?.message || err})`);
     }
