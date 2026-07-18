@@ -22,7 +22,9 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Reach the Kanpur 2026 team — phone, email, venue and social. FAQs answered." },
       { property: "og:title", content: "Contact — Tent Decor Expo UP" },
       { property: "og:description", content: "Get in touch with the Tent Decor Expo UP team." },
+      { property: "og:url", content: "/contact" },
     ],
+    links: [{ rel: "canonical", href: "/contact" }],
   }),
   component: Contact,
 });

@@ -17,7 +17,9 @@ export const Route = createFileRoute("/registration")({
         property: "og:description",
         content: "Get your Visitor E-Pass or book Exhibitor stall space for the upcoming Tent Decor Expo UP edition.",
       },
+      { property: "og:url", content: "/registration" },
     ],
+    links: [{ rel: "canonical", href: "/registration" }],
   }),
   component: RegistrationPage,
 });

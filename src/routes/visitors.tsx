@@ -12,7 +12,9 @@ export const Route = createFileRoute("/visitors")({
       { name: "description", content: "Trade visitor profile for Tent Decor Expo UP. Learn what a Visitor E-Pass includes, who should attend, and how to register." },
       { property: "og:title", content: "Visitor Profile — Tent Decor Expo UP" },
       { property: "og:description", content: "Free trade E-Pass for planners, buyers and industry professionals attending the Mahadhiveshan." },
+      { property: "og:url", content: "/visitors" },
     ],
+    links: [{ rel: "canonical", href: "/visitors" }],
   }),
   component: VisitorsPage,
 });

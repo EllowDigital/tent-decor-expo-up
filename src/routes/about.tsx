@@ -12,7 +12,9 @@ export const Route = createFileRoute("/about")({
       { name: "description", content: "The Tent, Caterers & Decorators Welfare Association of UP — history, mission, vision and the goals behind Tent Decor Expo UP." },
       { property: "og:title", content: "About — Tent Decor Expo UP" },
       { property: "og:description", content: "History, mission and vision of Uttar Pradesh's apex tent, catering and decor industry body." },
+      { property: "og:url", content: "/about" },
     ],
+    links: [{ rel: "canonical", href: "/about" }],
   }),
   component: About,
 });

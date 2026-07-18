@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisitorsRouteImport } from './routes/visitors'
 import { Route as UpcomingRouteImport } from './routes/upcoming'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RegistrationRouteImport } from './routes/registration'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as GalleryRouteImport } from './routes/gallery'
@@ -30,6 +31,11 @@ const VisitorsRoute = VisitorsRouteImport.update({
 const UpcomingRoute = UpcomingRouteImport.update({
   id: '/upcoming',
   path: '/upcoming',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegistrationRoute = RegistrationRouteImport.update({
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/registration': typeof RegistrationRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
   '/event/$slug': typeof EventSlugRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/registration': typeof RegistrationRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
   '/event/$slug': typeof EventSlugRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
   '/registration': typeof RegistrationRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
   '/event/$slug': typeof EventSlugRoute
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/members'
     | '/registration'
+    | '/sitemap.xml'
     | '/upcoming'
     | '/visitors'
     | '/event/$slug'
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/members'
     | '/registration'
+    | '/sitemap.xml'
     | '/upcoming'
     | '/visitors'
     | '/event/$slug'
@@ -165,6 +176,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/members'
     | '/registration'
+    | '/sitemap.xml'
     | '/upcoming'
     | '/visitors'
     | '/event/$slug'
@@ -180,6 +192,7 @@ export interface RootRouteChildren {
   GalleryRoute: typeof GalleryRoute
   MembersRoute: typeof MembersRoute
   RegistrationRoute: typeof RegistrationRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UpcomingRoute: typeof UpcomingRoute
   VisitorsRoute: typeof VisitorsRoute
   EventSlugRoute: typeof EventSlugRoute
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/upcoming'
       fullPath: '/upcoming'
       preLoaderRoute: typeof UpcomingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/registration': {
@@ -284,6 +304,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryRoute: GalleryRoute,
   MembersRoute: MembersRoute,
   RegistrationRoute: RegistrationRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   UpcomingRoute: UpcomingRoute,
   VisitorsRoute: VisitorsRoute,
   EventSlugRoute: EventSlugRoute,

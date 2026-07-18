@@ -74,6 +74,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Tent Decor Expo UP — Kanpur 2026" },
       { property: "og:description", content: "Connect • Learn • Grow — the 4th Mahadhiveshan of India's wedding and event economy. 30 August – 1 September 2026, Sanskar Lawn, Kanpur." },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Tent Decor Expo UP" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
@@ -82,6 +83,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Tent, Caterers & Decorators Welfare Association of UP",
+          alternateName: "Tent Decor Expo UP",
+          description: "Uttar Pradesh's apex tent, catering and decor industry body, organiser of the annual Mahadhiveshan expo.",
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
