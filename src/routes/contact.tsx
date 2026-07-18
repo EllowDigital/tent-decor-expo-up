@@ -38,71 +38,70 @@ type FormT = z.infer<typeof schema>;
 function Contact() {
   return (
     <>
-      <section className="py-24 bg-charcoal relative overflow-hidden">
-        <div className="absolute inset-0 opacity-25">
-          <div className="absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-gold blur-[140px]" />
-        </div>
-        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-xs uppercase tracking-[0.32em] text-gold font-medium">Get in Touch</span>
-          <h1 className="mt-4 font-display text-5xl md:text-7xl font-bold text-white leading-[1.02]">
+      {/* Simple hero */}
+      <section className="pt-24 sm:pt-32 pb-10 sm:pb-14 bg-white border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <span className="text-[11px] uppercase tracking-[0.32em] text-gold font-medium">Get in touch</span>
+          <h1 className="mt-3 font-display font-bold text-charcoal leading-[1.05] text-[clamp(2rem,5vw,3.5rem)]">
             Let's <span className="text-gradient-gold">talk business.</span>
           </h1>
-          <p className="mt-6 text-white/70 text-lg">Whether it's a stall enquiry or press access — the team is here.</p>
+          <p className="mt-4 max-w-2xl text-slate-muted text-base sm:text-lg">
+            Stall enquiries, press access, sponsorship — the team responds within 24 business hours.
+          </p>
         </div>
       </section>
 
-      {/* Floating contact cards */}
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-6">
-          {[
-            { icon: Phone, label: "Call", value: CONTACT.phone, href: `tel:${CONTACT.phone.replace(/\s/g, "")}` },
-            { icon: Mail, label: "Email", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
-            { icon: MapPin, label: "Venue", value: CONTACT.venue },
-          ].map((c, i) => (
-            <Reveal key={c.label} delay={i * 0.08}>
-              <Card className="p-8 glass-card hover-lift">
-                <div className="h-14 w-14 rounded-xl bg-gradient-gold grid place-items-center shadow-gold">
-                  <c.icon className="h-6 w-6 text-charcoal" />
-                </div>
-                <p className="mt-6 text-xs uppercase tracking-[0.28em] text-slate-muted">{c.label}</p>
-                {c.href ? (
-                  <a href={c.href} className="mt-2 font-display text-xl text-charcoal hover:text-gold transition-colors block">{c.value}</a>
-                ) : (
-                  <p className="mt-2 font-display text-xl text-charcoal">{c.value}</p>
-                )}
-              </Card>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* Form + Map */}
-      <section className="py-20 bg-pearl">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 items-stretch">
+      {/* Form + Info & Map */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-pearl">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* LEFT: contact form */}
           <Reveal>
             <ContactForm />
           </Reveal>
+
+          {/* RIGHT: info cards + map */}
           <Reveal delay={0.1}>
-            <Card className="h-full overflow-hidden border-border/60 min-h-[420px]">
-              <iframe
-                title="Sanskar Lawn, Kanpur"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=80.32%2C26.44%2C80.36%2C26.48&layer=mapnik&marker=26.46%2C80.34"
-                className="h-full w-full min-h-[420px] border-0"
-                loading="lazy"
-              />
-            </Card>
+            <div className="flex flex-col gap-4 sm:gap-5 h-full">
+              {[
+                { icon: Phone, label: "Call", value: CONTACT.phone, href: `tel:${CONTACT.phone.replace(/\s/g, "")}` },
+                { icon: Mail, label: "Email", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
+                { icon: MapPin, label: "Venue", value: CONTACT.venue },
+              ].map((c) => (
+                <Card key={c.label} className="p-5 sm:p-6 border-border/60 flex items-start gap-4">
+                  <div className="h-11 w-11 shrink-0 rounded-lg bg-gold/10 grid place-items-center">
+                    <c.icon className="h-5 w-5 text-gold" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[10px] uppercase tracking-[0.28em] text-slate-muted font-medium">{c.label}</p>
+                    {c.href ? (
+                      <a href={c.href} className="mt-1 font-display text-base sm:text-lg text-charcoal hover:text-gold transition-colors block truncate">{c.value}</a>
+                    ) : (
+                      <p className="mt-1 font-display text-base sm:text-lg text-charcoal leading-snug">{c.value}</p>
+                    )}
+                  </div>
+                </Card>
+              ))}
+              <Card className="flex-1 overflow-hidden border-border/60 min-h-64">
+                <iframe
+                  title="Sanskar Lawn, Kanpur"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=80.32%2C26.44%2C80.36%2C26.48&layer=mapnik&marker=26.46%2C80.34"
+                  className="h-full w-full min-h-64 lg:min-h-full border-0"
+                  loading="lazy"
+                />
+              </Card>
+            </div>
           </Reveal>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-24 bg-white">
+      <section className="py-16 sm:py-20 lg:py-24 bg-white">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <SectionHeading eyebrow="FAQ" title="Answers, before you ask." />
-          <Accordion type="single" collapsible className="mt-12 space-y-3">
+          <Accordion type="single" collapsible className="mt-10 sm:mt-12 space-y-3">
             {FAQS.map((f, i) => (
-              <AccordionItem key={f.q} value={`f-${i}`} className="border border-border/60 rounded-xl px-6 bg-white hover-lift">
-                <AccordionTrigger className="text-left font-display text-lg text-charcoal hover:no-underline">
+              <AccordionItem key={f.q} value={`f-${i}`} className="border border-border/60 rounded-xl px-5 sm:px-6 bg-white">
+                <AccordionTrigger className="text-left font-display text-base sm:text-lg text-charcoal hover:no-underline">
                   {f.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-slate-muted leading-relaxed">{f.a}</AccordionContent>
@@ -110,11 +109,11 @@ function Contact() {
             ))}
           </Accordion>
 
-          <div className="mt-16 text-center">
-            <p className="text-xs uppercase tracking-[0.28em] text-gold font-medium">Follow the movement</p>
-            <div className="mt-6 flex justify-center gap-3">
+          <div className="mt-14 text-center">
+            <p className="text-[11px] uppercase tracking-[0.28em] text-gold font-medium">Follow the movement</p>
+            <div className="mt-5 flex justify-center gap-3">
               {[Facebook, Instagram, Linkedin, Youtube].map((I, j) => (
-                <a key={j} href="#" aria-label="social" className="h-12 w-12 grid place-items-center rounded-full border border-border hover:border-gold hover:text-gold transition-colors">
+                <a key={j} href="#" aria-label="social" className="h-11 w-11 grid place-items-center rounded-full border border-border hover:border-gold hover:text-gold transition-colors">
                   <I className="h-5 w-5" />
                 </a>
               ))}
@@ -125,6 +124,7 @@ function Contact() {
     </>
   );
 }
+
 
 function ContactForm() {
   const [sent, setSent] = useState(false);
