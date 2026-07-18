@@ -368,10 +368,10 @@ function ClosingCTA({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
         </p>
         <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <Button asChild size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-12 sm:h-14 px-6 sm:px-8">
-            <Link to="/events/$year" params={{ year: upcoming.year }}>Event details</Link>
+            <Link to="/registration"><Ticket className="mr-2 h-4 w-4" /> Register Now</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 bg-transparent h-12 sm:h-14 px-6 sm:px-8">
-            <Link to="/visitors">Visitor info</Link>
+            <Link to="/events/$year" params={{ year: upcoming.year }}>Event details</Link>
           </Button>
         </div>
       </div>
