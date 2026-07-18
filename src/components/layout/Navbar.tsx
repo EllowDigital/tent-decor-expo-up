@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
-import { Button } from "@/components/ui/button";
+import { RegisterLink } from "@/components/common/RegisterLink";
 import { NAV_LINKS } from "@/data/constants";
 import { cn } from "@/lib/utils";
 
