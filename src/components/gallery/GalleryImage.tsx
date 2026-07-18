@@ -23,11 +23,12 @@ export function GalleryImage({ src, alt, idx, priority }: Props) {
       <div
         aria-hidden
         className={cn(
-          "absolute inset-0 transition-opacity duration-500",
-          loaded ? "opacity-0" : "opacity-100",
-          "bg-[linear-gradient(110deg,theme(colors.pearl)_25%,theme(colors.white)_50%,theme(colors.pearl)_75%)] bg-[length:200%_100%] animate-[shimmer_1.6s_linear_infinite]",
+          "absolute inset-0 transition-opacity duration-500 bg-pearl",
+          loaded ? "opacity-0" : "opacity-100 animate-pulse",
         )}
-      />
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-charcoal/5" />
+      </div>
       <img
         src={src}
         alt={alt}
