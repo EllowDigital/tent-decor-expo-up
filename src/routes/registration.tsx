@@ -13,6 +13,7 @@ import {
   Building2,
   Users,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/common/Reveal";
 import { EDITIONS, VISITOR_REGISTER_URL, EXHIBITOR_REGISTER_URL, CONTACT } from "@/data/constants";
@@ -307,7 +308,7 @@ function RegistrationPage() {
   );
 }
 
-function FactRow({ icon: Icon, label, value }: { icon: any; label: string; value: string }) {
+function FactRow({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string }) {
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 flex items-start gap-3">
       <span className="h-9 w-9 shrink-0 rounded-md bg-gold/15 grid place-items-center">
@@ -329,7 +330,7 @@ function QuickLink({
   desc,
 }: {
   to: string;
-  icon: any;
+  icon: LucideIcon;
   eyebrow: string;
   title: string;
   desc: string;
