@@ -1,7 +1,8 @@
-import { useRouterState, Link } from "@tanstack/react-router";
-import { RegisterLink } from "@/components/common/RegisterLink";
+import { Link } from "@tanstack/react-router";
+import { EpassDialog } from "@/components/common/EpassDialog";
 import { EDITIONS } from "@/data/constants";
-import { Calendar } from "lucide-react";
+import { Calendar, Ticket } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 /**
  * Sticky bottom bar on mobile only. Surfaces the next upcoming edition and
