@@ -116,6 +116,8 @@ export type Edition = {
   venue: string;
   dates: string;
   startDate?: string; // ISO — enables countdown for upcoming editions
+  endDate?: string; // ISO — end of the event (used for calendar exports & labels)
+  timezone?: string; // IANA tz for display (e.g. "Asia/Kolkata")
   host: string;
   exhibitors: string;
   visitors: string;
