@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
       { title: "Tent Decor Expo UP — Kanpur 2026 | 4th Mahadhiveshan" },
       { name: "description", content: "Connect, learn and grow at UP's premier B2B tent, decor and event expo. 30 Aug – 1 Sep 2026 at Sanskar Lawn, Kanpur." },
       { property: "og:title", content: "Tent Decor Expo UP — Kanpur 2026" },
-      { property: "og:description", content: "India's largest B2B expo for tent, decor and catering — hosted by Shamiyana Furniture Association." },
+      { property: "og:description", content: "India's largest B2B expo for tent, decor and catering — organised by the Tent, Caterers & Decorators Welfare Association of UP." },
     ],
   }),
   component: Home,
