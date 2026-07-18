@@ -30,7 +30,7 @@ function Home() {
   return (
     <>
       <Hero upcoming={upcoming} />
-      <HowToRegister />
+      <HowToRegister upcoming={upcoming} />
       <Stats />
       <EventsRow upcoming={upcoming} past={past} />
       <GalleryPreview />
