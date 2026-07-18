@@ -38,8 +38,8 @@ export function MobileEventBar() {
           size="sm"
           className="shrink-0 bg-gradient-gold text-charcoal shadow-gold hover:opacity-90"
         >
-          <Link to="/visitors" aria-label="Visitor profile & E-Pass">
-            <Ticket className="mr-1.5 h-4 w-4" /> Visitors
+          <Link to="/registration" aria-label="Register — Visitor or Exhibitor">
+            <Ticket className="mr-1.5 h-4 w-4" /> Register
           </Link>
         </Button>
       </div>
