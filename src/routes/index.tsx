@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight, Calendar, MapPin, Ticket, Store, Users, Sparkles, ChevronDown, Quote, TrendingUp, Building2, Rocket, Award } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import { Button } from "@/components/ui/button";
-import { EDITIONS, GALLERY, INDUSTRY_CATEGORIES, REGISTER_URL, TESTIMONIALS } from "@/data/constants";
+import { EDITIONS, GALLERY, INDUSTRY_CATEGORIES, REGISTER_URL, TESTIMONIALS, CURRENT_EVENT_ID } from "@/data/constants";
 import { Reveal } from "@/components/common/Reveal";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
@@ -21,7 +21,12 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const upcoming = EDITIONS.find((e) => e.status === "upcoming") ?? EDITIONS[0];
+  // Single source of truth: siteConfig.currentEventId. Change that one value
+  // each year and the entire homepage (hero, banner, closing CTA) follows.
+  const upcoming =
+    EDITIONS.find((e) => e.slug === CURRENT_EVENT_ID) ??
+    EDITIONS.find((e) => e.status === "upcoming") ??
+    EDITIONS[0];
   return (
     <>
       <Hero upcoming={upcoming} />
