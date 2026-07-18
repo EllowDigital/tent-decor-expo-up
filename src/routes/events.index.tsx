@@ -14,7 +14,9 @@ export const Route = createFileRoute("/events/")({
       { name: "description", content: "Every edition of the Mahadhiveshan — from the 2015 founding congress to Kanpur 2026 and beyond." },
       { property: "og:title", content: "Editions — Tent Decor Expo UP" },
       { property: "og:description", content: "Browse every year of India's largest tent, decor and catering B2B expo." },
+      { property: "og:url", content: "/events" },
     ],
+    links: [{ rel: "canonical", href: "/events" }],
   }),
   component: EventsIndex,
 });
