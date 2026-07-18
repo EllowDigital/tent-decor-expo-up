@@ -7,6 +7,9 @@ import { STATS, EDITIONS, GALLERY, REGISTER_URL } from "@/data/constants";
 import { Reveal, Counter } from "@/components/common/Reveal";
 import { Card } from "@/components/ui/card";
 import { RegisterLink } from "@/components/common/RegisterLink";
+import { EpassDialog } from "@/components/common/EpassDialog";
+import { AddToCalendar } from "@/components/common/AddToCalendar";
+import { CountdownMeta } from "@/components/common/CountdownMeta";
 
 export const Route = createFileRoute("/")({
   head: () => ({
