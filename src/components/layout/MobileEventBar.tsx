@@ -1,12 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { EpassDialog } from "@/components/common/EpassDialog";
 import { EDITIONS } from "@/data/constants";
 import { Calendar, Ticket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /**
  * Sticky bottom bar on mobile only. Surfaces the next upcoming edition and
- * a one-tap Register CTA — solves the "how do I sign up?" UX gap.
+ * a one-tap link into the Visitors profile page.
  */
 export function MobileEventBar() {
   const upcoming = EDITIONS.find((e) => e.status === "upcoming") ?? EDITIONS[0];
@@ -28,29 +27,23 @@ export function MobileEventBar() {
             <Calendar className="h-4 w-4 text-charcoal" />
           </span>
           <span className="min-w-0">
-            <span className="block text-[10px] uppercase tracking-widest text-gold font-medium">
-              {upcoming.status === "upcoming" ? "Upcoming" : "Next Edition"}
-            </span>
+            <span className="block text-[10px] uppercase tracking-widest text-gold font-medium">Upcoming</span>
             <span className="block truncate text-xs font-medium text-charcoal">
               {upcoming.city} · {upcoming.dates}
             </span>
           </span>
         </Link>
-        <EpassDialog
-          eventName={`${upcoming.edition} · ${upcoming.city} ${upcoming.year}`}
-          eventDate={upcoming.dates}
-          eventVenue={upcoming.venue}
-          trigger={
-            <Button
-              size="sm"
-              className="shrink-0 bg-gradient-gold text-charcoal shadow-gold hover:opacity-90"
-              aria-label="Get your free E-Pass"
-            >
-              <Ticket className="mr-1.5 h-4 w-4" /> Get E-Pass
-            </Button>
-          }
-        />
+        <Button
+          asChild
+          size="sm"
+          className="shrink-0 bg-gradient-gold text-charcoal shadow-gold hover:opacity-90"
+        >
+          <Link to="/visitors" aria-label="Visitor profile & E-Pass">
+            <Ticket className="mr-1.5 h-4 w-4" /> Visitors
+          </Link>
+        </Button>
       </div>
     </div>
   );
 }
+
