@@ -180,7 +180,12 @@ function EditionPage() {
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
             <span className="text-xs uppercase tracking-[0.32em] text-gold font-medium">Countdown</span>
             <h2 className="mt-4 font-display text-4xl md:text-5xl font-bold text-charcoal">The clock is running.</h2>
-            <div className="mt-12 grid grid-cols-4 gap-3 md:gap-6">
+            <div
+              className="mt-12 grid grid-cols-4 gap-3 md:gap-6"
+              role="timer"
+              aria-live="polite"
+              aria-label={`Time until ${e.edition} begins`}
+            >
               {[
                 { label: "Days", v: time.d },
                 { label: "Hours", v: time.h },
@@ -195,9 +200,36 @@ function EditionPage() {
                 </Card>
               ))}
             </div>
-            <div className="mt-12 flex flex-wrap justify-center gap-4">
-              <RegisterLink size="lg" variant="gold" showIcon>Book Your Stall</RegisterLink>
-              <RegisterLink size="lg" variant="outline">Get Free E-Pass</RegisterLink>
+            <CountdownMeta
+              startISO={e.startDate}
+              endISO={e.endDate}
+              timezone={e.timezone}
+              tone="dark"
+              className="mt-6 justify-center"
+            />
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <EpassDialog
+                eventName={`${e.edition} · ${e.city} ${e.year}`}
+                eventDate={e.dates}
+                eventVenue={e.venue}
+                trigger={
+                  <Button size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-14 px-8">
+                    <Ticket className="mr-2 h-4 w-4" /> Get Free E-Pass
+                  </Button>
+                }
+              />
+              <RegisterLink size="lg" variant="outline">Book Your Stall</RegisterLink>
+              {e.endDate && (
+                <AddToCalendar
+                  variant="outline"
+                  size="lg"
+                  title={`${e.edition} · ${e.city} ${e.year}`}
+                  description={`${e.summary} Register at ${REGISTER_URL}`}
+                  location={e.venue}
+                  start={e.startDate}
+                  end={e.endDate}
+                />
+              )}
             </div>
           </div>
         </section>
