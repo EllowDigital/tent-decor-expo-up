@@ -146,6 +146,38 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // Canonical URL normalization: strip trailing slashes and known tracking
+  // params so bookmarked / shared variants collapse onto the canonical URL
+  // that appears in <link rel="canonical"> and sitemap.xml.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const { pathname, search, hash } = window.location;
+    let nextPath = pathname;
+    if (nextPath.length > 1 && nextPath.endsWith("/")) {
+      nextPath = nextPath.replace(/\/+$/, "");
+    }
+    let nextSearch = search;
+    if (search) {
+      const params = new URLSearchParams(search);
+      const junk = ["fbclid", "gclid", "msclkid", "mc_cid", "mc_eid", "_hsenc", "_hsmi"];
+      let mutated = false;
+      for (const k of Array.from(params.keys())) {
+        if (junk.includes(k) || k.toLowerCase().startsWith("utm_")) {
+          params.delete(k);
+          mutated = true;
+        }
+      }
+      if (mutated) {
+        const q = params.toString();
+        nextSearch = q ? `?${q}` : "";
+      }
+    }
+    if (nextPath !== pathname || nextSearch !== search) {
+      window.history.replaceState(null, "", nextPath + nextSearch + hash);
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Navbar />
