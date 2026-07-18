@@ -8,6 +8,7 @@ import { Reveal, Counter } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { RegisterLink } from "@/components/common/RegisterLink";
 
 export const Route = createFileRoute("/")({
   head: () => ({
