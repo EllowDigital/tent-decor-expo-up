@@ -9,76 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as EpassStatusRouteImport } from './routes/epass-status'
-import { Route as EventDetailsRouteImport } from './routes/event-details'
-import { Route as ExhibitorsRouteImport } from './routes/exhibitors'
-import { Route as GalleryRouteImport } from './routes/gallery'
-import { Route as MembersRouteImport } from './routes/members'
-import { Route as RegistrationRouteImport } from './routes/registration'
-import { Route as SitemapImagesDotxmlRouteImport } from './routes/sitemap-images[.]xml'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as UpcomingRouteImport } from './routes/upcoming'
 import { Route as VisitorsRouteImport } from './routes/visitors'
-import { Route as DebugSeoRouteImport } from './routes/debug.seo'
-import { Route as EventSlugRouteImport } from './routes/event.$slug'
+import { Route as UpcomingRouteImport } from './routes/upcoming'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SitemapImagesDotxmlRouteImport } from './routes/sitemap-images[.]xml'
+import { Route as RegistrationRouteImport } from './routes/registration'
+import { Route as MembersRouteImport } from './routes/members'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ExhibitorsRouteImport } from './routes/exhibitors'
+import { Route as EventDetailsRouteImport } from './routes/event-details'
+import { Route as EpassStatusRouteImport } from './routes/epass-status'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
+import { Route as EventSlugRouteImport } from './routes/event.$slug'
+import { Route as DebugSeoRouteImport } from './routes/debug.seo'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EpassStatusRoute = EpassStatusRouteImport.update({
-  id: '/epass-status',
-  path: '/epass-status',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EventDetailsRoute = EventDetailsRouteImport.update({
-  id: '/event-details',
-  path: '/event-details',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExhibitorsRoute = ExhibitorsRouteImport.update({
-  id: '/exhibitors',
-  path: '/exhibitors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GalleryRoute = GalleryRouteImport.update({
-  id: '/gallery',
-  path: '/gallery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MembersRoute = MembersRouteImport.update({
-  id: '/members',
-  path: '/members',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RegistrationRoute = RegistrationRouteImport.update({
-  id: '/registration',
-  path: '/registration',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapImagesDotxmlRoute = SitemapImagesDotxmlRouteImport.update({
-  id: '/sitemap-images.xml',
-  path: '/sitemap-images.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const VisitorsRoute = VisitorsRouteImport.update({
+  id: '/visitors',
+  path: '/visitors',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UpcomingRoute = UpcomingRouteImport.update({
@@ -86,14 +36,64 @@ const UpcomingRoute = UpcomingRouteImport.update({
   path: '/upcoming',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VisitorsRoute = VisitorsRouteImport.update({
-  id: '/visitors',
-  path: '/visitors',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DebugSeoRoute = DebugSeoRouteImport.update({
-  id: '/debug/seo',
-  path: '/debug/seo',
+const SitemapImagesDotxmlRoute = SitemapImagesDotxmlRouteImport.update({
+  id: '/sitemap-images.xml',
+  path: '/sitemap-images.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistrationRoute = RegistrationRouteImport.update({
+  id: '/registration',
+  path: '/registration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MembersRoute = MembersRouteImport.update({
+  id: '/members',
+  path: '/members',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExhibitorsRoute = ExhibitorsRouteImport.update({
+  id: '/exhibitors',
+  path: '/exhibitors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventDetailsRoute = EventDetailsRouteImport.update({
+  id: '/event-details',
+  path: '/event-details',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EpassStatusRoute = EpassStatusRouteImport.update({
+  id: '/epass-status',
+  path: '/epass-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsIndexRoute = EventsIndexRouteImport.update({
+  id: '/events/',
+  path: '/events/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EventSlugRoute = EventSlugRouteImport.update({
@@ -101,9 +101,9 @@ const EventSlugRoute = EventSlugRouteImport.update({
   path: '/event/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EventsIndexRoute = EventsIndexRouteImport.update({
-  id: '/events/',
-  path: '/events/',
+const DebugSeoRoute = DebugSeoRouteImport.update({
+  id: '/debug/seo',
+  path: '/debug/seo',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -240,81 +240,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/epass-status': {
-      id: '/epass-status'
-      path: '/epass-status'
-      fullPath: '/epass-status'
-      preLoaderRoute: typeof EpassStatusRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/event-details': {
-      id: '/event-details'
-      path: '/event-details'
-      fullPath: '/event-details'
-      preLoaderRoute: typeof EventDetailsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/exhibitors': {
-      id: '/exhibitors'
-      path: '/exhibitors'
-      fullPath: '/exhibitors'
-      preLoaderRoute: typeof ExhibitorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gallery': {
-      id: '/gallery'
-      path: '/gallery'
-      fullPath: '/gallery'
-      preLoaderRoute: typeof GalleryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/members': {
-      id: '/members'
-      path: '/members'
-      fullPath: '/members'
-      preLoaderRoute: typeof MembersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/registration': {
-      id: '/registration'
-      path: '/registration'
-      fullPath: '/registration'
-      preLoaderRoute: typeof RegistrationRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap-images.xml': {
-      id: '/sitemap-images.xml'
-      path: '/sitemap-images.xml'
-      fullPath: '/sitemap-images.xml'
-      preLoaderRoute: typeof SitemapImagesDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
+    '/visitors': {
+      id: '/visitors'
+      path: '/visitors'
+      fullPath: '/visitors'
+      preLoaderRoute: typeof VisitorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/upcoming': {
@@ -324,18 +254,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpcomingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/visitors': {
-      id: '/visitors'
-      path: '/visitors'
-      fullPath: '/visitors'
-      preLoaderRoute: typeof VisitorsRouteImport
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/debug/seo': {
-      id: '/debug/seo'
-      path: '/debug/seo'
-      fullPath: '/debug/seo'
-      preLoaderRoute: typeof DebugSeoRouteImport
+    '/sitemap-images.xml': {
+      id: '/sitemap-images.xml'
+      path: '/sitemap-images.xml'
+      fullPath: '/sitemap-images.xml'
+      preLoaderRoute: typeof SitemapImagesDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registration': {
+      id: '/registration'
+      path: '/registration'
+      fullPath: '/registration'
+      preLoaderRoute: typeof RegistrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/members': {
+      id: '/members'
+      path: '/members'
+      fullPath: '/members'
+      preLoaderRoute: typeof MembersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exhibitors': {
+      id: '/exhibitors'
+      path: '/exhibitors'
+      fullPath: '/exhibitors'
+      preLoaderRoute: typeof ExhibitorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event-details': {
+      id: '/event-details'
+      path: '/event-details'
+      fullPath: '/event-details'
+      preLoaderRoute: typeof EventDetailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/epass-status': {
+      id: '/epass-status'
+      path: '/epass-status'
+      fullPath: '/epass-status'
+      preLoaderRoute: typeof EpassStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events/': {
+      id: '/events/'
+      path: '/events'
+      fullPath: '/events/'
+      preLoaderRoute: typeof EventsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/event/$slug': {
@@ -345,11 +345,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/events/': {
-      id: '/events/'
-      path: '/events'
-      fullPath: '/events/'
-      preLoaderRoute: typeof EventsIndexRouteImport
+    '/debug/seo': {
+      id: '/debug/seo'
+      path: '/debug/seo'
+      fullPath: '/debug/seo'
+      preLoaderRoute: typeof DebugSeoRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -376,13 +376,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
