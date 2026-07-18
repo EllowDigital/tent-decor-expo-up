@@ -278,7 +278,7 @@ function Gallery() {
             <>
               <ul
                 role="list"
-                className="columns-1 xs:columns-2 sm:columns-2 md:columns-3 lg:columns-3 xl:columns-4 gap-3 sm:gap-4 lg:gap-5 [column-fill:_balance]"
+                className="columns-2 md:columns-3 xl:columns-4 gap-3 sm:gap-4 lg:gap-5 [column-fill:_balance]"
               >
                 {shown.map((g, i) => (
                   <li key={`${g.src}-${g._idx}-${i}`} className="break-inside-avoid mb-3 sm:mb-4 lg:mb-5 inline-block w-full">
