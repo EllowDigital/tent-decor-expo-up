@@ -69,8 +69,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "Tent Decor Expo UP — India's Premier B2B Wedding & Event Expo" },
-      { name: "description", content: "Tent Decor Expo UP — Kanpur 2026, the 4th Mahadhiveshan. India's largest B2B exhibition for tent, decor, catering, lighting and event professionals." },
+      // Per-route head() supplies title, description, and og:title/og:description.
+
       { name: "application-name", content: "Tent Decor Expo UP" },
       { name: "apple-mobile-web-app-title", content: "TDX UP" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
