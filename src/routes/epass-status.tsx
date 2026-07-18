@@ -24,22 +24,15 @@ import { Button } from "@/components/ui/button";
 import { EDITIONS, REGISTER_URL, CONTACT } from "@/data/constants";
 import { EpassDialog } from "@/components/common/EpassDialog";
 
+import { buildHead, PAGE_SEO } from "@/lib/seo";
+
 export const Route = createFileRoute("/epass-status")({
-  head: () => ({
-    meta: [
-      { title: "E-Pass Status — Tent Decor Expo UP" },
-      { name: "description", content: "Enter your E-Pass reference code to view your registration details and completion status for Tent Decor Expo UP." },
-      { property: "og:title", content: "E-Pass Status — Tent Decor Expo UP" },
-      { property: "og:description", content: "Look up your Tent Decor Expo UP E-Pass registration by reference code." },
-      { property: "og:url", content: "/epass-status" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "E-Pass Status — Tent Decor Expo UP" },
-      { name: "twitter:description", content: "Look up your Tent Decor Expo UP E-Pass registration." },
-      { name: "robots", content: "noindex" },
-    ],
-    links: [{ rel: "canonical", href: "/epass-status" }],
-  }),
+  head: () => {
+    const h = buildHead({ ...PAGE_SEO.epassStatus, webPageSchema: false });
+    // Keep this utility page out of the index — the content is per-code lookup.
+    h.meta.push({ name: "robots", content: "noindex,follow" });
+    return h;
+  },
   component: EpassStatus,
 });
 
