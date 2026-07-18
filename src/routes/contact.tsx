@@ -35,10 +35,19 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { CONTACT, FAQS, SOCIAL_LINKS } from "@/data/constants";
-import { buildHead, PAGE_SEO } from "@/lib/seo";
+import { buildHead, PAGE_SEO, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  head: () => buildHead(PAGE_SEO.contact),
+  head: () => buildHead({
+    ...PAGE_SEO.contact,
+    extraJsonLd: [
+      breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Contact", path: "/contact" },
+      ]),
+      faqJsonLd(FAQS.map((f) => ({ question: f.q, answer: f.a }))),
+    ],
+  }),
   component: Contact,
 });
 
