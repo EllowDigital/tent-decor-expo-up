@@ -98,12 +98,8 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="pt-3 grid grid-cols-2 gap-2">
-                <Button asChild variant="outline" className="border-gold text-charcoal">
-                  <Link to="/register">Get E-Pass</Link>
-                </Button>
-                <Button asChild className="bg-gradient-gold text-charcoal">
-                  <Link to="/register">Book Stall</Link>
-                </Button>
+                <RegisterLink variant="outline">Get E-Pass</RegisterLink>
+                <RegisterLink variant="gold">Book Stall</RegisterLink>
               </div>
             </div>
           </motion.div>
