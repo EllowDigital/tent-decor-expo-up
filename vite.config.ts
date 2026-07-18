@@ -11,6 +11,8 @@ export default defineConfig({
   // (dist/client/index.html) plus per-route prerendered HTML, so Netlify
   // (and any static host) serves the site with zero server functions.
   tanstackStart: {
+    server: { entry: "server" },
+
     spa: {
       enabled: true,
       // Every unmatched path falls back to this prerendered shell (SPA fallback).
