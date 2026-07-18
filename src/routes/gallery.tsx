@@ -278,10 +278,10 @@ function Gallery() {
             <>
               <ul
                 role="list"
-                className="columns-2 md:columns-3 xl:columns-4 gap-3 sm:gap-4 [column-fill:_balance] space-y-3 sm:space-y-4"
+                className="columns-2 md:columns-3 xl:columns-4 gap-3 sm:gap-4 [column-fill:_balance]"
               >
                 {shown.map((g, i) => (
-                  <li key={`${g.src}-${g._idx}-${i}`} className="break-inside-avoid">
+                  <li key={`${g.src}-${g._idx}-${i}`} className="break-inside-avoid mb-3 sm:mb-4 inline-block w-full">
                     <Reveal delay={Math.min((i % PAGE) * 0.02, 0.2)}>
                       <button
                         onClick={() => setLightbox(i)}
