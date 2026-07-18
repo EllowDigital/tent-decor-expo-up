@@ -517,7 +517,16 @@ function GalleryPreview() {
               }
               aria-label={g.title}
             >
-              <img src={g.src} alt={g.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <img
+                src={g.src}
+                alt={g.title}
+                width={480}
+                height={480}
+                sizes="(min-width: 1024px) 15vw, (min-width: 768px) 22vw, 30vw"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
             </Link>
           ))}
         </div>
