@@ -117,10 +117,30 @@ function EditionPage() {
             <div className="mt-8 flex flex-wrap gap-4">
               {isUpcoming ? (
                 <>
-                  <RegisterLink size="lg" variant="gold" showIcon>Get Free E-Pass</RegisterLink>
+                  <EpassDialog
+                    eventName={`${e.edition} · ${e.city} ${e.year}`}
+                    eventDate={e.dates}
+                    eventVenue={e.venue}
+                    trigger={
+                      <Button size="lg" className="bg-gradient-gold text-charcoal shadow-gold hover:opacity-90 h-14 px-8">
+                        <Ticket className="mr-2 h-4 w-4" /> Get Free E-Pass
+                      </Button>
+                    }
+                  />
                   <RegisterLink size="lg" variant="outline" className="!border-white/30 !text-white hover:!bg-white/10">
                     Book a Stall
                   </RegisterLink>
+                  {e.startDate && e.endDate && (
+                    <AddToCalendar
+                      variant="ghostLight"
+                      size="lg"
+                      title={`${e.edition} · ${e.city} ${e.year}`}
+                      description={`${e.summary} Register at ${REGISTER_URL}`}
+                      location={e.venue}
+                      start={e.startDate}
+                      end={e.endDate}
+                    />
+                  )}
                 </>
               ) : (
                 <Button asChild size="lg" className="bg-gradient-gold text-charcoal shadow-gold h-14 px-8">
