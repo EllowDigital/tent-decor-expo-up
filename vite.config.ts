@@ -1,43 +1,18 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import netlify from "@netlify/vite-plugin-tanstack-start";
 import { visualizer } from "rollup-plugin-visualizer";
 
 // Enable a treemap of the production client bundle by running:
 //   ANALYZE=1 bun run build
-// The report is written to dist/stats.html (opened locally).
+// The report is written to dist/stats.html.
 const analyze = process.env.ANALYZE === "1" || process.env.ANALYZE === "true";
 
 export default defineConfig({
-  // Force Nitro to emit a pure static build (no serverless function). Combined
-  // with TanStack Start's SPA mode below, this produces dist/client/ with a
-  // static index.html plus per-route prerendered HTML — perfect for Netlify,
-  // Vercel static, or Cloudflare Pages with zero server code.
+  // Netlify plugin owns SSR wiring, so disable Nitro entirely.
   nitro: false,
 
-  // Pure static SPA build. TanStack Start's SPA mode emits a static shell
-  // (dist/client/index.html) plus per-route prerendered HTML, so Netlify
-  // (and any static host) serves the site with zero server functions.
   tanstackStart: {
     server: { entry: "server" },
-
-    spa: {
-      enabled: true,
-      // Every unmatched path falls back to this prerendered shell (SPA fallback).
-      maskPath: "/",
-    },
-    // Prerender each route to its own HTML file for SEO / social sharing.
-    pages: [
-      { path: "/" },
-      { path: "/about" },
-      { path: "/events" },
-      { path: "/event-details" },
-      { path: "/members" },
-      { path: "/visitors" },
-      { path: "/exhibitors" },
-      { path: "/registration" },
-      { path: "/gallery" },
-      { path: "/contact" },
-      { path: "/upcoming" },
-    ],
   },
 
   vite: {
@@ -56,16 +31,21 @@ export default defineConfig({
     build: {
       assetsInlineLimit: 4096,
     },
-    plugins: analyze
-      ? [
-          visualizer({
-            filename: "dist/stats.html",
-            template: "treemap",
-            gzipSize: true,
-            brotliSize: true,
-            open: false,
-          }),
-        ]
-      : [],
+    plugins: [
+      // Official Netlify integration for TanStack Start — handles SSR
+      // function output, redirects, and headers automatically.
+      netlify(),
+      ...(analyze
+        ? [
+            visualizer({
+              filename: "dist/stats.html",
+              template: "treemap",
+              gzipSize: true,
+              brotliSize: true,
+              open: false,
+            }),
+          ]
+        : []),
+    ],
   },
 });
