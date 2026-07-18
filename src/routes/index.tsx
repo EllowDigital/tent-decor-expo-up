@@ -16,7 +16,7 @@ import {
   Award,
   Plane,
 } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+
 import { Button } from "@/components/ui/button";
 import {
   EDITIONS,
@@ -29,11 +29,31 @@ import {
 import { Reveal } from "@/components/common/Reveal";
 import { AddToCalendar } from "@/components/common/AddToCalendar";
 import { CountdownMeta } from "@/components/common/CountdownMeta";
+import { HeroBackground } from "@/components/common/HeroBackground";
 
 import { buildHead, PAGE_SEO } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => buildHead(PAGE_SEO.home),
+  head: () => {
+    const base = buildHead(PAGE_SEO.home);
+    return {
+      ...base,
+      links: [
+        ...base.links,
+        // Preload the LCP hero variant most likely to be picked on desktop.
+        {
+          rel: "preload",
+          as: "image",
+          href: "/assets/responsive/hero-bg-1600.webp",
+          type: "image/webp",
+          fetchPriority: "high",
+          imageSrcSet:
+            "/assets/responsive/hero-bg-640.webp 640w, /assets/responsive/hero-bg-1024.webp 1024w, /assets/responsive/hero-bg-1600.webp 1600w, /assets/responsive/hero-bg-1920.webp 1920w",
+          imageSizes: "100vw",
+        },
+      ],
+    };
+  },
   component: Home,
 });
 
@@ -70,16 +90,7 @@ function Hero({ upcoming }: { upcoming: (typeof EDITIONS)[number] }) {
       aria-label="Upcoming edition"
     >
       <div className="absolute inset-0">
-        <img
-          src={heroBg}
-          alt=""
-          width={1920}
-          height={1080}
-          sizes="100vw"
-          decoding="async"
-          fetchPriority="high"
-          className="h-full w-full object-cover"
-        />
+        <HeroBackground />
         <div className="absolute inset-0 bg-gradient-to-br from-charcoal/95 via-charcoal/85 to-charcoal/70" />
       </div>
 
