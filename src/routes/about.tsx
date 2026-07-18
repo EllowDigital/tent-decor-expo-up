@@ -3,7 +3,7 @@ import { Reveal } from "@/components/common/Reveal";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { Card } from "@/components/ui/card";
 import { MILESTONES } from "@/data/constants";
-import heroBg from "@/assets/hero-bg.jpg";
+import { HeroBackground } from "@/components/common/HeroBackground";
 import {
   Building2,
   Target,
@@ -61,16 +61,7 @@ function About() {
       {/* Hero */}
       <section className="relative py-24 sm:py-28 lg:py-32 bg-charcoal overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src={heroBg}
-            alt=""
-            width={1920}
-            height={1080}
-            sizes="100vw"
-            decoding="async"
-            fetchPriority="high"
-            className="h-full w-full object-cover opacity-25"
-          />
+          <HeroBackground className="opacity-25" />
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/90 to-charcoal" />
         </div>
         <div className="absolute inset-0 opacity-40 pointer-events-none">
