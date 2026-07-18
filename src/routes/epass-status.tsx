@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, REGISTER_URL, CONTACT } from "@/data/constants";
-import { EpassDialog } from "@/components/common/EpassDialog";
+import { EpassDialog } from "@/components/common/LazyDialogs";
 
 import { buildHead, PAGE_SEO } from "@/lib/seo";
 
