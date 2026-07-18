@@ -22,6 +22,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventsIndexRouteImport } from './routes/events.index'
 import { Route as EventSlugRouteImport } from './routes/event.$slug'
+import { Route as DebugSeoRouteImport } from './routes/debug.seo'
 
 const VisitorsRoute = VisitorsRouteImport.update({
   id: '/visitors',
@@ -88,6 +89,11 @@ const EventSlugRoute = EventSlugRouteImport.update({
   path: '/event/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DebugSeoRoute = DebugSeoRouteImport.update({
+  id: '/debug/seo',
+  path: '/debug/seo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
+  '/debug/seo': typeof DebugSeoRoute
   '/event/$slug': typeof EventSlugRoute
   '/events/': typeof EventsIndexRoute
 }
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
+  '/debug/seo': typeof DebugSeoRoute
   '/event/$slug': typeof EventSlugRoute
   '/events': typeof EventsIndexRoute
 }
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
+  '/debug/seo': typeof DebugSeoRoute
   '/event/$slug': typeof EventSlugRoute
   '/events/': typeof EventsIndexRoute
 }
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/upcoming'
     | '/visitors'
+    | '/debug/seo'
     | '/event/$slug'
     | '/events/'
   fileRoutesByTo: FileRoutesByTo
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/upcoming'
     | '/visitors'
+    | '/debug/seo'
     | '/event/$slug'
     | '/events'
   id:
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/upcoming'
     | '/visitors'
+    | '/debug/seo'
     | '/event/$slug'
     | '/events/'
   fileRoutesById: FileRoutesById
@@ -195,6 +207,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UpcomingRoute: typeof UpcomingRoute
   VisitorsRoute: typeof VisitorsRoute
+  DebugSeoRoute: typeof DebugSeoRoute
   EventSlugRoute: typeof EventSlugRoute
   EventsIndexRoute: typeof EventsIndexRoute
 }
@@ -292,6 +305,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/debug/seo': {
+      id: '/debug/seo'
+      path: '/debug/seo'
+      fullPath: '/debug/seo'
+      preLoaderRoute: typeof DebugSeoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -307,6 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   UpcomingRoute: UpcomingRoute,
   VisitorsRoute: VisitorsRoute,
+  DebugSeoRoute: DebugSeoRoute,
   EventSlugRoute: EventSlugRoute,
   EventsIndexRoute: EventsIndexRoute,
 }
