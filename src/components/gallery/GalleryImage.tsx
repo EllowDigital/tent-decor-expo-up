@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-const RATIOS = ["4/5", "1/1", "3/4", "4/3", "5/4"];
-
 type Props = {
   src: string;
   alt: string;
@@ -10,15 +8,11 @@ type Props = {
   priority?: boolean;
 };
 
-export function GalleryImage({ src, alt, idx, priority }: Props) {
+export function GalleryImage({ src, alt, priority }: Props) {
   const [loaded, setLoaded] = useState(false);
-  const ratio = RATIOS[idx % RATIOS.length];
 
   return (
-    <div
-      className="relative w-full overflow-hidden bg-pearl"
-      style={{ aspectRatio: ratio }}
-    >
+    <div className="relative w-full overflow-hidden bg-pearl aspect-[4/5]">
       {/* Skeleton shimmer */}
       <div
         aria-hidden
