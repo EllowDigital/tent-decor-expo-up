@@ -6,59 +6,25 @@ import { visualizer } from "rollup-plugin-visualizer";
 // The report is written to dist/stats.html (opened locally).
 const analyze = process.env.ANALYZE === "1" || process.env.ANALYZE === "true";
 
-// Nitro preset selection. Cloudflare/Lovable builds leave both env vars unset
-// and continue to use the default cloudflare-module preset (nitro: undefined).
-//   DEPLOY_TARGET=vercel  (or Vercel's own VERCEL=1) → nitro `vercel` preset
-//   DEPLOY_TARGET=netlify                            → nitro `netlify` preset
-type NitroTargetConfig = {
-  preset: string;
-  output?: {
-    dir?: string;
-    publicDir?: string;
-  };
-};
-
-let nitroConfig: NitroTargetConfig | undefined;
-if (process.env.VERCEL === "1" || process.env.DEPLOY_TARGET === "vercel") {
-  nitroConfig = { preset: "vercel" };
-} else if (process.env.DEPLOY_TARGET === "netlify" || process.env.NETLIFY === "true") {
-  nitroConfig = {
-    preset: "netlify",
-    output: {
-      // Keep Netlify's SSR function in the directory configured by netlify.toml.
-      dir: ".netlify/functions",
-      // Static client assets are published from dist/ and served before SSR.
-      publicDir: "dist",
-    },
-  };
-}
 export default defineConfig({
-  tanstackStart: {
-    server: { entry: "server" },
-  },
-
-  nitro: nitroConfig,
-
+  // No custom SSR entry, no Nitro preset. TanStack Start's default build emits
+  // client assets to `dist/` — perfect for pure static hosting on Netlify,
+  // Vercel (static), or Cloudflare Pages. SPA fallback is handled per-platform
+  // (see netlify.toml).
   vite: {
     server: {
       host: "0.0.0.0",
       allowedHosts: true,
-      // Disable browser caching in dev so image/metadata changes are reflected
-      // immediately after HMR. Production builds emit hashed filenames and are
-      // served with their platform's default long-lived cache headers.
       headers: {
         "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
         Pragma: "no-cache",
         Expires: "0",
       },
       watch: {
-        // Ensure edits to files under public/ and public/assets/ trigger reloads
-        // on all platforms (Cloudflare Tunnel + Docker fs can miss inotify).
         ignored: ["**/node_modules/**", "**/dist/**", "**/.output/**"],
       },
     },
     build: {
-      // Long-lived hashed filenames for cache busting in production.
       assetsInlineLimit: 4096,
     },
     plugins: analyze
