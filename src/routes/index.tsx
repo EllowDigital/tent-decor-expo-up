@@ -130,17 +130,19 @@ function TicketCard({
   return (
     <div className="relative rounded-2xl bg-white text-charcoal shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] overflow-hidden">
       {/* Top stub */}
-      <div className="flex items-center justify-between px-5 sm:px-6 py-3 bg-charcoal text-white">
-        <div className="flex items-center gap-2 min-w-0">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-6 py-3 bg-charcoal text-white">
+        <div className="flex min-w-0 items-center gap-2">
           <Plane className="h-3.5 w-3.5 text-gold shrink-0" />
-          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-white/80 truncate">
-            Mahadhiveshan Boarding Pass
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-white/80 truncate">
+            <span className="sm:hidden">Boarding Pass</span>
+            <span className="hidden sm:inline">Mahadhiveshan Boarding Pass</span>
           </span>
         </div>
-        <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-gold font-medium shrink-0">
+        <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.28em] text-gold font-medium shrink-0">
           {upcoming.edition}
         </span>
       </div>
+
 
       {/* Main body */}
       <div className="px-5 sm:px-6 py-5 sm:py-6">
