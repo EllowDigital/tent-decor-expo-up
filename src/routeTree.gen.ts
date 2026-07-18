@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VisitorsRouteImport } from './routes/visitors'
 import { Route as UpcomingRouteImport } from './routes/upcoming'
+import { Route as RegistrationRouteImport } from './routes/registration'
 import { Route as MembersRouteImport } from './routes/members'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ExhibitorsRouteImport } from './routes/exhibitors'
@@ -29,6 +30,11 @@ const VisitorsRoute = VisitorsRouteImport.update({
 const UpcomingRoute = UpcomingRouteImport.update({
   id: '/upcoming',
   path: '/upcoming',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegistrationRoute = RegistrationRouteImport.update({
+  id: '/registration',
+  path: '/registration',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MembersRoute = MembersRouteImport.update({
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
+  '/registration': typeof RegistrationRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
   '/events/$year': typeof EventsYearRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
+  '/registration': typeof RegistrationRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
   '/events/$year': typeof EventsYearRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/exhibitors': typeof ExhibitorsRoute
   '/gallery': typeof GalleryRoute
   '/members': typeof MembersRoute
+  '/registration': typeof RegistrationRoute
   '/upcoming': typeof UpcomingRoute
   '/visitors': typeof VisitorsRoute
   '/events/$year': typeof EventsYearRoute
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/exhibitors'
     | '/gallery'
     | '/members'
+    | '/registration'
     | '/upcoming'
     | '/visitors'
     | '/events/$year'
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/exhibitors'
     | '/gallery'
     | '/members'
+    | '/registration'
     | '/upcoming'
     | '/visitors'
     | '/events/$year'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/exhibitors'
     | '/gallery'
     | '/members'
+    | '/registration'
     | '/upcoming'
     | '/visitors'
     | '/events/$year'
@@ -167,6 +179,7 @@ export interface RootRouteChildren {
   ExhibitorsRoute: typeof ExhibitorsRoute
   GalleryRoute: typeof GalleryRoute
   MembersRoute: typeof MembersRoute
+  RegistrationRoute: typeof RegistrationRoute
   UpcomingRoute: typeof UpcomingRoute
   VisitorsRoute: typeof VisitorsRoute
   EventsYearRoute: typeof EventsYearRoute
@@ -187,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: '/upcoming'
       fullPath: '/upcoming'
       preLoaderRoute: typeof UpcomingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registration': {
+      id: '/registration'
+      path: '/registration'
+      fullPath: '/registration'
+      preLoaderRoute: typeof RegistrationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/members': {
@@ -263,6 +283,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExhibitorsRoute: ExhibitorsRoute,
   GalleryRoute: GalleryRoute,
   MembersRoute: MembersRoute,
+  RegistrationRoute: RegistrationRoute,
   UpcomingRoute: UpcomingRoute,
   VisitorsRoute: VisitorsRoute,
   EventsYearRoute: EventsYearRoute,
