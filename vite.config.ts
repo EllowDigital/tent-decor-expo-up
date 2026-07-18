@@ -6,17 +6,18 @@ import { visualizer } from "rollup-plugin-visualizer";
 // The report is written to dist/stats.html (opened locally).
 const analyze = process.env.ANALYZE === "1" || process.env.ANALYZE === "true";
 
-// Vercel SSR opt-in. Set DEPLOY_TARGET=vercel (or rely on Vercel's own VERCEL=1)
-// to force the Nitro `vercel` preset. Cloudflare/Lovable builds leave this
-// unset and continue to use the default cloudflare-module preset.
-const isVercel = process.env.DEPLOY_TARGET === "vercel" || process.env.VERCEL === "1";
+// Nitro preset selection. Cloudflare/Lovable builds leave both env vars unset
+// and continue to use the default cloudflare-module preset (nitro: undefined).
+//   DEPLOY_TARGET=vercel  (or Vercel's own VERCEL=1) → nitro `vercel` preset
+//   DEPLOY_TARGET=netlify                            → nitro `netlify` preset
+let nitroPreset: string | undefined;
+if (process.env.VERCEL === "1" || process.env.DEPLOY_TARGET === "vercel") {
+  nitroPreset = "vercel";
+} else if (process.env.DEPLOY_TARGET === "netlify" || process.env.NETLIFY === "true") {
+  nitroPreset = "netlify";
+}
 
-export default defineConfig({
-  tanstackStart: {
-    server: { entry: "server" },
-  },
 
-  nitro: isVercel ? { preset: "vercel" } : undefined,
 
 
 
