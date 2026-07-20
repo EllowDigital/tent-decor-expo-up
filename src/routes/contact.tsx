@@ -106,7 +106,7 @@ function Contact() {
                 <Button
                   asChild
                   variant="outline"
-                  className="h-11 px-5 border-white/20 text-white hover:bg-white/10 hover:text-white"
+                  className="h-11 px-5 border border-white/20 text-white bg-white/5 hover:bg-white/10 hover:text-white transition-colors"
                 >
                   <a
                     href={`https://wa.me/${CONTACT.phone.replace(/[^\d]/g, "")}`}
@@ -235,7 +235,7 @@ function Contact() {
                           Tent, Caterers & Decorators Welfare Association of UP
                         </p>
                         <p className="mt-0.5 text-sm text-slate-muted">
-                          Head office · Kanpur, Uttar Pradesh
+                          Head office · Lucknow, Uttar Pradesh
                         </p>
                       </div>
                     </div>

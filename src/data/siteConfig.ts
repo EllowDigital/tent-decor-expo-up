@@ -5,7 +5,7 @@
 
 export const siteConfig = {
   name: "Tent Decor Expo UP",
-  shortName: "TDX UP",
+  shortName: "TDE-UP",
   organisation: "Tent, Caterers & Decorators Welfare Association of UP",
   tagline:
     "Uttar Pradesh's premier B2B trade show for the tent, decor, catering & hospitality industry.",
@@ -14,9 +14,9 @@ export const siteConfig = {
   currentEventId: "kanpur-2026",
 
   contactInfo: {
-    phone: "+91 98765 43210",
-    email: "info@tentdecorexpoup.in",
-    venue: "Sanskar Lawn, Kanpur, Uttar Pradesh 208001",
+    phone: "+91 99539 03330",
+    email: "uptentcatererswelfare@gmail.com",
+    venue: "16/1402, Sector 16, Indira Nagar, Lucknow, Uttar Pradesh 226016",
   },
 
   socialLinks: {
@@ -29,8 +29,8 @@ export const siteConfig = {
   /** External portal URLs — swap once each year, whole site picks them up. */
   registrationLinks: {
     portal: "https://www.tentdecorexpo.com",
-    visitorEpass: "https://www.tentdecorexpo.com/e-pass",
-    exhibitorStall: "https://www.tentdecorexpo.com/book-stall",
+    visitorEpass: "https://www.tentdecorexpo.com/",
+    exhibitorStall: "https://www.tentdecorexpo.com/",
   },
 
   industryCategories: [
