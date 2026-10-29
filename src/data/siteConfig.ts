@@ -16,7 +16,7 @@ export const siteConfig = {
   contactInfo: {
     phone: "+91 99539 03330",
     email: "uptentcatererswelfare@gmail.com",
-    venue: "16/1402, Sector 16, Indira Nagar, Lucknow, Uttar Pradesh 226016",
+    venue: "Sanskar Lawn, Kanpur, Uttar Pradesh 208001",
   },
 
   socialLinks: {
